@@ -30,7 +30,16 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     fontWeight: 900,
     fontFamily: "Prompt",
-    fontSize: "1.5em"
+    fontSize: "2em",
+    width: "100%",
+    backgroundColor: "#F00"
+  },
+  tagline: {
+    flexGrow: 1,
+    fontSize: "1em",
+    width: "100%",
+    backgroundColor: "#F00",
+    paddingBottom: "2em"
   },
   list: {
     width: 250,
@@ -45,10 +54,7 @@ const useStyles = makeStyles(theme => ({
   },
   hamburger: {
     backgroundColor: "#F00",
-    padding: "0.5em"
-  },
-  tool: {
-    display: "flex"
+    padding: "0.30em"
   }
 }));
 
@@ -122,7 +128,11 @@ export default function TemporaryDrawer() {
             {sideList("right")}
           </Drawer>
         </Toolbar>
-        <Typography style={{ fontSize: "2em" }}>Welcome to</Typography>
+        <Typography style={{ fontSize: "1.5em" }}>Welcome to</Typography>
+        <Typography className={classes.title}>commons</Typography>
+        <Typography className={classes.tagline}>
+          Stay informed. Get engaged
+        </Typography>
       </AppBar>
     </div>
   );
