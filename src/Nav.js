@@ -16,7 +16,12 @@ import BookmarkIcon from "@material-ui/icons/Bookmark";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    background:
+      "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.35) 59%, rgba(0, 0, 0, 0.65) 100%), url('https://upload.wikimedia.org/wikipedia/commons/d/d7/House_of_Commons_Chamber_1.png') no-repeat",
+    backgroundSize: "cover",
+    width: "100%",
+    height: "200px"
   },
   menuButton: {
     marginRight: theme.spacing(2)
@@ -28,13 +33,22 @@ const useStyles = makeStyles(theme => ({
     fontSize: "1.5em"
   },
   list: {
-    width: 250
+    width: 250,
+    boxShadow: 0
   },
   fullList: {
     width: "auto"
   },
   bar: {
-    backgroundColor: "#F00"
+    background: "rgba(0,0,0,0)",
+    boxShadow: "none"
+  },
+  hamburger: {
+    backgroundColor: "#F00",
+    padding: "0.5em"
+  },
+  tool: {
+    display: "flex"
   }
 }));
 
@@ -61,8 +75,6 @@ export default function TemporaryDrawer() {
       role="presentation"
       onClick={toggleDrawer(side, false)}
       onKeyDown={toggleDrawer(side, false)}
-      display="flex"
-      alignItems="center"
     >
       <List>
         <ListItem button>
@@ -90,17 +102,17 @@ export default function TemporaryDrawer() {
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.bar}>
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            commons
-          </Typography>
+        <Toolbar className={classes.tool}>
           <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
           >
-            <MenuIcon onClick={toggleDrawer("right", true)} />
+            <MenuIcon
+              className={classes.hamburger}
+              onClick={toggleDrawer("right", true)}
+            />
           </IconButton>
           <Drawer
             anchor="right"
@@ -110,6 +122,7 @@ export default function TemporaryDrawer() {
             {sideList("right")}
           </Drawer>
         </Toolbar>
+        <Typography style={{ fontSize: "2em" }}>Welcome to</Typography>
       </AppBar>
     </div>
   );
