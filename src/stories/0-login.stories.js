@@ -4,7 +4,6 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import LoginForm from '../components/LoginForm';
-import { BottomNavigationAction } from '@material-ui/core';
 
 storiesOf('LoginForm', module)
   .addParameters({
@@ -13,5 +12,5 @@ storiesOf('LoginForm', module)
   .add('Empty', () => <LoginForm />)
   .add('Error', () => <LoginForm error="invalid" />)
   .add('Login clickable', () => (
-    <LoginForm onClick={(e) => action('clicked login')} />
+    <LoginForm onClick={action('clicked login')} />
   ));
