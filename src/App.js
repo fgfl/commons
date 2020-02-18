@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Home from "./components/Home";
-import Login from "./components/registrations/Login";
-import Signup from "./components/registrations/Signup";
+import React, { Component } from 'react';
+import axios from 'axios';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Home from './components/Home';
+import Login from './components/registrations/Login';
+import Signup from './components/registrations/Signup';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoggedIn: false,
-      user: {}
+      user: {},
     };
   }
   componentDidMount() {
@@ -18,26 +18,26 @@ class App extends Component {
   }
   loginStatus = () => {
     axios
-      .get("http://localhost:3001/logged_in", { withCredentials: true })
-      .then(response => {
+      .get('http://localhost:3001/logged_in', { withCredentials: true })
+      .then((response) => {
         if (response.data.logged_in) {
           this.handleLogin(response);
         } else {
           this.handleLogout();
         }
       })
-      .catch(error => console.log("api errors:", error));
+      .catch((error) => console.log('api errors:', error));
   };
-  handleLogin = data => {
+  handleLogin = (data) => {
     this.setState({
       isLoggedIn: true,
-      user: data.user
+      user: data.user,
     });
   };
   handleLogout = () => {
     this.setState({
       isLoggedIn: false,
-      user: {}
+      user: {},
     });
   };
   render() {
@@ -48,7 +48,7 @@ class App extends Component {
             <Route
               exact
               path="/"
-              render={props => (
+              render={(props) => (
                 <Home
                   {...props}
                   handleLogout={this.handleLogout}
@@ -59,7 +59,7 @@ class App extends Component {
             <Route
               exact
               path="/login"
-              render={props => (
+              render={(props) => (
                 <Login
                   {...props}
                   handleLogin={this.handleLogin}
@@ -70,7 +70,7 @@ class App extends Component {
             <Route
               exact
               path="/signup"
-              render={props => (
+              render={(props) => (
                 <Signup
                   {...props}
                   handleLogin={this.handleLogin}
