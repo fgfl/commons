@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import NavBar from './components/Nav';
-import Home from './components/Home';
-import Watch from './components/Watch';
-import Login from './components/registrations/Login';
-import Signup from './components/registrations/Signup';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import NavBar from "./components/Nav";
+import Home from "./components/Home";
+import Watch from "./components/Watch";
+import Login from "./components/registrations/Login";
+import Signup from "./components/registrations/Signup";
+import axios from "axios";
 
 function App() {
-  const [user, setUser] = useState({});
+  const [setUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     loginStatus();
-  }, []);
+  });
 
   const loginStatus = () => {
     axios
-      .get('http://localhost:3001/logged_in', { withCredentials: true })
-      .then((response) => {
+      .get("http://localhost:3001/logged_in", { withCredentials: true })
+      .then(response => {
         if (response.data.logged_in) {
           handleLogin(response);
         } else {
           handleLogout();
         }
       })
-      .catch((error) => console.log('api errors:', error));
+      .catch(error => console.log("api errors:", error));
   };
 
-  const handleLogin = (data) => {
+  const handleLogin = data => {
     setUser(data.user);
     setLoggedIn(true);
   };
@@ -46,7 +46,7 @@ function App() {
           <Route
             exact
             path="/"
-            render={(props) => (
+            render={props => (
               <Home
                 {...props}
                 handleLogout={handleLogout}
@@ -57,7 +57,7 @@ function App() {
           <Route
             exact
             path="/login"
-            render={(props) => (
+            render={props => (
               <Login
                 {...props}
                 handleLogin={handleLogin}
@@ -68,7 +68,7 @@ function App() {
           <Route
             exact
             path="/signup"
-            render={(props) => (
+            render={props => (
               <Signup
                 {...props}
                 handleLogin={handleLogin}
