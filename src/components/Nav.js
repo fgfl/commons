@@ -61,13 +61,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NavBar(props) {
+export default function NavBar({ handleLogout, history, loggedIn }) {
   const handleClick = () => {
     axios
       .delete('http://localhost:3001/logout', { withCredentials: true })
       .then((response) => {
-        props.handleLogout();
-        props.history.push('/');
+        handleLogout();
+        history.push('/');
       })
       .catch((error) => console.log(error));
   };
