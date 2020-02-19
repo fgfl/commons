@@ -3,6 +3,7 @@ import React, { useEffect, Fragment } from 'react';
 import Grid from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import FormControl from '@material-ui/core/FormControl';
 
 import ProfileField from './ProfileField';
 import mapUserFieldToLabel from '../../helpers/mapUserFieldToLabel';
@@ -33,7 +34,7 @@ const ProfileText = ({ user }) => {
           {labels}
         </Grid>
         <Grid item xs={6}>
-          {values}
+          <FormControl>{values}</FormControl>
         </Grid>
       </Grid>
     </Container>
