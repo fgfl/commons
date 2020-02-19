@@ -12,5 +12,6 @@ it('renders the login form', () => {
       <Login></Login>
     </MemoryRouter>
   );
-  expect(getByText('Email Address*')).toBeInTheDocument();
+  expect(getByText('LOGIN')).toBeInTheDocument();
+  expect(getByText('Not a member? Sign up')).toBeInTheDocument();
 });
