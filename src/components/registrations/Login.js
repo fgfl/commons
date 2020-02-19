@@ -1,100 +1,196 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link as RouterLink } from 'react-router-dom';
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: "",
-      email: "",
-      password: "",
-      errors: ""
-    };
-  }
-  componentWillMount() {
-    return this.props.loggedInStatus ? this.redirect() : null;
-  }
-  handleChange = event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
-  };
-  handleSubmit = event => {
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import PersonIcon from '@material-ui/icons/Person';
+import { Typography } from '@material-ui/core';
+
+const Login = (props) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState('');
+
+  // componentWillMount() {
+  //   return this.props.loggedInStatus ? this.redirect() : null;
+  // }
+
+  useEffect(() => {
+    if (props.loggedInStatus) {
+      redirect('/');
+    }
+  }, []);
+
+  const handleSubmit = (event) => {
     event.preventDefault();
-    const { username, email, password } = this.state;
     let user = {
-      username: username,
       email: email,
-      password: password
+      password: password,
     };
 
     axios
-      .post("http://localhost:3001/login", { user }, { withCredentials: true })
-      .then(response => {
+      .post('http://localhost:3001/login', { user }, { withCredentials: true })
+      .then((response) => {
         if (response.data.logged_in) {
-          this.props.handleLogin(response.data);
-          this.redirect();
+          props.handleLogin(response.data);
+          redirect();
         } else {
-          this.setState({
-            errors: response.data.errors
-          });
+          setErrors(response.data.errors);
         }
       })
-      .catch(error => console.log("api errors:", error));
+      .catch((error) => console.log('api errors:', error));
   };
-  redirect = () => {
-    this.props.history.push("/");
+
+  const redirect = () => {
+    props.history.push('/');
   };
-  handleErrors = () => {
+
+  const handleErrors = () => {
+    console.log(errors);
     return (
       <div>
         <ul>
-          {this.state.errors.map(error => {
-            return <li key={error}>{error}</li>;
+          {errors.map((error) => {
+            return (
+              <li key={error}>
+                <Typography variant="body1">{error}</Typography>
+              </li>
+            );
           })}
         </ul>
       </div>
     );
   };
-  render() {
-    const { username, email, password } = this.state;
-    return (
-      <div>
-        <h1>Log In</h1>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            placeholder="username"
-            type="text"
-            name="username"
-            value={username}
-            onChange={this.handleChange}
-          />
-          <input
-            placeholder="email"
-            type="text"
+
+  const useStyles = makeStyles((theme) => ({
+    paper: {
+      zIndex: 1000,
+      marginTop: theme.spacing(8),
+      marginBottom: theme.spacing(8),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      border: 5,
+      padding: theme.spacing(2),
+    },
+    avatar: {
+      zIndex: 1000,
+      margin: theme.spacing(1),
+      width: '10em',
+      height: '10em',
+      backgroundColor: '#29c0a8',
+    },
+    form: {
+      zIndex: 1000,
+      width: '100%', // Fix IE 11 issue.
+      marginTop: theme.spacing(1),
+      textAlign: 'center',
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+      backgroundColor: '#29c0a8',
+    },
+    accountCirle: {
+      fontSize: '9.5em',
+      color: 'white',
+    },
+    backDrop: {
+      backgroundColor: 'grey',
+      position: 'absolute',
+      height: '75%',
+      width: '100%',
+      bottom: 0,
+      left: 0,
+      zIndex: 0,
+    },
+  }));
+  const classes = useStyles();
+
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <PersonIcon className={classes.accountCirle} />
+        </Avatar>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
             name="email"
+            autoComplete="email"
+            autoFocus
             value={email}
-            onChange={this.handleChange}
+            onChange={(e) => setEmail(e.target.value)}
           />
-          <input
-            placeholder="password"
-            type="password"
-            name="password"
-            value={password}
-            onChange={this.handleChange}
-          />
-          <button placeholder="submit" type="submit">
-            Log In
-          </button>
-          <div>
-            or <Link to="/signup">sign up</Link>
-          </div>
+          {errors ? (
+            <TextField
+              error
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          ) : (
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          )}
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={props.onClick}
+          >
+            LOGIN
+          </Button>
+          <Grid container justify="center">
+            <Grid item>
+              <Link
+                href="#"
+                variant="body2"
+                component={RouterLink}
+                to="/signup"
+              >
+                {'Not a member? Sign up'}
+              </Link>
+            </Grid>
+          </Grid>
+
+          {errors ? handleErrors() : null}
         </form>
-        <div>{this.state.errors ? this.handleErrors() : null}</div>
       </div>
-    );
-  }
-}
+      <div className={classes.backDrop}></div>
+    </Container>
+  );
+};
+
 export default Login;
