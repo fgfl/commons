@@ -11,11 +11,12 @@ import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
+import clsx from "clsx";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    maxWidth: 345,
-    textAlign: "left"
+    textAlign: "left",
+    marginBottom: "16px"
   },
   media: {
     height: 0,

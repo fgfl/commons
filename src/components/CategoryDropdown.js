@@ -5,8 +5,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 const categories = [
   {
-    value: "",
-    label: ""
+    value: "All Categories",
+    label: "All Categories"
   },
   {
     value: "Transport",
@@ -41,16 +41,20 @@ const categories = [
 const useStyles = makeStyles(theme => ({
   root: {
     "& .MuiTextField-root": {
-      margin: theme.spacing(1),
-      width: "90%",
-      textAlign: "left"
+      width: "100%",
+      textAlign: "left",
+      marginBottom: "16px",
+      marginTop: "16px"
     }
+  },
+  text: {
+    margin: "0 auto"
   }
 }));
 
-export default function MultilineTextFields() {
+export default function CategoryDropdown() {
   const classes = useStyles();
-  const [category, setCategory] = React.useState("");
+  const [category, setCategory] = React.useState("All Categories");
 
   const handleChange = event => {
     setCategory(event.target.value);
