@@ -39,6 +39,11 @@ function App() {
     setLoggedIn(false);
   };
 
+  const handleProfileUpdate = (newUserInfo) => {
+    setUser(newUserInfo);
+    // need to update server
+  };
+
   return (
     <div>
       <Router>
@@ -78,7 +83,15 @@ function App() {
             )}
           />
           <Route path="/Watch" component={Watch} />
-          <Route path="/user/:id" render={() => <Profile user></Profile>} />
+          <Route
+            path="/user/:id"
+            render={() => (
+              <Profile
+                user={user}
+                handleProfileUpdate={handleProfileUpdate}
+              ></Profile>
+            )}
+          />
         </Switch>
       </Router>
     </div>
