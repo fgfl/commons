@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link as RouterLink, BrowserRouter as Router } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
