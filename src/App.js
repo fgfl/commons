@@ -77,6 +77,7 @@ function App() {
             )}
           />
           <Route path="/Watch" component={Watch} />
+          <Route path="/user/:id" render={() => <Profile user></Profile>} />
         </Switch>
       </Router>
     </div>
