@@ -13,6 +13,8 @@ import Typography from "@material-ui/core/Typography";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,7 +23,8 @@ const useStyles = makeStyles(theme => ({
       "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.35) 59%, rgba(0, 0, 0, 0.65) 100%), url('https://upload.wikimedia.org/wikipedia/commons/d/d7/House_of_Commons_Chamber_1.png') no-repeat",
     backgroundSize: "cover",
     width: "100%",
-    height: "200px"
+    height: "200px",
+    textAlign: "center"
   },
   menuButton: {
     marginRight: theme.spacing(2)
@@ -58,7 +61,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function TemporaryDrawer() {
+export default function NavBar(props) {
+  const handleClick = () => {
+    axios
+      .delete("http://localhost:3001/logout", { withCredentials: true })
+      .then(response => {
+        props.handleLogout();
+        props.history.push("/");
+      })
+      .catch(error => console.log(error));
+  };
   const classes = useStyles();
   const [state, setState] = React.useState({
     right: false
@@ -83,24 +95,44 @@ export default function TemporaryDrawer() {
       onKeyDown={toggleDrawer(side, false)}
     >
       <List>
-        <ListItem button>
-          <ListItemIcon>
-            <AccountCircleIcon />
-          </ListItemIcon>
-          <ListItemText>Login</ListItemText>
-        </ListItem>
+        <Link to="/">
+          <ListItem button>
+            <ListItemIcon>
+              <AccountCircleIcon />
+            </ListItemIcon>
+            <ListItemText>Home</ListItemText>
+          </ListItem>
+        </Link>
+        <Link to="/login">
+          <ListItem button>
+            <ListItemIcon>
+              <AccountCircleIcon />
+            </ListItemIcon>
+            <ListItemText>Log In</ListItemText>
+          </ListItem>
+        </Link>
         <ListItem button>
           <ListItemIcon>
             <PersonAddIcon />
           </ListItemIcon>
-          <ListItemText>Signup</ListItemText>
+          <ListItemText>
+            <Link to="/signup">Sign Up</Link>
+            <br></br>
+            {props.loggedInStatus ? (
+              <Link to="/logout" onClick={handleClick}>
+                Log Out
+              </Link>
+            ) : null}
+          </ListItemText>
         </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <BookmarkIcon />
-          </ListItemIcon>
-          <ListItemText>My Watch List</ListItemText>
-        </ListItem>
+        <Link to="/watch">
+          <ListItem button>
+            <ListItemIcon>
+              <BookmarkIcon />
+            </ListItemIcon>
+            <ListItemText>My Watch List</ListItemText>
+          </ListItem>
+        </Link>
       </List>
     </div>
   );

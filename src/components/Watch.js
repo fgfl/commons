@@ -3,7 +3,7 @@ import CategoryDropdown from "./CategoryDropdown";
 import BillCard from "./Bill";
 import Container from "@material-ui/core/Container";
 
-const Home = props => {
+const Watch = props => {
   return (
     <div>
       <Container maxWidth="sm">
@@ -13,4 +13,4 @@ const Home = props => {
     </div>
   );
 };
-export default Home;
+export default Watch;
