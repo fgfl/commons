@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import axios from 'axios';
 import NavBar from './components/Nav';
 import Home from './components/Home';
 import Watch from './components/Watch';
 import Login from './components/registrations/Login';
 import Signup from './components/registrations/Signup';
-import axios from 'axios';
+import Profile from './components/Profile';
 
 function App() {
   const [user, setUser] = useState({});
@@ -41,7 +42,7 @@ function App() {
   return (
     <div>
       <Router>
-        <NavBar />
+        <NavBar handleLogout history loggedIn />
         <Switch>
           <Route
             exact
@@ -77,6 +78,7 @@ function App() {
             )}
           />
           <Route path="/Watch" component={Watch} />
+          <Route path="/user/:id" component={Profile} />
         </Switch>
       </Router>
     </div>
