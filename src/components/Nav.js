@@ -125,14 +125,13 @@ export default function NavBar(props) {
             ) : null}
           </ListItemText>
         </ListItem>
-        <Link to="/watch">
-          <ListItem button>
-            <ListItemIcon>
-              <BookmarkIcon />
-            </ListItemIcon>
-            <ListItemText>My Watch List</ListItemText>
-          </ListItem>
-        </Link>
+        <Link to="/login"></Link>
+        <ListItem button>
+          <ListItemIcon>
+            <BookmarkIcon />
+          </ListItemIcon>
+          <ListItemText>My Watch List</ListItemText>
+        </ListItem>
       </List>
     </div>
   );

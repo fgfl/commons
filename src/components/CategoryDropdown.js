@@ -23,18 +23,6 @@ const categories = [
   {
     value: "Finance",
     label: "Finance"
-  },
-  {
-    value: "Transport",
-    label: "Transport"
-  },
-  {
-    value: "Indigenous Rights",
-    label: "Indigenous Rights"
-  },
-  {
-    value: "Agriculture",
-    label: "Agriculture"
   }
 ];
 
@@ -64,7 +52,7 @@ export default function CategoryDropdown() {
     <form className={classes.root} noValidate autoComplete="off">
       <div>
         <TextField
-          id="standard-select-currency"
+          id="standard-select-category"
           select
           label="Select"
           value={category}

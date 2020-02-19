@@ -1,13 +1,13 @@
-import React, { useState, setState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import { Link as RouterLink } from "react-router-dom";
 
 import Avatar from "@material-ui/core/Avatar";
+import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -133,151 +133,153 @@ const Signup = props => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <PersonIcon className={classes.accountCirle} />
-        </Avatar>
-        <Typography variant="h4">Not a Member Yet? Sign Up!</Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="name"
-            label="Name"
-            name="name"
-            autoComplete="name"
-            autoFocus
-            value={name}
-            onChange={e => setName(e.target.value)}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            autoComplete="username"
-            autoFocus
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-          {errors ? (
-            <TextField
-              error
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={e => setPassword(e.target.value)}
-            />
-          ) : (
+      <Card className={classes.root} variant="outlined">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <PersonIcon className={classes.accountCirle} />
+          </Avatar>
+          <Typography variant="h4">Not a Member Yet? Sign Up!</Typography>
+          <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={e => setPassword(e.target.value)}
+              id="name"
+              label="Name"
+              name="name"
+              autoComplete="name"
+              autoFocus
+              value={name}
+              onChange={e => setName(e.target.value)}
             />
-          )}
-          {errors ? (
-            <TextField
-              error
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password_confirmation"
-              label="Confirm Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={e => setPassword_confirmation(e.target.value)}
-            />
-          ) : (
             <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              name="password_confirmation"
-              label="Confirm Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={e => setPassword_confirmation(e.target.value)}
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
+              autoFocus
+              value={username}
+              onChange={e => setUsername(e.target.value)}
             />
-          )}
-          <TextField
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            name="telephone"
-            label="Phone Number"
-            type="telephone"
-            id="telephone"
-            autoComplete="telephone"
-            onChange={e => setPhone_number(e.target.value)}
-          />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+            {errors ? (
+              <TextField
+                error
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={e => setPassword(e.target.value)}
+              />
+            ) : (
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={e => setPassword(e.target.value)}
+              />
+            )}
+            {errors ? (
+              <TextField
+                error
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password_confirmation"
+                label="Confirm Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={e => setPassword_confirmation(e.target.value)}
+              />
+            ) : (
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password_confirmation"
+                label="Confirm Password"
+                type="password"
+                id="password-confirmation"
+                autoComplete="current-password"
+                onChange={e => setPassword_confirmation(e.target.value)}
+              />
+            )}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              name="telephone"
+              label="Phone Number"
+              type="telephone"
+              id="telephone"
+              autoComplete="telephone"
+              onChange={e => setPhone_number(e.target.value)}
+            />
 
-          <FormControl component="fieldset" className={classes.formControl}>
-            <FormLabel component="legend">
-              How would you like to receive notifications?
-            </FormLabel>
-            <FormGroup>
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Receive notifications by email"
-                onChange={handleEmailCheck}
-              />
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Receive notifications by SMS message"
-                onChange={handleSmsCheck}
-              />
-            </FormGroup>
-          </FormControl>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={props.onClick}
-          >
-            SIGNUP
-          </Button>
-          {errors ? handleErrors() : null}
-        </form>
-      </div>
-      <div className={classes.backDrop}></div>
+            <FormControl component="fieldset" className={classes.formControl}>
+              <FormLabel component="legend">
+                How would you like to receive notifications?
+              </FormLabel>
+              <FormGroup>
+                <FormControlLabel
+                  control={<Checkbox />}
+                  label="Receive notifications by email"
+                  onChange={handleEmailCheck}
+                />
+                <FormControlLabel
+                  control={<Checkbox />}
+                  label="Receive notifications by SMS message"
+                  onChange={handleSmsCheck}
+                />
+              </FormGroup>
+            </FormControl>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={props.onClick}
+            >
+              SIGNUP
+            </Button>
+            {errors ? handleErrors() : null}
+          </form>
+        </div>
+        <div className={classes.backDrop}></div>
+      </Card>
     </Container>
   );
 };
