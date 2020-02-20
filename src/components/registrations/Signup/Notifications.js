@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import FormGroup from "@material-ui/core/FormGroup";
@@ -107,6 +108,18 @@ const Notifications = props => {
                 control={<Checkbox />}
                 label="Receive notifications by SMS message"
                 onChange={handleSmsCheck}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                id="phoneNumber"
+                label="Phone Number"
+                name="phoneNumber"
+                autoComplete="phoneNumber"
+                autoFocus
+                value={props.phoneNumber}
+                onChange={e => (data.phoneNumber = e.target.value)}
               />
             </FormGroup>
           </FormControl>
