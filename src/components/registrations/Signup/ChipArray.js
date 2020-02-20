@@ -36,9 +36,7 @@ export default function ChipsArray() {
   console.log("clicked", clicked);
 
   const setThisOneClicked = key => {
-    // if (clicked === false) {
     setClicked(prev => ({ ...prev, [key]: !prev[key] }));
-    // }
   };
 
   return (

@@ -9,9 +9,17 @@ import PersonIcon from "@material-ui/icons/Person";
 import { Typography } from "@material-ui/core";
 
 const Signup = props => {
+  let data = {
+    name: "",
+    username: "",
+    email: "",
+    password: "",
+    password_confirmation: ""
+  };
+
   const proceed = event => {
     event.preventDefault();
-    props.nextStep();
+    props.nextStep(1, data);
   };
 
   const useStyles = makeStyles(theme => ({
@@ -83,7 +91,7 @@ const Signup = props => {
               autoComplete="name"
               autoFocus
               value={props.name}
-              onChange={e => props.setName(e.target.value)}
+              onChange={e => (data.name = e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -96,7 +104,7 @@ const Signup = props => {
               autoComplete="username"
               autoFocus
               value={props.username}
-              onChange={e => props.setUsername(e.target.value)}
+              onChange={e => (data.username = e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -109,7 +117,7 @@ const Signup = props => {
               autoComplete="email"
               autoFocus
               value={props.email}
-              onChange={e => props.setEmail(e.target.value)}
+              onChange={e => (data.email = e.target.value)}
             />
             {props.errors ? (
               <TextField
@@ -123,7 +131,7 @@ const Signup = props => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                onChange={e => props.setPassword(e.target.value)}
+                onChange={e => (data.password = e.target.value)}
               />
             ) : (
               <TextField
@@ -136,7 +144,7 @@ const Signup = props => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                onChange={e => props.setPassword(e.target.value)}
+                onChange={e => (data.password = e.target.value)}
               />
             )}
             {props.errors ? (
@@ -151,7 +159,7 @@ const Signup = props => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                onChange={e => props.setPasswordConfirmation(e.target.value)}
+                onChange={e => (data.password_confirmation = e.target.value)}
               />
             ) : (
               <TextField
@@ -164,31 +172,9 @@ const Signup = props => {
                 type="password"
                 id="password-confirmation"
                 autoComplete="current-password"
-                onChange={e => props.setPasswordConfirmation(e.target.value)}
+                onChange={e => (data.password_confirmation = e.target.value)}
               />
             )}
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              name="telephone"
-              label="Phone Number"
-              type="telephone"
-              id="telephone"
-              autoComplete="telephone"
-              onChange={e => props.setPhoneNumber(e.target.value)}
-            />
-            {/* <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={props.onClick}
-            >
-              SIGNUP
-            </Button> */}
-
             <Button color="primary" variant="contained" onClick={proceed}>
               Continue
             </Button>

@@ -11,7 +11,7 @@ import ChipArray from "./ChipArray";
 const Categories = props => {
   const proceed = e => {
     e.preventDefault();
-    props.nextStep();
+    props.nextStep(3);
   };
 
   const back = e => {
