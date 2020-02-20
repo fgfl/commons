@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment as Grid } from 'react';
+import React, { useState, useEffect, Fragment as Grid, Fragment } from 'react';
 
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,35 +19,36 @@ const useStyles = makeStyles((theme) => ({
 
     border: '5px',
     backgroundColor: 'aquamarine',
-    [theme.breakpoints.up('md')]: {
-      flexDirection: 'row',
-    },
+    // [theme.breakpoints.up('md')]: {
+    //   flexDirection: 'row',
+    // },
   },
   avatar: {},
   buttons: {},
 }));
 
 const Profile = ({ user, handleProfileUpdate }) => {
-  const [editStatus, setEditStatus] = useState(false);
-
   useEffect(() => {}, []);
 
   const classes = useStyles();
 
   return (
     <Container maxWidth="sm" className={classes.container}>
-      <Avatar className={classes.avatar}>
-        <PersonIcon className={classes.accountCirle} />
-      </Avatar>
-      <ProfileText user={user} onChange></ProfileText>
-      {editStatus ? (
-        <Button variant="contained">Edit</Button>
-      ) : (
-        <Grid container>
-          <Button variant="contained">Save</Button>
-          <Button variant="contained">Cancel</Button>
+      <div>
+        <Grid container direction="row" alignItems="center" wrap="wrap">
+          <Grid item direction="column">
+            <Avatar className={classes.avatar}>
+              <PersonIcon className={classes.accountCirle} />
+            </Avatar>
+          </Grid>
+          <Grid item>
+            <ProfileText
+              user={user}
+              handleProfileUpdate={handleProfileUpdate}
+            ></ProfileText>
+          </Grid>
         </Grid>
-      )}
+      </div>
     </Container>
   );
 };
