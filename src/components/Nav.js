@@ -61,13 +61,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NavBar({ handleLogout, history, loggedIn }) {
+const NavBar = (props) => {
   const handleClick = () => {
     axios
       .delete('http://localhost:3001/logout', { withCredentials: true })
       .then((response) => {
-        handleLogout();
-        history.push('/');
+        props.handleLogout();
+        console.log('logged out');
+        props.history.push('/');
       })
       .catch((error) => console.log(error));
   };
@@ -94,6 +95,11 @@ export default function NavBar({ handleLogout, history, loggedIn }) {
       onClick={toggleDrawer(side, false)}
       onKeyDown={toggleDrawer(side, false)}
     >
+      {props.loggedIn ? (
+        <Typography>Logged in as: {props.user.name}</Typography>
+      ) : (
+        <Typography>Please login</Typography>
+      )}
       <List>
         <Link to="/">
           <ListItem button>
@@ -103,49 +109,39 @@ export default function NavBar({ handleLogout, history, loggedIn }) {
             <ListItemText>Home</ListItemText>
           </ListItem>
         </Link>
+        <Link to="/user/:id">
+          <ListItem button>
+            <ListItemIcon>
+              <AccountCircleIcon />
+            </ListItemIcon>
+            <ListItemText>Profile</ListItemText>
+          </ListItem>
+        </Link>
+        <Link to="/logout" onClick={handleClick}>
+          <ListItem button>
+            <ListItemIcon>
+              <AccountCircleIcon />
+            </ListItemIcon>
+            <ListItemText>Log Out</ListItemText>
+          </ListItem>
+        </Link>
+        <Link to="/login">
+          <ListItem button>
+            <ListItemIcon>
+              <AccountCircleIcon />
+            </ListItemIcon>
+            <ListItemText>Log In</ListItemText>
+          </ListItem>
+        </Link>
 
-        {loggedIn ? (
-          <Fragment>
-            <Link to="/user/:id">
-              <ListItem button>
-                <ListItemIcon>
-                  <AccountCircleIcon />
-                </ListItemIcon>
-                <ListItemText>Profile</ListItemText>
-              </ListItem>
-            </Link>
-
-            <Link to="/logout" onClick={handleClick}>
-              <ListItem button>
-                <ListItemIcon>
-                  <AccountCircleIcon />
-                </ListItemIcon>
-                <ListItemText>Log Out</ListItemText>
-              </ListItem>
-            </Link>
-          </Fragment>
-        ) : (
-          <Fragment>
-            <Link to="/login">
-              <ListItem button>
-                <ListItemIcon>
-                  <AccountCircleIcon />
-                </ListItemIcon>
-                <ListItemText>Log In</ListItemText>
-              </ListItem>
-            </Link>
-
-            <Link to="/signup">
-              <ListItem button>
-                <ListItemIcon>
-                  <PersonAddIcon />
-                </ListItemIcon>
-                <ListItemText>Sign Up</ListItemText>
-              </ListItem>
-            </Link>
-          </Fragment>
-        )}
-
+        <Link to="/signup">
+          <ListItem button>
+            <ListItemIcon>
+              <PersonAddIcon />
+            </ListItemIcon>
+            <ListItemText>Sign Up</ListItemText>
+          </ListItem>
+        </Link>
         <Link to="/watch">
           <ListItem button>
             <ListItemIcon>
@@ -189,4 +185,6 @@ export default function NavBar({ handleLogout, history, loggedIn }) {
       </AppBar>
     </div>
   );
-}
+};
+
+export default NavBar;
