@@ -1,15 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-
 import Avatar from "@material-ui/core/Avatar";
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -17,74 +9,9 @@ import PersonIcon from "@material-ui/icons/Person";
 import { Typography } from "@material-ui/core";
 
 const Signup = props => {
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [password_confirmation, setPassword_confirmation] = useState("");
-  const [errors, setErrors] = useState("");
-  const [email_notification, setEmail_notification] = useState(false);
-  const [sms_notification, setSms_notification] = useState(false);
-  const [phone_number, setPhone_number] = useState("");
-
-  const handleSubmit = event => {
+  const proceed = event => {
     event.preventDefault();
-    let user = {
-      name: name,
-      username: username,
-      email: email,
-      password: password,
-      password_confirmation: password_confirmation,
-      email_notification: email_notification,
-      sms_notification: sms_notification,
-      phone_number: phone_number
-    };
-
-    axios
-      .post("http://localhost:3001/users", { user }, { withCredentials: true })
-      .then(response => {
-        if (response.data.status === "created") {
-          props.handleLogin(response.data);
-          redirect();
-        } else {
-          setErrors(response.data.errors);
-        }
-      })
-      .catch(error => console.log("api errors:", error));
-  };
-  const redirect = () => {
-    props.history.push("/");
-  };
-
-  const handleErrors = () => {
-    return (
-      <div>
-        <ul>
-          {errors.map(error => {
-            return (
-              <li key={error}>
-                <Typography variant="body1">{error}</Typography>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    );
-  };
-
-  const handleEmailCheck = () => {
-    if (sms_notification === false) {
-      setSms_notification(true);
-    } else {
-      setSms_notification(false);
-    }
-  };
-  const handleSmsCheck = () => {
-    if (email_notification === false) {
-      setEmail_notification(true);
-    } else {
-      setEmail_notification(false);
-    }
+    props.nextStep();
   };
 
   const useStyles = makeStyles(theme => ({
@@ -102,8 +29,8 @@ const Signup = props => {
     avatar: {
       zIndex: 1000,
       marginBottom: theme.spacing(2),
-      width: "10em",
-      height: "10em",
+      width: "120px",
+      height: "120px",
       backgroundColor: "#29c0a8"
     },
     form: {
@@ -117,7 +44,8 @@ const Signup = props => {
       backgroundColor: "#29c0a8"
     },
     accountCirle: {
-      fontSize: "9.5em",
+      width: "100px",
+      height: "100px",
       color: "white"
     },
     backDrop: {
@@ -134,13 +62,16 @@ const Signup = props => {
   return (
     <Container component="main" maxWidth="xs">
       <Card className={classes.root} variant="outlined">
-        <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <PersonIcon className={classes.accountCirle} />
           </Avatar>
           <Typography variant="h4">Not a Member Yet? Sign Up!</Typography>
-          <form className={classes.form} noValidate onSubmit={handleSubmit}>
+          <form
+            className={classes.form}
+            noValidate
+            onSubmit={props.handleSubmit}
+          >
             <TextField
               variant="outlined"
               margin="normal"
@@ -151,8 +82,8 @@ const Signup = props => {
               name="name"
               autoComplete="name"
               autoFocus
-              value={name}
-              onChange={e => setName(e.target.value)}
+              value={props.name}
+              onChange={e => props.setName(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -164,8 +95,8 @@ const Signup = props => {
               name="username"
               autoComplete="username"
               autoFocus
-              value={username}
-              onChange={e => setUsername(e.target.value)}
+              value={props.username}
+              onChange={e => props.setUsername(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -177,10 +108,10 @@ const Signup = props => {
               name="email"
               autoComplete="email"
               autoFocus
-              value={email}
-              onChange={e => setEmail(e.target.value)}
+              value={props.email}
+              onChange={e => props.setEmail(e.target.value)}
             />
-            {errors ? (
+            {props.errors ? (
               <TextField
                 error
                 variant="outlined"
@@ -192,7 +123,7 @@ const Signup = props => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                onChange={e => setPassword(e.target.value)}
+                onChange={e => props.setPassword(e.target.value)}
               />
             ) : (
               <TextField
@@ -205,10 +136,10 @@ const Signup = props => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                onChange={e => setPassword(e.target.value)}
+                onChange={e => props.setPassword(e.target.value)}
               />
             )}
-            {errors ? (
+            {props.errors ? (
               <TextField
                 error
                 variant="outlined"
@@ -220,7 +151,7 @@ const Signup = props => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                onChange={e => setPassword_confirmation(e.target.value)}
+                onChange={e => props.setPasswordConfirmation(e.target.value)}
               />
             ) : (
               <TextField
@@ -233,7 +164,7 @@ const Signup = props => {
                 type="password"
                 id="password-confirmation"
                 autoComplete="current-password"
-                onChange={e => setPassword_confirmation(e.target.value)}
+                onChange={e => props.setPasswordConfirmation(e.target.value)}
               />
             )}
             <TextField
@@ -245,27 +176,9 @@ const Signup = props => {
               type="telephone"
               id="telephone"
               autoComplete="telephone"
-              onChange={e => setPhone_number(e.target.value)}
+              onChange={e => props.setPhoneNumber(e.target.value)}
             />
-
-            <FormControl component="fieldset" className={classes.formControl}>
-              <FormLabel component="legend">
-                How would you like to receive notifications?
-              </FormLabel>
-              <FormGroup>
-                <FormControlLabel
-                  control={<Checkbox />}
-                  label="Receive notifications by email"
-                  onChange={handleEmailCheck}
-                />
-                <FormControlLabel
-                  control={<Checkbox />}
-                  label="Receive notifications by SMS message"
-                  onChange={handleSmsCheck}
-                />
-              </FormGroup>
-            </FormControl>
-            <Button
+            {/* <Button
               type="submit"
               fullWidth
               variant="contained"
@@ -274,8 +187,12 @@ const Signup = props => {
               onClick={props.onClick}
             >
               SIGNUP
+            </Button> */}
+
+            <Button color="primary" variant="contained" onClick={proceed}>
+              Continue
             </Button>
-            {errors ? handleErrors() : null}
+            {props.errors ? props.handleErrors() : null}
           </form>
         </div>
         <div className={classes.backDrop}></div>
