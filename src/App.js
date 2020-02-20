@@ -6,7 +6,7 @@ import Home from './components/Home';
 import Watch from './components/Watch';
 import Login from './components/registrations/Login';
 import Signup from './components/registrations/Signup';
-import Profile from './components/Profile';
+import Profile from './components/profile/Profile';
 
 function App() {
   const [user, setUser] = useState({});
@@ -40,8 +40,16 @@ function App() {
   };
 
   const handleProfileUpdate = (newUserInfo) => {
-    setUser(newUserInfo);
-    // need to update server
+    console.log(newUserInfo);
+    axios
+      .put(`http://localhost:3001/api/users/${user.id}`, { newUserInfo })
+      .then((res) => {
+        console.log('done put for update user infor');
+        setUser(newUserInfo);
+      })
+      .catch((res) => {
+        console.error(`Failed setting profile: ${res}`);
+      });
   };
 
   return (

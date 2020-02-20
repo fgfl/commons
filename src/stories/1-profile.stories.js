@@ -14,6 +14,6 @@ const user = {
   email_notification: true,
   sms_notification: true,
 };
-storiesOf('Profile', module)
-  .add('Default', () => <Profile user={user}></Profile>)
-  .add('nothing', () => <Profile></Profile>);
+storiesOf('Profile', module).add('Default', () => (
+  <Profile user={user}></Profile>
+));
