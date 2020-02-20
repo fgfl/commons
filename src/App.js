@@ -4,7 +4,7 @@ import NavBar from "./components/Nav";
 import Home from "./components/Home";
 import Watch from "./components/Watch";
 import Login from "./components/registrations/Login";
-import Signup from "./components/registrations/Signup";
+import UserForm from "./components/registrations/Signup/UserForm";
 import axios from "axios";
 
 function App() {
@@ -69,7 +69,7 @@ function App() {
             exact
             path="/signup"
             render={props => (
-              <Signup
+              <UserForm
                 {...props}
                 handleLogin={handleLogin}
                 loggedInStatus={loggedIn}
