@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import Signup from "./Signup";
 import Notifications from "./Notifications";
 import Categories from "./Categories";
+import Confirmation from "./Confirmation";
+import Success from "./Success";
 import axios from "axios";
 import { Typography } from "@material-ui/core";
-// import Confirm from "./Confirm";
-// import Success from "./Success";
 
 const UserForm = props => {
   const [name, setName] = useState("");
@@ -68,15 +68,42 @@ const UserForm = props => {
 
   // Proceed to next step
   const nextStep = (justFinishedStep, data) => {
-    // if (justFinishedStep === 1) {
-    //   if (data.name) { setName(data.name); }
-
-    // }
-
-    // if (justFinishedstep === FINAL_STEP) {
-    //   handleSubmit();
-    // }
-    setStep(step + 1);
+    if (justFinishedStep === 1) {
+      if (data.name) {
+        setName(data.name);
+      }
+      if (data.username) {
+        setUsername(data.username);
+      }
+      if (data.email) {
+        setEmail(data.email);
+      }
+      if (data.password) {
+        setPassword(data.password);
+      }
+      if (data.passwordConfirmation) {
+        setPasswordConfirmation(data.passwordConfirmation);
+      }
+      setStep(step + 1);
+    }
+    if (justFinishedStep === 2) {
+      if (data.smsNotification) {
+        setSmsNotification(data.smsNotification);
+      }
+      if (data.emailNotification) {
+        setEmailNotification(data.emailNotification);
+      }
+      if (data.phoneNumber) {
+        setPhoneNumber(data.phoneNumber);
+      }
+      setStep(step + 1);
+    }
+    if (justFinishedStep === 3) {
+      setStep(step + 1);
+    }
+    if (justFinishedStep === 4) {
+      handleSubmit();
+    }
   };
 
   // Go back to prev step
@@ -93,6 +120,10 @@ const UserForm = props => {
       // eslint-disable-next-line no-duplicate-case
       case 3:
         return <Categories nextStep={nextStep} prevStep={prevStep} />;
+      case 4:
+        return <Confirmation prevStep={prevStep} nextStep={nextStep} />;
+      case 5:
+        return <Success />;
     }
   };
 
