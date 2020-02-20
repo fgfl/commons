@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
@@ -7,8 +8,18 @@ import Watch from './components/Watch';
 import Login from './components/registrations/Login';
 import Signup from './components/registrations/Signup';
 import Profile from './components/profile/Profile';
+=======
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import axios from "axios";
+import NavBar from "./components/Nav";
+import Home from "./components/Home";
+import Watch from "./components/Watch";
+import Login from "./components/registrations/Login";
+import Signup from "./components/registrations/Signup";
+>>>>>>> master
 
-function App() {
+const App = () => {
   const [user, setUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -18,19 +29,20 @@ function App() {
 
   const loginStatus = () => {
     axios
-      .get('http://localhost:3001/logged_in', { withCredentials: true })
-      .then((response) => {
+      .get("http://localhost:3001/logged_in", { withCredentials: true })
+      .then(response => {
         if (response.data.logged_in) {
           handleLogin(response);
         } else {
           handleLogout();
         }
       })
-      .catch((error) => console.log('api errors:', error));
+      .catch(error => console.log("api errors:", error));
   };
 
-  const handleLogin = (data) => {
+  const handleLogin = data => {
     setUser(data.user);
+    console.log("logged in");
     setLoggedIn(true);
   };
 
@@ -55,12 +67,12 @@ function App() {
   return (
     <div>
       <Router>
-        <NavBar handleLogout history loggedIn />
+        <NavBar user={user} handleLogout={handleLogout} loggedIn={loggedIn} />
         <Switch>
           <Route
             exact
             path="/"
-            render={(props) => (
+            render={props => (
               <Home
                 {...props}
                 handleLogout={handleLogout}
@@ -71,7 +83,7 @@ function App() {
           <Route
             exact
             path="/login"
-            render={(props) => (
+            render={props => (
               <Login
                 {...props}
                 handleLogin={handleLogin}
@@ -82,7 +94,7 @@ function App() {
           <Route
             exact
             path="/signup"
-            render={(props) => (
+            render={props => (
               <Signup
                 {...props}
                 handleLogin={handleLogin}
@@ -90,6 +102,18 @@ function App() {
               />
             )}
           />
+          <Route
+            exact
+            path="/logout"
+            render={props => (
+              <Home
+                {...props}
+                handleLogin={handleLogout}
+                loggedInStatus={loggedIn}
+              />
+            )}
+          />
+
           <Route path="/Watch" component={Watch} />
           <Route
             path="/user/:id"
@@ -104,6 +128,6 @@ function App() {
       </Router>
     </div>
   );
-}
+};
 
 export default App;
