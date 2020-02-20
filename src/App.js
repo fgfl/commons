@@ -42,7 +42,7 @@ function App() {
   const handleProfileUpdate = (newUserInfo) => {
     console.log(newUserInfo);
     axios
-      .put(`http://localhost:3001/api/users/${user.id}`, { newUserInfo })
+      .put(`http://localhost:3001/users/${user.id}`, { newUserInfo })
       .then((res) => {
         console.log('done put for update user infor');
         setUser(newUserInfo);

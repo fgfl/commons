@@ -9,6 +9,7 @@ const user = {
   name: 'Fred',
   username: 'Ffff',
   email: 'fff@fff.com',
+  password_digest: 'hello',
   phone_number: '123-456-7890',
   postal_code: 'A1B 2C3',
   email_notification: true,

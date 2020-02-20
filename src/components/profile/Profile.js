@@ -1,10 +1,11 @@
-import React, { useState, useEffect, Fragment as Grid, Fragment } from 'react';
+import React, { Fragment } from 'react';
 
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import PersonIcon from '@material-ui/icons/Person';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 import ProfileText from './ProfileText';
 
@@ -28,8 +29,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Profile = ({ user, handleProfileUpdate }) => {
-  useEffect(() => {}, []);
-
   const classes = useStyles();
 
   return (
