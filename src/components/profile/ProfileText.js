@@ -28,8 +28,6 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
   );
   const [smsNotification, setSmsNotification] = useState(user.sms_notification);
 
-  const classes = useStyles();
-
   const formSetters = {
     name: setName,
     username: setUsername,
@@ -80,23 +78,37 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
     handleProfileUpdate(formValues);
   };
 
+  const classes = useStyles();
+
+  useEffect(() => {
+    const passwordIndex = labels.findIndex((field) => {
+      // console.log('asdlkfjasdlf');
+      // console.log(field);
+      return field.key === 'password_digest';
+    });
+
+    labels.splice(
+      passwordIndex + 1,
+      0,
+      <TextField
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        key="password_confirmation"
+        id="passworkd_confirmation"
+        label="Confirm password"
+        name="Confirm password"
+        disabled={!editStatus}
+        defaultValue=""
+        onChange={(e) => formSetters['password_confirmation'](e.target.value)}
+      />
+    );
+    console.log(labels);
+  }, [labels, editStatus]);
+
   return (
     <form onSubmit={(e) => e.preventDefault()}>
       {labels}
-      {editStatus && (
-        <TextField
-          variant="outlined"
-          margin="normal"
-          fullWidth
-          key="password_confirmation"
-          id="passworkd_confirmation"
-          label="Confirm password"
-          name="Confirm password"
-          disabled={!editStatus}
-          defaultValue=""
-          onChange={(e) => formSetters['password_confirmation'](e.target.value)}
-        />
-      )}
 
       <div>
         <Grid container direction="row" justify="flex-end" alignItems="center">
