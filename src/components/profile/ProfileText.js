@@ -20,6 +20,7 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState(user.password_digest);
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [phoneNumber, setPhoneNumber] = useState(user.phone_number);
   const [postalCode, setPostalCode] = useState(user.postal_code);
   const [emailNotification, setEmailNotification] = useState(
@@ -34,6 +35,7 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
     username: setUsername,
     email: setEmail,
     password: setPassword,
+    password_confirmation: setPasswordConfirmation,
     phone_number: setPhoneNumber,
     postal_code: setPostalCode,
     email_notification: setEmailNotification,
@@ -50,6 +52,7 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
           variant="outlined"
           margin="normal"
           fullWidth
+          key={key}
           id={key}
           label={label}
           name={label}
@@ -66,7 +69,8 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
       name: name,
       username: username,
       email: email,
-      password_digest: password,
+      password: password,
+      password_confirmation: passwordConfirmation,
       phone_number: phoneNumber,
       postal_code: postalCode,
       email_notification: emailNotification,
@@ -79,6 +83,20 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
   return (
     <form onSubmit={(e) => e.preventDefault()}>
       {labels}
+      {editStatus && (
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          key="password_confirmation"
+          id="passworkd_confirmation"
+          label="Confirm password"
+          name="Confirm password"
+          disabled={!editStatus}
+          defaultValue=""
+          onChange={(e) => formSetters['password_confirmation'](e.target.value)}
+        />
+      )}
 
       <div>
         <Grid container direction="row" justify="flex-end" alignItems="center">
