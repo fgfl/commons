@@ -121,7 +121,14 @@ const UserForm = props => {
       case 3:
         return <Categories nextStep={nextStep} prevStep={prevStep} />;
       case 4:
-        return <Confirmation prevStep={prevStep} nextStep={nextStep} />;
+        return (
+          <Confirmation
+            errors={errors}
+            handleErrors={handleErrors}
+            prevStep={prevStep}
+            nextStep={nextStep}
+          />
+        );
       case 5:
         return <Success />;
     }

@@ -74,6 +74,7 @@ const Confirmation = props => {
         <Button color="primary" variant="contained" onClick={proceed}>
           Submit
         </Button>
+        <div>{props.errors ? props.handleErrors() : null}</div>
       </Card>
     </Container>
   );
