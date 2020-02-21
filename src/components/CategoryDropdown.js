@@ -1,23 +1,25 @@
+
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 
-const useStyles = makeStyles((theme) => ({
-	root: {
-		'& .MuiTextField-root': {
-			width: '100%',
-			textAlign: 'left',
-			marginBottom: '16px',
-			marginTop: '16px'
-		}
-	},
-	text: {
-		margin: '0 auto'
-	}
+const useStyles = makeStyles(theme => ({
+  root: {
+    "& .MuiTextField-root": {
+      width: "100%",
+      textAlign: "left",
+      marginBottom: "16px",
+      marginTop: "16px"
+    }
+  },
+  text: {
+    margin: "0 auto"
+  }
 }));
 
 export default function CategoryDropdown(props) {
+
 	const classes = useStyles();
 	const [category, setCategory] = React.useState(0);
 
