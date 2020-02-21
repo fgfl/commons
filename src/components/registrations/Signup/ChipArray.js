@@ -16,9 +16,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ChipsArray() {
+const ChipsArray = props => {
   const classes = useStyles();
-  const [chipData, setChipData] = React.useState([
+  const [chipData, setChipData] = useState([
     { key: 0, label: "Angular" },
     { key: 1, label: "jQuery" },
     { key: 2, label: "Polymer" },
@@ -32,17 +32,11 @@ export default function ChipsArray() {
     { key: 10, label: "Vue.js" }
   ]);
 
-  const [clicked, setClicked] = useState({});
-  console.log("clicked", clicked);
-
-  const setThisOneClicked = key => {
-    setClicked(prev => ({ ...prev, [key]: !prev[key] }));
-  };
-
   return (
     <Paper className={classes.root}>
       {chipData.map(data => {
-        let color = clicked[data.key] ? "blue" : "grey";
+        console.log(props);
+        let color = props.clicked[data.label] ? "blue" : "grey";
 
         return (
           <Chip
@@ -51,11 +45,15 @@ export default function ChipsArray() {
             label={data.label}
             className={classes.chip}
             clickable
-            onClick={setThisOneClicked.bind(null, data.key)}
+            onClick={() => {
+              props.setThisOneClicked(data.label);
+            }}
             style={{ background: color }}
           />
         );
       })}
     </Paper>
   );
-}
+};
+
+export default ChipsArray;
