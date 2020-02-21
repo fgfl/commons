@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
 
@@ -20,9 +21,10 @@ const useStyles = makeStyles((theme) => ({
 
     border: '5px',
     backgroundColor: 'aquamarine',
-    // [theme.breakpoints.up('md')]: {
-    //   flexDirection: 'row',
-    // },
+
+    [theme.breakpoints.up('sm')]: {
+      flexDirection: 'row',
+    },
   },
   avatar: {},
   buttons: {},
@@ -30,24 +32,22 @@ const useStyles = makeStyles((theme) => ({
 
 const Profile = ({ user, handleProfileUpdate }) => {
   const classes = useStyles();
-
+  // direction="row" alignItems="center" wrap="wrap"
   return (
-    <Container maxWidth="sm" className={classes.container}>
-      <div>
-        <Grid container direction="row" alignItems="center" wrap="wrap">
-          <Grid item direction="column">
-            <Avatar className={classes.avatar}>
-              <PersonIcon className={classes.accountCirle} />
-            </Avatar>
-          </Grid>
-          <Grid item>
-            <ProfileText
-              user={user}
-              handleProfileUpdate={handleProfileUpdate}
-            ></ProfileText>
-          </Grid>
+    <Container>
+      <Grid container className={classes.container}>
+        <Grid item>
+          <Avatar className={classes.avatar}>
+            <PersonIcon className={classes.accountCirle} />
+          </Avatar>
         </Grid>
-      </div>
+        <Grid item>
+          <ProfileText
+            user={user}
+            handleProfileUpdate={handleProfileUpdate}
+          ></ProfileText>
+        </Grid>
+      </Grid>
     </Container>
   );
 };

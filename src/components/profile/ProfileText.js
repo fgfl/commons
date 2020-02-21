@@ -94,35 +94,37 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
         defaultValue={email}
         onChange={(e) => setEmail(e.target.value)}
       />
-      <TextField
-        variant="outlined"
-        type="password"
-        margin="normal"
-        fullWidth
-        id="password"
-        label={mapUserFieldToLabel('password_digest')}
-        name={mapUserFieldToLabel('password_digest')}
-        InputProps={{
-          readOnly: !editStatus,
-        }}
-        defaultValue=""
-        onChange={(e) => setPassword(e.target.value)}
-      />
       {editStatus && (
-        <TextField
-          variant="outlined"
-          type="password"
-          margin="normal"
-          fullWidth
-          id="password_confirmation"
-          label="Confirm password"
-          name="Confirm password"
-          InputProps={{
-            readOnly: !editStatus,
-          }}
-          defaultValue=""
-          onChange={(e) => setPasswordConfirmation(e.target.value)}
-        />
+        <Fragment>
+          <TextField
+            variant="outlined"
+            type="password"
+            margin="normal"
+            fullWidth
+            id="password"
+            label={mapUserFieldToLabel('password_digest')}
+            name={mapUserFieldToLabel('password_digest')}
+            InputProps={{
+              readOnly: !editStatus,
+            }}
+            defaultValue=""
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            type="password"
+            margin="normal"
+            fullWidth
+            id="password_confirmation"
+            label="Confirm password"
+            name="Confirm password"
+            InputProps={{
+              readOnly: !editStatus,
+            }}
+            defaultValue=""
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
+          />
+        </Fragment>
       )}
       <TextField
         variant="outlined"
@@ -157,6 +159,7 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
             checked={emailNotification}
             onChange={(e) => handleCheckChange(e, setEmailNotification)}
             inputProps={{ 'aria-label': 'email notification checkbox' }}
+            disabled={!editStatus}
           />
         }
         label={mapUserFieldToLabel('email_notification')}
@@ -167,6 +170,7 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
             checked={smsNotification}
             onChange={(e) => handleCheckChange(e, setSmsNotification)}
             inputProps={{ 'aria-label': 'sms notification checkbox' }}
+            disabled={!editStatus}
           />
         }
         label={mapUserFieldToLabel('sms_notification')}
