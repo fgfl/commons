@@ -1,6 +1,7 @@
 import React from "react";
 import CategoryDropdown from "./CategoryDropdown";
 import BillCard from "./Bill";
+import FindMyMp from "./FindMyMp";
 import Container from "@material-ui/core/Container";
 
 const Home = props => {
@@ -10,6 +11,7 @@ const Home = props => {
         <CategoryDropdown />
         <BillCard />
       </Container>
+      <FindMyMp />
     </div>
   );
 };
