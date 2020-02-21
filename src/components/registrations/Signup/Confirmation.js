@@ -20,11 +20,13 @@ const Confirmation = (props) => {
 		props.nextStep(4);
 	};
 
-	const categories = idToCategoryName(props.details.categories).map(
-		(categoryName) => {
-			return <Typography>{categoryName}</Typography>;
-		}
-	);
+	console.log(props.details);
+	console.log(props.details.categories);
+	const categories = props.details.categories.map((categoryId) => {
+		return (
+			<Typography key={categoryId}>{idToCategoryName(categoryId)}</Typography>
+		);
+	});
 
 	const useStyles = makeStyles((theme) => ({
 		paper: {
