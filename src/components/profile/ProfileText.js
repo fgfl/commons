@@ -6,6 +6,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import mapUserFieldToLabel from '../../helpers/mapUserFieldToLabel';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 const useStyles = makeStyles((theme) => ({
   profileTable: {
@@ -43,6 +45,10 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
     };
 
     handleProfileUpdate(formValues);
+  };
+
+  const handleCheckChange = (event, setFunction) => {
+    setFunction(event.target.checked);
   };
 
   const classes = useStyles();
@@ -144,31 +150,26 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
         defaultValue={postalCode}
         onChange={(e) => setPostalCode(e.target.value)}
       />
-      <TextField
-        variant="outlined"
-        margin="normal"
-        fullWidth
-        id="email_notification"
+
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={emailNotification}
+            onChange={(e) => handleCheckChange(e, setEmailNotification)}
+            inputProps={{ 'aria-label': 'email notification checkbox' }}
+          />
+        }
         label={mapUserFieldToLabel('email_notification')}
-        name={mapUserFieldToLabel('email_notification')}
-        InputProps={{
-          readOnly: !editStatus,
-        }}
-        defaultValue={emailNotification}
-        onChange={(e) => setEmailNotification(e.target.value)}
       />
-      <TextField
-        variant="outlined"
-        margin="normal"
-        fullWidth
-        id="sms_notification"
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={smsNotification}
+            onChange={(e) => handleCheckChange(e, setSmsNotification)}
+            inputProps={{ 'aria-label': 'sms notification checkbox' }}
+          />
+        }
         label={mapUserFieldToLabel('sms_notification')}
-        name={mapUserFieldToLabel('sms_notification')}
-        InputProps={{
-          readOnly: !editStatus,
-        }}
-        defaultValue={smsNotification}
-        onChange={(e) => setSmsNotification(e.target.value)}
       />
 
       <div>
