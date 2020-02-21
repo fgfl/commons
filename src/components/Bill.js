@@ -77,12 +77,10 @@ export default function BillCard(props) {
 				<Typography variant='body2' color='textSecondary' component='p'>
 					{props.bill.description}
 				</Typography>
-				<Typography className={classes.root} component='button' variant='body2'>
-					<Link component='button' variant='body2' href={props.bill.page_url}>
-						Bill Page
-					</Link>
+				<Typography>
+					<Link href={props.bill.page_url}>Bill Page</Link>
 				</Typography>
-				<Typography className={classes.root} component='button' variant='body2'>
+				<Typography>
 					<Link href={props.bill.full_text_url}>Full Text</Link>
 				</Typography>
 			</CardContent>
