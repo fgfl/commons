@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import axios from "axios";
-import NavBar from "./components/Nav";
-import Home from "./components/Home";
-import Watch from "./components/Watch";
-import Login from "./components/registrations/Login";
-import UserForm from "./components/registrations/Signup/UserForm";
-import Profile from "./components/profile/Profile";
-
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import axios from 'axios';
+import NavBar from './components/Nav';
+import Home from './components/Home';
+import Watch from './components/Watch';
+import Login from './components/registrations/Login';
+import UserForm from './components/registrations/Signup/UserForm';
+import Profile from './components/profile/Profile';
 
 const App = () => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
   const [bills, setBills] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -23,30 +22,30 @@ const App = () => {
 
   const loginStatus = () => {
     axios
-      .get("http://localhost:3001/logged_in", { withCredentials: true })
-      .then(response => {
+      .get('http://localhost:3001/logged_in', { withCredentials: true })
+      .then((response) => {
         if (response.data.logged_in) {
           handleLogin(response.data);
         } else {
           handleLogout();
         }
       })
-      .catch(error => console.log("api errors:", error));
+      .catch((error) => console.log('api errors:', error));
   };
 
   const fetchBills = () => {
     axios
-      .get("http://localhost:3001/bills")
-      .then(response => {
+      .get('http://localhost:3001/bills')
+      .then((response) => {
         setBills(response.data.bills);
         setCategories(response.data.categories);
       })
-      .catch(error => console.log("api errors:", error));
+      .catch((error) => console.log('api errors:', error));
   };
 
-  const handleLogin = data => {
+  const handleLogin = (data) => {
+    console.log(data.user);
     setUser(data.user);
-    console.log("logged in");
     setLoggedIn(true);
   };
 
@@ -55,19 +54,18 @@ const App = () => {
     setLoggedIn(false);
   };
 
-  const handleProfileUpdate = user => {
-    console.log(user);
+  const handleProfileUpdate = (user) => {
     axios
       .put(
         `http://localhost:3001/users/${user.id}`,
         { user },
         { withCredentials: true }
       )
-      .then(res => {
-        console.log("done put for update user infor");
+      .then((res) => {
+        console.log('done put for update user infor');
         setUser(user);
       })
-      .catch(res => {
+      .catch((res) => {
         console.error(`Failed setting profile: ${res}`);
       });
   };
@@ -80,7 +78,7 @@ const App = () => {
           <Route
             exact
             path="/"
-            render={props => (
+            render={(props) => (
               <Home
                 {...props}
                 bills={bills}
@@ -93,7 +91,7 @@ const App = () => {
           <Route
             exact
             path="/login"
-            render={props => (
+            render={(props) => (
               <Login
                 {...props}
                 handleLogin={handleLogin}
@@ -104,7 +102,7 @@ const App = () => {
           <Route
             exact
             path="/signup"
-            render={props => (
+            render={(props) => (
               <UserForm
                 {...props}
                 handleLogin={handleLogin}
@@ -115,7 +113,7 @@ const App = () => {
           <Route
             exact
             path="/logout"
-            render={props => (
+            render={(props) => (
               <Home
                 {...props}
                 handleLogin={handleLogout}
