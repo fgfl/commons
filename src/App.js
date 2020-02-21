@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
@@ -8,16 +7,6 @@ import Watch from './components/Watch';
 import Login from './components/registrations/Login';
 import Signup from './components/registrations/Signup';
 import Profile from './components/profile/Profile';
-=======
-import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import axios from "axios";
-import NavBar from "./components/Nav";
-import Home from "./components/Home";
-import Watch from "./components/Watch";
-import Login from "./components/registrations/Login";
-import Signup from "./components/registrations/Signup/Signup";
->>>>>>> master
 
 const App = () => {
   const [user, setUser] = useState({});
@@ -46,15 +35,15 @@ const App = () => {
 
   const fetchBills = () => {
     axios
-      .get("http://localhost:3001/bills")
-      .then(response => {
+      .get('http://localhost:3001/bills')
+      .then((response) => {
         setBills(response.data.bills);
         setCategories(response.data.categories);
       })
-      .catch(error => console.log("api errors:", error));
+      .catch((error) => console.log('api errors:', error));
   };
 
-  const handleLogin = data => {
+  const handleLogin = (data) => {
     setUser(data.user);
     console.log('logged in');
     setLoggedIn(true);
