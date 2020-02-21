@@ -3,41 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 
-const categories = [
-  {
-    value: "All Categories",
-    label: "All Categories"
-  },
-  {
-    value: "Transport",
-    label: "Transport"
-  },
-  {
-    value: "Indigenous Rights",
-    label: "Indigenous Rights"
-  },
-  {
-    value: "Agriculture",
-    label: "Agriculture"
-  },
-  {
-    value: "Finance",
-    label: "Finance"
-  },
-  {
-    value: "Transport",
-    label: "Transport"
-  },
-  {
-    value: "Indigenous Rights",
-    label: "Indigenous Rights"
-  },
-  {
-    value: "Agriculture",
-    label: "Agriculture"
-  }
-];
-
 const useStyles = makeStyles(theme => ({
   root: {
     "& .MuiTextField-root": {
@@ -52,9 +17,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function CategoryDropdown() {
+export default function CategoryDropdown(props) {
   const classes = useStyles();
   const [category, setCategory] = React.useState("All Categories");
+
+  const categories = [];
+
+  props.categories.forEach(c => {
+    categories.push({
+      value: c.name,
+      label: c.name
+    });
+  });
 
   const handleChange = event => {
     setCategory(event.target.value);

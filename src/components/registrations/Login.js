@@ -27,7 +27,7 @@ const Login = props => {
       console.log("logged in");
       redirect("/");
     }
-  }, []);
+  });
 
   const handleSubmit = event => {
     event.preventDefault();

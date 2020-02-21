@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
@@ -7,13 +8,27 @@ import Watch from './components/Watch';
 import Login from './components/registrations/Login';
 import Signup from './components/registrations/Signup';
 import Profile from './components/profile/Profile';
+=======
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import axios from "axios";
+import NavBar from "./components/Nav";
+import Home from "./components/Home";
+import Watch from "./components/Watch";
+import Login from "./components/registrations/Login";
+import Signup from "./components/registrations/Signup/Signup";
+>>>>>>> master
 
 const App = () => {
   const [user, setUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
+  const [bills, setBills] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [events, setEvents] = useState([]);
 
   useEffect(() => {
     loginStatus();
+    fetchBills();
   }, []);
 
   const loginStatus = () => {
@@ -29,7 +44,17 @@ const App = () => {
       .catch((error) => console.log('api errors:', error));
   };
 
-  const handleLogin = (data) => {
+  const fetchBills = () => {
+    axios
+      .get("http://localhost:3001/bills")
+      .then(response => {
+        setBills(response.data.bills);
+        setCategories(response.data.categories);
+      })
+      .catch(error => console.log("api errors:", error));
+  };
+
+  const handleLogin = data => {
     setUser(data.user);
     console.log('logged in');
     setLoggedIn(true);
@@ -68,6 +93,8 @@ const App = () => {
             render={(props) => (
               <Home
                 {...props}
+                bills={bills}
+                categories={categories}
                 handleLogout={handleLogout}
                 loggedInStatus={loggedIn}
               />
@@ -106,7 +133,6 @@ const App = () => {
               />
             )}
           />
-
           <Route path="/Watch" component={Watch} />
           <Route
             path="/user/:id"
