@@ -50,6 +50,7 @@ const App = () => {
             render={props => (
               <Home
                 {...props}
+                user={user}
                 handleLogout={handleLogout}
                 loggedInStatus={loggedIn}
               />

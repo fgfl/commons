@@ -3,10 +3,12 @@ import axios from "axios";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
+import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
+import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 
-export default function FindMyMp() {
+export default function FindMyMp(props) {
   const [postalCode, setPostalCode] = useState("");
   const [mpName, setMpName] = useState("");
   const [mpParty, setMpParty] = useState("");
@@ -16,8 +18,6 @@ export default function FindMyMp() {
   const [mpEmail, setMpEmail] = useState("");
   const [mpOfficeOttawa, setMpOfficeOttawa] = useState("");
   const [mpOfficeLocal, setMpOfficeLocal] = useState("");
-  const [mpPhoneOttawa, setMpPhoneOttawa] = useState("");
-  const [mpPhoneLocal, setMpPhoneLocal] = useState("");
 
   const [errors, setErrors] = useState("");
   const [loading, setLoading] = useState(false);
@@ -33,6 +33,9 @@ export default function FindMyMp() {
     },
     title: {
       padding: "24px"
+    },
+    mymp: {
+      textAlign: "left"
     }
   }));
 
@@ -40,21 +43,77 @@ export default function FindMyMp() {
 
   const handleMp = () => {
     return (
-      <div className={classes.root}>
-        <Grid container>
-          <Grid item xs={6}>
-            <Typography>{mpName}</Typography>
-            <Typography>{mpParty}</Typography>
+      <div>
+        <Container maxWidth="sm">
+          <Grid container spacing={3}>
+            <Grid item xs={8} className={classes.mymp}>
+              <Typography variant="h4">
+                <strong>Your Representative</strong>
+              </Typography>
+              <Typography>
+                <strong>Name:</strong> {mpName}
+              </Typography>
+              <Typography>
+                <strong>Party: </strong>
+                {mpParty}
+              </Typography>
+              <Typography>
+                <strong>Riding: </strong>
+                {mpRiding}
+              </Typography>
+              <Typography>
+                <strong>Website: </strong>
+                <a href={mpWebsite} target="_blank">
+                  {mpWebsite}
+                </a>
+              </Typography>
+              <Typography>
+                <strong>Email: </strong>
+                {mpEmail}
+              </Typography>
+              <Typography variant="h5">
+                <strong>Federal Office: </strong>
+                <Typography>
+                  <strong>Address: </strong>
+                  {mpOfficeLocal.postal}
+                </Typography>
+                <Typography>
+                  <strong>Telephone: </strong>
+                  {mpOfficeLocal.tel}
+                </Typography>
+              </Typography>
+              <Typography variant="h5">
+                <strong>Local Office: </strong>
+                <Typography>
+                  <strong>Address: </strong>
+                  {mpOfficeOttawa.postal}
+                </Typography>
+                <Typography>
+                  <strong>Telephone: </strong>
+                  {mpOfficeOttawa.tel}
+                </Typography>
+              </Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <img alt="Your MP" src={mpPhoto} />
+            </Grid>
+            <Grid container>
+              <Button variant="contained">
+                <Link href={`mailto:${mpEmail.toLowerCase()}`}>
+                  Email My MP
+                </Link>
+              </Button>
+              <Button variant="contained">
+                <Link href={`tel:+${mpOfficeOttawa.tel}`}>Call My MP</Link>
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <img alt="Your MP" src={mpPhoto} />
-          </Grid>
-        </Grid>
+        </Container>
       </div>
     );
   };
 
-  const handleSubmit = event => {
+  const handleMpSubmit = event => {
     event.preventDefault();
     setLoading(true);
     axios
@@ -66,6 +125,15 @@ export default function FindMyMp() {
           setMpName(response.data.representatives_centroid[0].name);
           setMpParty(response.data.representatives_centroid[0].party_name);
           setMpPhoto(response.data.representatives_centroid[0].photo_url);
+          setMpRiding(response.data.representatives_centroid[0].district_name);
+          setMpWebsite(response.data.representatives_centroid[0].url);
+          setMpEmail(response.data.representatives_centroid[0].email);
+          setMpOfficeLocal(
+            response.data.representatives_centroid[0].offices[0]
+          );
+          setMpOfficeOttawa(
+            response.data.representatives_centroid[0].offices[1]
+          );
           console.log(response.data);
         } else {
           setErrors(response.data.errors);
@@ -84,16 +152,19 @@ export default function FindMyMp() {
         <Typography variant="h5">
           Look up your representative in the House of Commons
         </Typography>
-        <form onSubmit={handleSubmit}>
+        <form>
           <TextField
             id="outlined-basic"
             name="postalcode"
             label="Postal Code"
             variant="outlined"
             value={postalCode}
+            defaultValue={
+              props.user && props.user.postal_code ? props.user.postal_code : ""
+            }
             onChange={e => setPostalCode(e.target.value)}
           />
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
+          <Button variant="contained" color="primary" onClick={handleMpSubmit}>
             Submit
           </Button>
         </form>
