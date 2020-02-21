@@ -109,49 +109,56 @@ const NavBar = (props) => {
             <ListItemText>Home</ListItemText>
           </ListItem>
         </Link>
-        {props.loggedIn && (
-          <Link to={`/user/${props.user.id}`}>
-            <ListItem button>
-              <ListItemIcon>
-                <AccountCircleIcon />
-              </ListItemIcon>
-              <ListItemText>Profile</ListItemText>
-            </ListItem>
-          </Link>
-        )}
-        <Link to="/logout" onClick={handleClick}>
-          <ListItem button>
-            <ListItemIcon>
-              <AccountCircleIcon />
-            </ListItemIcon>
-            <ListItemText>Log Out</ListItemText>
-          </ListItem>
-        </Link>
-        <Link to="/login">
-          <ListItem button>
-            <ListItemIcon>
-              <AccountCircleIcon />
-            </ListItemIcon>
-            <ListItemText>Log In</ListItemText>
-          </ListItem>
-        </Link>
+        {props.loggedIn ? (
+          <Fragment>
+            <Link to={`/user/${props.user.id}`}>
+              <ListItem button>
+                <ListItemIcon>
+                  <AccountCircleIcon />
+                </ListItemIcon>
+                <ListItemText>Profile</ListItemText>
+              </ListItem>
+            </Link>
 
-        <Link to="/signup">
-          <ListItem button>
-            <ListItemIcon>
-              <PersonAddIcon />
-            </ListItemIcon>
-            <ListItemText>Sign Up</ListItemText>
-          </ListItem>
-        </Link>
-        <Link to="/watch">
-          <ListItem button>
-            <ListItemIcon>
-              <BookmarkIcon />
-            </ListItemIcon>
-            <ListItemText>My Watch List</ListItemText>
-          </ListItem>
-        </Link>
+            <Link to="/watch">
+              <ListItem button>
+                <ListItemIcon>
+                  <BookmarkIcon />
+                </ListItemIcon>
+                <ListItemText>My Watch List</ListItemText>
+              </ListItem>
+            </Link>
+
+            <Link to="/logout" onClick={handleClick}>
+              <ListItem button>
+                <ListItemIcon>
+                  <AccountCircleIcon />
+                </ListItemIcon>
+                <ListItemText>Log Out</ListItemText>
+              </ListItem>
+            </Link>
+          </Fragment>
+        ) : (
+          <Fragment>
+            <Link to="/login">
+              <ListItem button>
+                <ListItemIcon>
+                  <AccountCircleIcon />
+                </ListItemIcon>
+                <ListItemText>Log In</ListItemText>
+              </ListItem>
+            </Link>
+
+            <Link to="/signup">
+              <ListItem button>
+                <ListItemIcon>
+                  <PersonAddIcon />
+                </ListItemIcon>
+                <ListItemText>Sign Up</ListItemText>
+              </ListItem>
+            </Link>
+          </Fragment>
+        )}
       </List>
     </div>
   );
