@@ -36,7 +36,7 @@ const App = () => {
 		axios
 			.get('http://localhost:3001/bills')
 			.then((response) => {
-				console.log(response.data);
+				// console.log(response.data);
 				setBills(response.data.bills);
 				setCategories(response.data.categories);
 			})
