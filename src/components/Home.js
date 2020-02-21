@@ -28,7 +28,7 @@ const Home = (props) => {
 				<CategoryDropdown
 					categories={props.categories}
 					passCategory={setChildCategory}
-					onChange={handleChange}
+// 					onChange={handleChange}
 				/>
 				{billCards}
 			</Container>
