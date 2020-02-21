@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -24,13 +24,16 @@ export default function CategoryDropdown(props) {
 	const categories = [];
 	props.categories.forEach((c) => {
 		categories.push({
-			value: c.name,
+			id: c.id,
+			value: c.id,
 			label: c.name
 		});
 	});
 
 	const handleChange = (event) => {
-		setCategory(event.target.value);
+		const category = event.target.value;
+		setCategory(category);
+		props.passCategory(category);
 	};
 
 	return (
@@ -44,6 +47,9 @@ export default function CategoryDropdown(props) {
 					onChange={handleChange}
 					helperText='Please select a category'
 				>
+					<MenuItem key={0} value={0}>
+						{'View All Bills'}
+					</MenuItem>
 					{categories.map((option) => (
 						<MenuItem key={option.value} value={option.value}>
 							{option.label}
