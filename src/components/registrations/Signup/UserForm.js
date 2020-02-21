@@ -19,9 +19,23 @@ const UserForm = props => {
   const [smsNotification, setSmsNotification] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [step, setStep] = useState(1);
+  const [clicked, setClicked] = useState({});
+  console.log("clicked", clicked);
 
-  const handleSubmit = event => {
-    event.preventDefault();
+  const setThisOneClicked = key => {
+    setClicked(prev => {
+      let state = { ...prev };
+      if (state[key]) {
+        delete state[key];
+      } else {
+        state[key] = true;
+      }
+      return state;
+    });
+  };
+
+  const handleSubmit = () => {
+    // event.preventDefault();
     let user = {
       name: name,
       username: username,
@@ -30,15 +44,17 @@ const UserForm = props => {
       password_confirmation: passwordConfirmation,
       email_notification: emailNotification,
       sms_notification: smsNotification,
-      phone_number: phoneNumber
+      phone_number: phoneNumber,
+      categories: Object.keys(clicked)
     };
+    console.log(user);
 
     axios
       .post("http://localhost:3001/users", { user }, { withCredentials: true })
       .then(response => {
         if (response.data.status === "created") {
           props.handleLogin(response.data);
-          redirect();
+          setStep(step + 1);
         } else {
           setErrors(response.data.errors);
         }
@@ -46,9 +62,9 @@ const UserForm = props => {
       .catch(error => console.log("api errors:", error));
   };
 
-  const redirect = () => {
-    props.history.push("/");
-  };
+  // const redirect = () => {
+  //   props.history.push("/");
+  // };
 
   const handleErrors = () => {
     return (
@@ -81,8 +97,8 @@ const UserForm = props => {
       if (data.password) {
         setPassword(data.password);
       }
-      if (data.passwordConfirmation) {
-        setPasswordConfirmation(data.passwordConfirmation);
+      if (data.password_confirmation) {
+        setPasswordConfirmation(data.password_confirmation);
       }
       setStep(step + 1);
     }
@@ -119,7 +135,14 @@ const UserForm = props => {
         return <Notifications nextStep={nextStep} prevStep={prevStep} />;
       // eslint-disable-next-line no-duplicate-case
       case 3:
-        return <Categories nextStep={nextStep} prevStep={prevStep} />;
+        return (
+          <Categories
+            clicked={clicked}
+            setThisOneClicked={setThisOneClicked}
+            nextStep={nextStep}
+            prevStep={prevStep}
+          />
+        );
       case 4:
         return (
           <Confirmation
@@ -127,6 +150,16 @@ const UserForm = props => {
             handleErrors={handleErrors}
             prevStep={prevStep}
             nextStep={nextStep}
+            details={{
+              name: name,
+              username: username,
+              email: email,
+              password: password,
+              password_confirmation: passwordConfirmation,
+              email_notification: emailNotification,
+              sms_notification: smsNotification,
+              phone_number: phoneNumber
+            }}
           />
         );
       case 5:

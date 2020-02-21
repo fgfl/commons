@@ -68,7 +68,10 @@ const Categories = props => {
             Pick the topics you are interested in
           </Typography>
         </div>
-        <ChipArray />
+        <ChipArray
+          clicked={props.clicked}
+          setThisOneClicked={props.setThisOneClicked}
+        />
         <Button color="secondary" variant="contained" onClick={back}>
           Back
         </Button>
