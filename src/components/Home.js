@@ -11,7 +11,7 @@ const Home = props => {
         <CategoryDropdown />
         <BillCard />
       </Container>
-      <FindMyMp />
+      <FindMyMp user={props.user} />
     </div>
   );
 };
