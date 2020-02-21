@@ -5,7 +5,7 @@ import NavBar from './components/Nav';
 import Home from './components/Home';
 import Watch from './components/Watch';
 import Login from './components/registrations/Login';
-import Signup from './components/registrations/Signup';
+import Signup from './components/registrations/Signup/Signup';
 import Profile from './components/profile/Profile';
 
 const App = () => {
@@ -25,7 +25,7 @@ const App = () => {
       .get('http://localhost:3001/logged_in', { withCredentials: true })
       .then((response) => {
         if (response.data.logged_in) {
-          handleLogin(response);
+          handleLogin(response.data);
         } else {
           handleLogout();
         }
