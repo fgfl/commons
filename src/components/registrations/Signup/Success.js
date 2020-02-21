@@ -1,16 +1,18 @@
-import React, { Component } from "react";
-import Dialog from "@material-ui/core/Dialog";
-import AppBar from "@material-ui/core/AppBar";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import React, { Component } from 'react';
+import Dialog from '@material-ui/core/Dialog';
+import AppBar from '@material-ui/core/AppBar';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import { Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 export class Success extends Component {
-  continue = e => {
+  continue = (e) => {
     e.preventDefault();
     // PROCESS FORM //
     this.props.nextStep();
   };
 
-  back = e => {
+  back = (e) => {
     e.preventDefault();
     this.props.prevStep();
   };
@@ -23,6 +25,11 @@ export class Success extends Component {
             <AppBar title="Success" />
             <h1>Thank You For Your Submission</h1>
             <p>You will get an email with further instructions</p>
+            <Link to="/">
+              <Button variant="contained" color="primary">
+                Home
+              </Button>
+            </Link>
           </Dialog>
         </React.Fragment>
       </MuiThemeProvider>
