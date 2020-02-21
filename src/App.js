@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
@@ -8,16 +7,6 @@ import Watch from './components/Watch';
 import Login from './components/registrations/Login';
 import Signup from './components/registrations/Signup';
 import Profile from './components/profile/Profile';
-=======
-import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import axios from "axios";
-import NavBar from "./components/Nav";
-import Home from "./components/Home";
-import Watch from "./components/Watch";
-import Login from "./components/registrations/Login";
-import Signup from "./components/registrations/Signup";
->>>>>>> master
 
 const App = () => {
   const [user, setUser] = useState({});
@@ -29,20 +18,20 @@ const App = () => {
 
   const loginStatus = () => {
     axios
-      .get("http://localhost:3001/logged_in", { withCredentials: true })
-      .then(response => {
+      .get('http://localhost:3001/logged_in', { withCredentials: true })
+      .then((response) => {
         if (response.data.logged_in) {
           handleLogin(response);
         } else {
           handleLogout();
         }
       })
-      .catch(error => console.log("api errors:", error));
+      .catch((error) => console.log('api errors:', error));
   };
 
-  const handleLogin = data => {
+  const handleLogin = (data) => {
     setUser(data.user);
-    console.log("logged in");
+    console.log('logged in');
     setLoggedIn(true);
   };
 
@@ -51,13 +40,17 @@ const App = () => {
     setLoggedIn(false);
   };
 
-  const handleProfileUpdate = (newUserInfo) => {
-    console.log(newUserInfo);
+  const handleProfileUpdate = (user) => {
+    console.log(user);
     axios
-      .put(`http://localhost:3001/users/${user.id}`, { newUserInfo })
+      .put(
+        `http://localhost:3001/users/${user.id}`,
+        { user },
+        { withCredentials: true }
+      )
       .then((res) => {
         console.log('done put for update user infor');
-        setUser(newUserInfo);
+        setUser(user);
       })
       .catch((res) => {
         console.error(`Failed setting profile: ${res}`);
@@ -72,7 +65,7 @@ const App = () => {
           <Route
             exact
             path="/"
-            render={props => (
+            render={(props) => (
               <Home
                 {...props}
                 handleLogout={handleLogout}
@@ -83,7 +76,7 @@ const App = () => {
           <Route
             exact
             path="/login"
-            render={props => (
+            render={(props) => (
               <Login
                 {...props}
                 handleLogin={handleLogin}
@@ -94,7 +87,7 @@ const App = () => {
           <Route
             exact
             path="/signup"
-            render={props => (
+            render={(props) => (
               <Signup
                 {...props}
                 handleLogin={handleLogin}
@@ -105,7 +98,7 @@ const App = () => {
           <Route
             exact
             path="/logout"
-            render={props => (
+            render={(props) => (
               <Home
                 {...props}
                 handleLogin={handleLogout}
