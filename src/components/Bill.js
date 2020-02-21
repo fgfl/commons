@@ -14,31 +14,27 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import clsx from 'clsx';
 
-const useStyles = makeStyles((theme) => ({
-	root: {
-		textAlign: 'left',
-		marginBottom: '16px'
-	},
-	media: {
-		height: 0,
-		paddingTop: '56.25%' // 16:9
-	},
-	expand: {
-		transform: 'rotate(0deg)',
-		marginLeft: 'auto',
-		transition: theme.transitions.create('transform', {
-			duration: theme.transitions.duration.shortest
-		})
-	},
-	expandOpen: {
-		transform: 'rotate(180deg)'
-	},
-	avatar: {
-		backgroundColor: red[500],
-		width: '60px',
-		height: '60px',
-		fontWeight: 900
-	}
+const useStyles = makeStyles(theme => ({
+  root: {
+    textAlign: "left",
+    marginBottom: "16px"
+  },
+  expand: {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
+      duration: theme.transitions.duration.shortest
+    })
+  },
+  expandOpen: {
+    transform: "rotate(180deg)"
+  },
+  avatar: {
+    backgroundColor: red[500],
+    width: "60px",
+    height: "60px",
+    fontWeight: 900
+  }
 }));
 
 export default function BillCard(props) {

@@ -27,7 +27,7 @@ const Login = props => {
       console.log("logged in");
       redirect("/");
     }
-  }, []);
+  });
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -41,7 +41,7 @@ const Login = props => {
       .then(response => {
         if (response.data.logged_in) {
           props.handleLogin(response.data);
-          redirect();
+          redirect('/');
         } else {
           setErrors(response.data.errors);
         }
