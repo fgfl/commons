@@ -5,7 +5,7 @@ import NavBar from "./components/Nav";
 import Home from "./components/Home";
 import Watch from "./components/Watch";
 import Login from "./components/registrations/Login";
-import Signup from "./components/registrations/Signup/Signup";
+import UserForm from "./components/registrations/Signup/UserForm";
 import Profile from "./components/profile/Profile";
 
 const App = () => {
@@ -104,7 +104,7 @@ const App = () => {
             exact
             path="/signup"
             render={props => (
-              <Signup
+              <UserForm
                 {...props}
                 handleLogin={handleLogin}
                 loggedInStatus={loggedIn}
