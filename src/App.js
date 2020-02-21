@@ -104,7 +104,6 @@ const App = () => {
 							/>
 						)}
 					/>
-
 					<Route path='/Watch' component={Watch} />
 					{/* <Route path="/user/:id" component={Profile} /> */}
 				</Switch>

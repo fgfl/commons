@@ -125,7 +125,6 @@ const NavBar = props => {
             <ListItemText>Log In</ListItemText>
           </ListItem>
         </Link>
-
         <Link to="/signup">
           <ListItem button>
             <ListItemIcon>
