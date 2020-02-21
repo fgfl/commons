@@ -2,7 +2,7 @@ import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
 
 import Login from '../components/registrations/Login';
-import { MemoryRouter, BrowserRouter as Router } from 'react-router';
+import { MemoryRouter } from 'react-router';
 
 afterEach(cleanup);
 
