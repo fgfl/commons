@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
@@ -61,12 +61,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function NavBar(props) {
+const NavBar = props => {
   const handleClick = () => {
     axios
       .delete("http://localhost:3001/logout", { withCredentials: true })
       .then(response => {
         props.handleLogout();
+        console.log("logged out");
         props.history.push("/");
       })
       .catch(error => console.log(error));
@@ -94,6 +95,11 @@ export default function NavBar(props) {
       onClick={toggleDrawer(side, false)}
       onKeyDown={toggleDrawer(side, false)}
     >
+      {props.loggedIn ? (
+        <Typography>Logged in as: {props.user.name}</Typography>
+      ) : (
+        <Typography>Please login</Typography>
+      )}
       <List>
         <Link to="/">
           <ListItem button>
@@ -101,6 +107,14 @@ export default function NavBar(props) {
               <AccountCircleIcon />
             </ListItemIcon>
             <ListItemText>Home</ListItemText>
+          </ListItem>
+        </Link>
+        <Link to="/logout" onClick={handleClick}>
+          <ListItem button>
+            <ListItemIcon>
+              <AccountCircleIcon />
+            </ListItemIcon>
+            <ListItemText>Log Out</ListItemText>
           </ListItem>
         </Link>
         <Link to="/login">
@@ -111,27 +125,22 @@ export default function NavBar(props) {
             <ListItemText>Log In</ListItemText>
           </ListItem>
         </Link>
-        <ListItem button>
-          <ListItemIcon>
-            <PersonAddIcon />
-          </ListItemIcon>
-          <ListItemText>
-            <Link to="/signup">Sign Up</Link>
-            <br></br>
-            {props.loggedInStatus ? (
-              <Link to="/logout" onClick={handleClick}>
-                Log Out
-              </Link>
-            ) : null}
-          </ListItemText>
-        </ListItem>
-        <Link to="/login"></Link>
-        <ListItem button>
-          <ListItemIcon>
-            <BookmarkIcon />
-          </ListItemIcon>
-          <ListItemText>My Watch List</ListItemText>
-        </ListItem>
+        <Link to="/signup">
+          <ListItem button>
+            <ListItemIcon>
+              <PersonAddIcon />
+            </ListItemIcon>
+            <ListItemText>Sign Up</ListItemText>
+          </ListItem>
+        </Link>
+        <Link to="/watch">
+          <ListItem button>
+            <ListItemIcon>
+              <BookmarkIcon />
+            </ListItemIcon>
+            <ListItemText>My Watch List</ListItemText>
+          </ListItem>
+        </Link>
       </List>
     </div>
   );
@@ -167,4 +176,6 @@ export default function NavBar(props) {
       </AppBar>
     </div>
   );
-}
+};
+
+export default NavBar;

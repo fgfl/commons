@@ -24,6 +24,7 @@ const Login = props => {
 
   useEffect(() => {
     if (props.loggedInStatus) {
+      console.log("logged in");
       redirect("/");
     }
   });
