@@ -14,6 +14,7 @@ const UserForm = props => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [postalCode, setPostalCode] = useState("");
   const [errors, setErrors] = useState("");
   const [emailNotification, setEmailNotification] = useState(false);
   const [smsNotification, setSmsNotification] = useState(false);
@@ -35,13 +36,13 @@ const UserForm = props => {
   };
 
   const handleSubmit = () => {
-    // event.preventDefault();
     let user = {
       name: name,
       username: username,
       email: email,
       password: password,
       password_confirmation: passwordConfirmation,
+      postal_code: postalCode,
       email_notification: emailNotification,
       sms_notification: smsNotification,
       phone_number: phoneNumber,
@@ -61,10 +62,6 @@ const UserForm = props => {
       })
       .catch(error => console.log("api errors:", error));
   };
-
-  // const redirect = () => {
-  //   props.history.push("/");
-  // };
 
   const handleErrors = () => {
     return (
@@ -99,6 +96,9 @@ const UserForm = props => {
       }
       if (data.password_confirmation) {
         setPasswordConfirmation(data.password_confirmation);
+      }
+      if (data.postal_code) {
+        setPostalCode(data.postal_code);
       }
       setStep(step + 1);
     }
@@ -137,6 +137,7 @@ const UserForm = props => {
       case 3:
         return (
           <Categories
+            categories={props.categories}
             clicked={clicked}
             setThisOneClicked={setThisOneClicked}
             nextStep={nextStep}

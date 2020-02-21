@@ -69,6 +69,7 @@ const Categories = props => {
           </Typography>
         </div>
         <ChipArray
+          categories={props.categories}
           clicked={props.clicked}
           setThisOneClicked={props.setThisOneClicked}
         />

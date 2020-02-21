@@ -65,7 +65,9 @@ const Confirmation = props => {
           </Avatar>
           <Typography variant="h4">Confirm your details</Typography>
         </div>
-        <Typography>{props.details.name}</Typography>
+        <Typography>Name: {props.details.name}</Typography>
+        <Typography>Username: {props.details.username}</Typography>
+        <Typography>Email: {props.details.email}</Typography>
 
         <Button color="secondary" variant="contained" onClick={back}>
           Back
