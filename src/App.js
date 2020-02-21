@@ -8,6 +8,7 @@ import Login from "./components/registrations/Login";
 import UserForm from "./components/registrations/Signup/UserForm";
 import Profile from "./components/profile/Profile";
 
+
 const App = () => {
   const [user, setUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
@@ -25,7 +26,7 @@ const App = () => {
       .get("http://localhost:3001/logged_in", { withCredentials: true })
       .then(response => {
         if (response.data.logged_in) {
-          handleLogin(response);
+          handleLogin(response.data);
         } else {
           handleLogout();
         }
