@@ -11,6 +11,7 @@ const App = () => {
 	const [user, setUser] = useState({});
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [bills, setBills] = useState([]);
+	const [categories, setCategories] = useState([]);
 	const [events, setEvents] = useState([]);
 
 	useEffect(() => {
@@ -36,6 +37,7 @@ const App = () => {
 			.get('http://localhost:3001/bills')
 			.then((response) => {
 				setBills(response.data.bills);
+				setCategories(response.data.categories);
 			})
 			.catch((error) => console.log('api errors:', error));
 	};
@@ -63,6 +65,7 @@ const App = () => {
 							<Home
 								{...props}
 								bills={bills}
+								categories={categories}
 								handleLogout={handleLogout}
 								loggedInStatus={loggedIn}
 							/>

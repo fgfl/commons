@@ -11,7 +11,7 @@ const Home = (props) => {
 	return (
 		<div>
 			<Container maxWidth='sm'>
-				<CategoryDropdown />
+				<CategoryDropdown categories={props.categories} />
 				{billCards}
 			</Container>
 		</div>
