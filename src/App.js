@@ -105,6 +105,7 @@ const App = () => {
 						render={(props) => (
 							<UserForm
 								{...props}
+								categories={categories}
 								handleLogin={handleLogin}
 								loggedInStatus={loggedIn}
 							/>
