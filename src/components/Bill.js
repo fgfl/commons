@@ -8,6 +8,7 @@ import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 import { red } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
@@ -71,6 +72,12 @@ export default function BillCard(props) {
 			<CardContent>
 				<Typography variant='body2' color='textSecondary' component='p'>
 					{props.bill.description}
+				</Typography>
+				<Typography>
+					<Link href={props.bill.page_url}>Bill Page</Link>
+				</Typography>
+				<Typography>
+					<Link href={props.bill.full_text_url}>Full Text</Link>
 				</Typography>
 			</CardContent>
 			<CardActions disableSpacing>
