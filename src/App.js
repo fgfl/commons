@@ -5,7 +5,7 @@ import NavBar from "./components/Nav";
 import Home from "./components/Home";
 import Watch from "./components/Watch";
 import Login from "./components/registrations/Login";
-import Signup from "./components/registrations/Signup/Signup";
+import UserForm from "./components/registrations/Signup/UserForm";
 
 const App = () => {
   const [user, setUser] = useState({});
@@ -86,8 +86,10 @@ const App = () => {
             exact
             path="/signup"
             render={props => (
-              <Signup
+              <UserForm
                 {...props}
+                bills={bills}
+                categories={categories}
                 handleLogin={handleLogin}
                 loggedInStatus={loggedIn}
               />

@@ -17,36 +17,28 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ChipsArray = props => {
+  const categories = props.categories;
+
+  console.log(categories);
+
   const classes = useStyles();
-  const [chipData, setChipData] = useState([
-    { key: 0, label: "Angular" },
-    { key: 1, label: "jQuery" },
-    { key: 2, label: "Polymer" },
-    { key: 3, label: "React" },
-    { key: 4, label: "Vue.js" },
-    { key: 5, label: "Vue.js" },
-    { key: 6, label: "Vue.js" },
-    { key: 7, label: "Vue.js" },
-    { key: 8, label: "Vue.js" },
-    { key: 9, label: "Vue.js" },
-    { key: 10, label: "Vue.js" }
-  ]);
+  const [chipData, setChipData] = useState(categories);
 
   return (
     <Paper className={classes.root}>
       {chipData.map(data => {
         console.log(props);
-        let color = props.clicked[data.label] ? "blue" : "grey";
+        let color = props.clicked[data.name] ? "blue" : "grey";
 
         return (
           <Chip
-            key={data.key}
+            key={data.id}
             icon={<DoneItem />}
-            label={data.label}
+            label={data.name}
             className={classes.chip}
             clickable
             onClick={() => {
-              props.setThisOneClicked(data.label);
+              props.setThisOneClicked(data.name);
             }}
             style={{ background: color }}
           />

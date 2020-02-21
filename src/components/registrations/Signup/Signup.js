@@ -14,7 +14,8 @@ const Signup = props => {
     username: "",
     email: "",
     password: "",
-    password_confirmation: ""
+    password_confirmation: "",
+    postal_code: ""
   };
 
   const proceed = event => {
@@ -175,6 +176,19 @@ const Signup = props => {
                 onChange={e => (data.password_confirmation = e.target.value)}
               />
             )}
+
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="postal_code"
+              label="Postal Code"
+              type="postal"
+              id="postal-code"
+              autoComplete="postal-code"
+              onChange={e => (data.postal_code = e.target.value)}
+            />
             <Button color="primary" variant="contained" onClick={proceed}>
               Continue
             </Button>
