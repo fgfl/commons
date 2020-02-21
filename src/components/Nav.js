@@ -109,14 +109,16 @@ const NavBar = (props) => {
             <ListItemText>Home</ListItemText>
           </ListItem>
         </Link>
-        <Link to="/user/:id">
-          <ListItem button>
-            <ListItemIcon>
-              <AccountCircleIcon />
-            </ListItemIcon>
-            <ListItemText>Profile</ListItemText>
-          </ListItem>
-        </Link>
+        {props.loggedIn && (
+          <Link to={`/user/${props.user.id}`}>
+            <ListItem button>
+              <ListItemIcon>
+                <AccountCircleIcon />
+              </ListItemIcon>
+              <ListItemText>Profile</ListItemText>
+            </ListItem>
+          </Link>
+        )}
         <Link to="/logout" onClick={handleClick}>
           <ListItem button>
             <ListItemIcon>

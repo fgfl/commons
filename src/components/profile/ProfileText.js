@@ -19,7 +19,7 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
   const [name, setName] = useState(user.name);
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
-  const [password, setPassword] = useState(user.password_digest);
+  const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [phoneNumber, setPhoneNumber] = useState(user.phone_number);
   const [postalCode, setPostalCode] = useState(user.postal_code);
@@ -28,42 +28,9 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
   );
   const [smsNotification, setSmsNotification] = useState(user.sms_notification);
 
-  const formSetters = {
-    name: setName,
-    username: setUsername,
-    email: setEmail,
-    password: setPassword,
-    password_confirmation: setPasswordConfirmation,
-    phone_number: setPhoneNumber,
-    postal_code: setPostalCode,
-    email_notification: setEmailNotification,
-    sms_notification: setSmsNotification,
-  };
-
-  const labels = [];
-
-  Object.entries(user).forEach(([key, val]) => {
-    const label = mapUserFieldToLabel(key);
-    if (label) {
-      labels.push(
-        <TextField
-          variant="outlined"
-          margin="normal"
-          fullWidth
-          key={key}
-          id={key}
-          label={label}
-          name={label}
-          disabled={!editStatus}
-          defaultValue={val}
-          onChange={(e) => formSetters[key](e.target.value)}
-        />
-      );
-    }
-  });
-
   const parseForm = () => {
     const formValues = {
+      id: user.id,
       name: name,
       username: username,
       email: email,
@@ -80,35 +47,129 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
 
   const classes = useStyles();
 
-  useEffect(() => {
-    const passwordIndex = labels.findIndex((field) => {
-      // console.log('asdlkfjasdlf');
-      // console.log(field);
-      return field.key === 'password_digest';
-    });
-
-    labels.splice(
-      passwordIndex + 1,
-      0,
+  return (
+    <form onSubmit={(e) => e.preventDefault()}>
       <TextField
         variant="outlined"
         margin="normal"
         fullWidth
-        key="password_confirmation"
-        id="passworkd_confirmation"
-        label="Confirm password"
-        name="Confirm password"
-        disabled={!editStatus}
-        defaultValue=""
-        onChange={(e) => formSetters['password_confirmation'](e.target.value)}
+        id="name"
+        label={mapUserFieldToLabel('name')}
+        name={mapUserFieldToLabel('name')}
+        InputProps={{
+          readOnly: !editStatus,
+        }}
+        defaultValue={name}
+        onChange={(e) => setName(e.target.value)}
       />
-    );
-    console.log(labels);
-  }, [labels, editStatus]);
-
-  return (
-    <form onSubmit={(e) => e.preventDefault()}>
-      {labels}
+      <TextField
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        id="username"
+        label={mapUserFieldToLabel('username')}
+        name={mapUserFieldToLabel('username')}
+        InputProps={{
+          readOnly: !editStatus,
+        }}
+        defaultValue={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <TextField
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        id="email"
+        label={mapUserFieldToLabel('email')}
+        name={mapUserFieldToLabel('email')}
+        InputProps={{
+          readOnly: !editStatus,
+        }}
+        defaultValue={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <TextField
+        variant="outlined"
+        type="password"
+        margin="normal"
+        fullWidth
+        id="password"
+        label={mapUserFieldToLabel('password_digest')}
+        name={mapUserFieldToLabel('password_digest')}
+        InputProps={{
+          readOnly: !editStatus,
+        }}
+        defaultValue=""
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      {editStatus && (
+        <TextField
+          variant="outlined"
+          type="password"
+          margin="normal"
+          fullWidth
+          id="password_confirmation"
+          label="Confirm password"
+          name="Confirm password"
+          InputProps={{
+            readOnly: !editStatus,
+          }}
+          defaultValue=""
+          onChange={(e) => setPasswordConfirmation(e.target.value)}
+        />
+      )}
+      <TextField
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        id="phone_number"
+        label={mapUserFieldToLabel('phone_number')}
+        name={mapUserFieldToLabel('phone_number')}
+        InputProps={{
+          readOnly: !editStatus,
+        }}
+        defaultValue={phoneNumber}
+        onChange={(e) => setPhoneNumber(e.target.value)}
+      />
+      <TextField
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        id="postal_code"
+        label={mapUserFieldToLabel('postal_code')}
+        name={mapUserFieldToLabel('postal_code')}
+        InputProps={{
+          readOnly: !editStatus,
+        }}
+        defaultValue={postalCode}
+        onChange={(e) => setPostalCode(e.target.value)}
+      />
+      <TextField
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        id="email_notification"
+        label={mapUserFieldToLabel('email_notification')}
+        name={mapUserFieldToLabel('email_notification')}
+        InputProps={{
+          readOnly: !editStatus,
+        }}
+        defaultValue={emailNotification}
+        onChange={(e) => setEmailNotification(e.target.value)}
+      />
+      <TextField
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        id="sms_notification"
+        label={mapUserFieldToLabel('sms_notification')}
+        name={mapUserFieldToLabel('sms_notification')}
+        InputProps={{
+          readOnly: !editStatus,
+        }}
+        defaultValue={smsNotification}
+        onChange={(e) => setSmsNotification(e.target.value)}
+      />
 
       <div>
         <Grid container direction="row" justify="flex-end" alignItems="center">
@@ -143,16 +204,6 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
       </div>
     </form>
   );
-  // <Container>
-  //   <Grid container spacing={1} className={classes.profileTable}>
-  //     <Grid item xs={6}>
-  //       {labels}
-  //     </Grid>
-  //     <Grid item xs={6}>
-  //       <FormControl>{values}</FormControl>
-  //     </Grid>
-  //   </Grid>
-  // </Container>
 };
 
 export default ProfileText;
