@@ -18,9 +18,9 @@ const Home = (props) => {
 		return <BillCard key={bill.id} bill={bill} />;
 	});
 
-	const handleChange = (category) => {
-		setChildCategory(category);
-	};
+// 	const handleChange = (category) => {
+// 		setChildCategory(category);
+// 	};
 
 	return (
 		<div>
