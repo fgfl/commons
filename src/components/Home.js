@@ -6,15 +6,17 @@ import Container from '@material-ui/core/Container';
 // import { getBillsForCategory } from 'helpers/selectors';
 
 const Home = (props) => {
-	const [childCategory, setChildCategory] = useState('All Categories');
-	// const billCards = props.bills.map((bill) => {
-	// 	return <BillCard key={bill.id} bill={bill} />;
-	// });
-	const billCards = props.bills.map((bill) => {
-		return <BillCard key={bill.id} bill={bill} />;
+	const [childCategory, setChildCategory] = useState(0);
+
+	useEffect(() => console.log('Category ID: ', childCategory), [childCategory]);
+
+	const bills = props.bills.filter((bill) => {
+		return childCategory === 0 ? bill : bill.categories.includes(childCategory);
 	});
 
-	useEffect(() => console.log('CATEGORY', childCategory), [childCategory]);
+	const billCards = bills.map((bill) => {
+		return <BillCard key={bill.id} bill={bill} />;
+	});
 
 	const handleChange = (category) => {
 		setChildCategory(category);

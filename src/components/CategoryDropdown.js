@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CategoryDropdown(props) {
 	const classes = useStyles();
-	const [category, setCategory] = React.useState('All Categories');
+	const [category, setCategory] = React.useState(0);
 
 	const categories = [];
 	props.categories.forEach((c) => {
