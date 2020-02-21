@@ -17,3 +17,5 @@ const idToCategoryName = (id) => {
   };
   return map[id];
 };
+
+export default idToCategoryName;
