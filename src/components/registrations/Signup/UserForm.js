@@ -158,7 +158,8 @@ const UserForm = (props) => {
 							password_confirmation: passwordConfirmation,
 							email_notification: emailNotification,
 							sms_notification: smsNotification,
-							phone_number: phoneNumber
+							phone_number: phoneNumber,
+							categories: Object.keys(clicked)
 						}}
 					/>
 				);

@@ -7,6 +7,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import PersonIcon from '@material-ui/icons/Person';
 
+import idToCategoryName from '../../helpers/idToCategoryName';
+
 const Confirmation = (props) => {
 	const back = (e) => {
 		e.preventDefault();
@@ -17,6 +19,12 @@ const Confirmation = (props) => {
 		event.preventDefault();
 		props.nextStep(4);
 	};
+
+	const categories = idToCategoryName(props.details.categories).map(
+		(categoryName) => {
+			return <Typography>{categoryName}</Typography>;
+		}
+	);
 
 	const useStyles = makeStyles((theme) => ({
 		paper: {
@@ -68,6 +76,8 @@ const Confirmation = (props) => {
 				<Typography>Name: {props.details.name}</Typography>
 				<Typography>Username: {props.details.username}</Typography>
 				<Typography>Email: {props.details.email}</Typography>
+				<Typography>Selected Categories:</Typography>
+				{categories}
 
 				<Button color='secondary' variant='contained' onClick={back}>
 					Back
