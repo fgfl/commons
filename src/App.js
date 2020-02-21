@@ -100,6 +100,8 @@ const App = () => {
 						render={(props) => (
 							<Home
 								{...props}
+								bills={bills}
+								categories={categories}
 								handleLogin={handleLogout}
 								loggedInStatus={loggedIn}
 							/>
