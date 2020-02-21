@@ -41,7 +41,7 @@ const Login = props => {
       .then(response => {
         if (response.data.logged_in) {
           props.handleLogin(response.data);
-          redirect();
+          redirect('/');
         } else {
           setErrors(response.data.errors);
         }
