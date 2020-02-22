@@ -1,42 +1,8 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import MenuItem from "@material-ui/core/MenuItem";
 
-const categories = [
-  {
-    value: "All Categories",
-    label: "All Categories"
-  },
-  {
-    value: "Transport",
-    label: "Transport"
-  },
-  {
-    value: "Indigenous Rights",
-    label: "Indigenous Rights"
-  },
-  {
-    value: "Agriculture",
-    label: "Agriculture"
-  },
-  {
-    value: "Finance",
-    label: "Finance"
-  },
-  {
-    value: "Transport",
-    label: "Transport"
-  },
-  {
-    value: "Indigenous Rights",
-    label: "Indigenous Rights"
-  },
-  {
-    value: "Agriculture",
-    label: "Agriculture"
-  }
-];
+import React, { useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -52,32 +18,47 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function CategoryDropdown() {
-  const classes = useStyles();
-  const [category, setCategory] = React.useState("All Categories");
+export default function CategoryDropdown(props) {
 
-  const handleChange = event => {
-    setCategory(event.target.value);
-  };
+	const classes = useStyles();
+	const [category, setCategory] = React.useState(0);
 
-  return (
-    <form className={classes.root} noValidate autoComplete="off">
-      <div>
-        <TextField
-          id="standard-select-currency"
-          select
-          label="Select"
-          value={category}
-          onChange={handleChange}
-          helperText="Please select a category"
-        >
-          {categories.map(option => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-      </div>
-    </form>
-  );
+	const categories = [];
+	props.categories.forEach((c) => {
+		categories.push({
+			id: c.id,
+			value: c.id,
+			label: c.name
+		});
+	});
+
+	const handleChange = (event) => {
+		const category = event.target.value;
+		setCategory(category);
+		props.passCategory(category);
+	};
+
+	return (
+		<form className={classes.root} noValidate autoComplete='off'>
+			<div>
+				<TextField
+					id='standard-select-currency'
+					select
+					label='Select'
+					value={category}
+					onChange={handleChange}
+					helperText='Please select a category'
+				>
+					<MenuItem key={0} value={0}>
+						{'View All Bills'}
+					</MenuItem>
+					{categories.map((option) => (
+						<MenuItem key={option.value} value={option.value}>
+							{option.label}
+						</MenuItem>
+					))}
+				</TextField>
+			</div>
+		</form>
+	);
 }
