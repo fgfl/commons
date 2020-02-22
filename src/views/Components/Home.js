@@ -24,80 +24,21 @@ import BillCard from "./Bill";
 const useStyles = makeStyles(styles);
 
 export default function Home(props) {
-  const [user, setUser] = useState();
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [bills, setBills] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [events, setEvents] = useState([]);
+  const classes = useStyles();
+  const { ...rest } = props;
+
   const [childCategory, setChildCategory] = useState(0);
-
-  useEffect(() => {
-    loginStatus();
-    fetchBills();
-  }, []);
-
-  const loginStatus = () => {
-    axios
-      .get("http://localhost:3001/logged_in", { withCredentials: true })
-      .then(response => {
-        if (response.data.logged_in) {
-          handleLogin(response.data);
-        } else {
-          handleLogout();
-        }
-      })
-      .catch(error => console.log("api errors:", error));
-  };
-
-  const fetchBills = () => {
-    axios
-      .get("http://localhost:3001/bills")
-      .then(response => {
-        setBills(response.data.bills);
-        setCategories(response.data.categories);
-      })
-      .catch(error => console.log("api errors:", error));
-  };
-
-  const handleLogin = data => {
-    setUser(data.user);
-    setLoggedIn(true);
-  };
-
-  const handleLogout = () => {
-    setUser({});
-    setLoggedIn(false);
-  };
-
-  const handleProfileUpdate = user => {
-    console.log(user);
-    axios
-      .put(
-        `http://localhost:3001/users/${user.id}`,
-        { user },
-        { withCredentials: true }
-      )
-      .then(res => {
-        console.log("done put for update user infor");
-        setUser(user);
-      })
-      .catch(res => {
-        console.error(`Failed setting profile: ${res}`);
-      });
-  };
 
   useEffect(() => console.log("Category ID: ", childCategory), [childCategory]);
 
-  const billsArray = bills.filter(bill => {
+  const bills = props.bills.filter(bill => {
     return childCategory === 0 ? bill : bill.categories.includes(childCategory);
   });
 
-  const billCards = billsArray.map(bill => {
+  const billCards = bills.map(bill => {
     return <BillCard key={bill.id} bill={bill} />;
   });
 
-  const classes = useStyles();
-  const { ...rest } = props;
   return (
     <div>
       <Header
@@ -127,7 +68,7 @@ export default function Home(props) {
       </Parallax>
 
       <div className={classNames(classes.main, classes.mainRaised)}>
-        <CategoryDropdown categories={categories} />
+        <CategoryDropdown categories={props.categories} />
         {billCards}
       </div>
       <Footer />
