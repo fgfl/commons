@@ -87,52 +87,50 @@ const Notifications = props => {
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Card className={classes.root} variant="outlined">
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <PersonIcon className={classes.accountCirle} />
-          </Avatar>
-          <Typography variant="h4">Get updates!</Typography>
-          <FormControl component="fieldset" className={classes.formControl}>
-            <FormLabel component="legend">
-              How would you like to receive notifications?
-            </FormLabel>
-            <FormGroup>
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Receive notifications by email"
-                onChange={handleEmailCheck}
-              />
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Receive notifications by SMS message"
-                onChange={handleSmsCheck}
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                id="phoneNumber"
-                label="Phone Number"
-                name="phoneNumber"
-                autoComplete="phoneNumber"
-                autoFocus
-                value={props.phoneNumber}
-                onChange={e => (data.phoneNumber = e.target.value)}
-              />
-            </FormGroup>
-          </FormControl>
-        </div>
-        <Button color="secondary" variant="contained" onClick={back}>
-          Back
-        </Button>
+    <div>
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <PersonIcon className={classes.accountCirle} />
+        </Avatar>
+        <Typography variant="h4">Get updates!</Typography>
+        <FormControl component="fieldset" className={classes.formControl}>
+          <FormLabel component="legend">
+            How would you like to receive notifications?
+          </FormLabel>
+          <FormGroup>
+            <FormControlLabel
+              control={<Checkbox />}
+              label="Receive notifications by email"
+              onChange={handleEmailCheck}
+            />
+            <FormControlLabel
+              control={<Checkbox />}
+              label="Receive notifications by SMS message"
+              onChange={handleSmsCheck}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              id="phoneNumber"
+              label="Phone Number"
+              name="phoneNumber"
+              autoComplete="phoneNumber"
+              autoFocus
+              value={props.phoneNumber}
+              onChange={e => (data.phoneNumber = e.target.value)}
+            />
+          </FormGroup>
+        </FormControl>
+      </div>
+      <Button color="secondary" variant="contained" onClick={back}>
+        Back
+      </Button>
 
-        <Button color="primary" variant="contained" onClick={proceed}>
-          Continue
-        </Button>
-      </Card>
-    </Container>
+      <Button color="primary" variant="contained" onClick={proceed}>
+        Continue
+      </Button>
+    </div>
   );
 };
 

@@ -14,7 +14,7 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Button from "components/CustomButtons/Button.js";
 import Card from "components/Card/Card.js";
-import Signup from "./Signup";
+import UserForm from "./UserForm";
 
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
 
@@ -50,7 +50,11 @@ export default function LoginPage(props) {
           <GridContainer justify="center">
             <GridItem xs={12} sm={12} md={4}>
               <Card className={classes[cardAnimaton]}>
-                <Signup />
+                <UserForm
+                  categories={props.categories}
+                  handleLogin={props.handleLogin}
+                  loggedInStatus={props.loggedIn}
+                />
               </Card>
             </GridItem>
           </GridContainer>
