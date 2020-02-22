@@ -22,7 +22,9 @@ const App = () => {
 
 	const loginStatus = () => {
 		axios
-			.get('http://localhost:3001/logged_in', { withCredentials: true })
+			.get(`${process.env.REACT_APP_PUBLIC_URL}/logged_in`, {
+				withCredentials: true
+			})
 			.then((response) => {
 				if (response.data.logged_in) {
 					handleLogin(response.data);
@@ -35,7 +37,7 @@ const App = () => {
 
 	const fetchBills = () => {
 		axios
-			.get('http://localhost:3001/bills')
+			.get(`${process.env.REACT_APP_PUBLIC_URL}/bills`)
 			.then((response) => {
 				setBills(response.data.bills);
 				setCategories(response.data.categories);
@@ -57,7 +59,7 @@ const App = () => {
 		console.log(user);
 		axios
 			.put(
-				`http://localhost:3001/users/${user.id}`,
+				`${process.env.REACT_APP_PUBLIC_URL}/users/${user.id}`,
 				{ user },
 				{ withCredentials: true }
 			)
