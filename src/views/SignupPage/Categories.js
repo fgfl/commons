@@ -58,30 +58,28 @@ const Categories = props => {
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Card className={classes.root} variant="outlined">
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <PersonIcon className={classes.accountCirle} />
-          </Avatar>
-          <Typography variant="h4">
-            Pick the topics you are interested in
-          </Typography>
-        </div>
-        <ChipsArray
-          categories={props.categories}
-          clicked={props.clicked}
-          setThisOneClicked={props.setThisOneClicked}
-        />
-        <Button color="secondary" variant="contained" onClick={back}>
-          Back
-        </Button>
+    <div>
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <PersonIcon className={classes.accountCirle} />
+        </Avatar>
+        <Typography variant="h4">
+          Pick the topics you are interested in
+        </Typography>
+      </div>
+      <ChipsArray
+        categories={props.categories}
+        clicked={props.clicked}
+        setThisOneClicked={props.setThisOneClicked}
+      />
+      <Button color="secondary" variant="contained" onClick={back}>
+        Back
+      </Button>
 
-        <Button color="primary" variant="contained" onClick={proceed}>
-          Continue
-        </Button>
-      </Card>
-    </Container>
+      <Button color="primary" variant="contained" onClick={proceed}>
+        Continue
+      </Button>
+    </div>
   );
 };
 

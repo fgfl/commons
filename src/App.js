@@ -6,7 +6,7 @@ import Home from "views/Components/Home.js";
 // import LandingPage from "views/LandingPage/LandingPage.js";
 import ProfilePage from "views/ProfilePage/ProfilePage.js";
 import LoginPage from "views/LoginPage/LoginPage.js";
-import UserForm from "views/SignupPage/SignupPage.js";
+import SignupPage from "views/SignupPage/SignupPage.js";
 import WatchListPage from "views/WatchListPage/WatchListPage.js";
 
 const App = props => {
@@ -105,7 +105,7 @@ const App = props => {
           <Route
             path="/signup-page"
             render={props => (
-              <UserForm
+              <SignupPage
                 {...props}
                 categories={categories}
                 handleLogin={handleLogin}

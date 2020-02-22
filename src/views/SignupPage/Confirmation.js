@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import PersonIcon from "@material-ui/icons/Person";
 
-import idToCategoryName from "../../helpers/idToCategoryName";
+import idToCategoryName from "./helpers/idToCategoryName";
 
 const Confirmation = props => {
   const back = e => {
@@ -50,7 +50,7 @@ const Confirmation = props => {
       margin: theme.spacing(3, 0, 2),
       backgroundColor: "#29c0a8"
     },
-    accountCirle: {
+    accountCircle: {
       width: "100px",
       height: "100px",
       color: "white"
@@ -67,30 +67,28 @@ const Confirmation = props => {
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Card className={classes.root} variant="outlined">
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <PersonIcon className={classes.accountCirle} />
-          </Avatar>
-          <Typography variant="h4">Confirm your details</Typography>
-        </div>
-        <Typography>Name: {props.details.name}</Typography>
-        <Typography>Username: {props.details.username}</Typography>
-        <Typography>Email: {props.details.email}</Typography>
-        <Typography>Selected Categories:</Typography>
-        {categories}
+    <div>
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <PersonIcon className={classes.accountCircle} />
+        </Avatar>
+        <Typography variant="h4">Confirm your details</Typography>
+      </div>
+      <Typography>Name: {props.details.name}</Typography>
+      <Typography>Username: {props.details.username}</Typography>
+      <Typography>Email: {props.details.email}</Typography>
+      <Typography>Selected Categories:</Typography>
+      {categories}
 
-        <Button color="secondary" variant="contained" onClick={back}>
-          Back
-        </Button>
+      <Button color="secondary" variant="contained" onClick={back}>
+        Back
+      </Button>
 
-        <Button color="primary" variant="contained" onClick={proceed}>
-          Submit
-        </Button>
-        <div>{props.errors ? props.handleErrors() : null}</div>
-      </Card>
-    </Container>
+      <Button color="primary" variant="contained" onClick={proceed}>
+        Submit
+      </Button>
+      <div>{props.errors ? props.handleErrors() : null}</div>
+    </div>
   );
 };
 

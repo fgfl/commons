@@ -68,7 +68,10 @@ export default function Home(props) {
       </Parallax>
 
       <div className={classNames(classes.main, classes.mainRaised)}>
-        <CategoryDropdown categories={props.categories} />
+        <CategoryDropdown
+          categories={props.categories}
+          passCategory={setChildCategory}
+        />
         {billCards}
       </div>
       <Footer />
