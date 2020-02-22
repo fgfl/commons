@@ -34,7 +34,7 @@ export default function LoginPage(props) {
       <Header
         absolute
         color="transparent"
-        brand="Material Kit React"
+        brand="Commons"
         rightLinks={<HeaderLinks />}
         {...rest}
       />

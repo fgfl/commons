@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import axios from "axios";
 
-import Home from "views/Components/Home.js";
+import Home from "views/HomePage/Home.js";
 // import LandingPage from "views/LandingPage/LandingPage.js";
 import ProfilePage from "views/ProfilePage/ProfilePage.js";
 import LoginPage from "views/LoginPage/LoginPage.js";
@@ -10,12 +10,11 @@ import SignupPage from "views/SignupPage/SignupPage.js";
 import WatchListPage from "views/WatchListPage/WatchListPage.js";
 
 const App = props => {
-  console.log(props.history);
   const [user, setUser] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
   const [bills, setBills] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [events, setEvents] = useState([]);
+  // const [events, setEvents] = useState([]);
 
   useEffect(() => {
     loginStatus();
@@ -89,8 +88,6 @@ const App = props => {
               />
             )}
           />
-          {/* <Route path="/landing-page" component={LandingPage} /> */}
-          {/* <Route path="/profile-page" component={ProfilePage} /> */}
           <Route
             path="/login-page"
             render={props => (
@@ -113,7 +110,18 @@ const App = props => {
               />
             )}
           />
-          <Route path="/watch-list" component={WatchListPage} />
+          <Route
+            path="/watch-list"
+            render={props => (
+              <WatchListPage
+                {...props}
+                bills={bills}
+                categories={categories}
+                handleLogin={handleLogin}
+                loggedInStatus={loggedIn}
+              />
+            )}
+          />
           <Route
             path="/user/:id"
             render={() => (

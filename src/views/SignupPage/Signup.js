@@ -47,7 +47,7 @@ const Signup = props => {
       margin: theme.spacing(3, 0, 2),
       backgroundColor: "#29c0a8"
     },
-    accountCirle: {
+    accountCircle: {
       width: "100px",
       height: "100px",
       color: "white"
@@ -66,7 +66,7 @@ const Signup = props => {
   return (
     <div className={classes.paper}>
       <Avatar className={classes.avatar}>
-        <PersonIcon className={classes.accountCirle} />
+        <PersonIcon className={classes.accountCircle} />
       </Avatar>
       <Typography variant="h4">Not a Member Yet? Sign Up!</Typography>
       <form className={classes.form} noValidate onSubmit={props.handleSubmit}>

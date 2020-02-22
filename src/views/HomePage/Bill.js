@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function BillCard(props) {
+export default function Bill(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 

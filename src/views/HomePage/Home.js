@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // react components for routing our app without refresh
@@ -19,7 +18,7 @@ import HeaderLinks from "components/Header/HeaderLinks.js";
 
 import styles from "assets/jss/material-kit-react/views/components.js";
 import CategoryDropdown from "./CategoryDropdown";
-import BillCard from "./Bill";
+import Bill from "./Bill";
 
 const useStyles = makeStyles(styles);
 
@@ -36,7 +35,7 @@ export default function Home(props) {
   });
 
   const billCards = bills.map(bill => {
-    return <BillCard key={bill.id} bill={bill} />;
+    return <Bill key={bill.id} bill={bill} />;
   });
 
   return (
