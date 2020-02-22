@@ -61,7 +61,7 @@ export default function HeaderLinks(props) {
           </IconButton>
         </Tooltip>*/}
         <Button
-          href="/profile-page"
+          href="/user/:id"
           color="transparent"
           className={classes.navLink}
         >
