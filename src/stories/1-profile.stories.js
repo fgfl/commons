@@ -16,9 +16,16 @@ const user = {
   email_notification: true,
   sms_notification: true,
 };
-storiesOf('Profile', module).add('Default', () => (
-  <Fragment>
-    <Profile user={user}></Profile>
-    <FindMyMp></FindMyMp>
-  </Fragment>
-));
+storiesOf('Profile', module)
+  .add('Logged in', () => (
+    <Fragment>
+      <Profile user={user}></Profile>
+      <FindMyMp></FindMyMp>
+    </Fragment>
+  ))
+  .add('Not logged in', () => {
+    <Fragment>
+      <Profile user={null}></Profile>
+      <FindMyMp></FindMyMp>
+    </Fragment>;
+  });
