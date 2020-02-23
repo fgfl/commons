@@ -42,11 +42,7 @@ export default function HeaderLinks({ loggedIn }) {
           </IconButton>
         </Tooltip>*/}
             <Link to="/user/:id">
-              <Button
-                href="/user/:id"
-                color="transparent"
-                className={classes.navLink}
-              >
+              <Button color="transparent" className={classes.navLink}>
                 PROFILE
               </Button>
             </Link>
@@ -94,6 +90,24 @@ export default function HeaderLinks({ loggedIn }) {
           </ListItem>
         </Fragment>
       )}
+      {/* For testing purpose. Remove these last two afterwards  */}
+      <Fragment>
+        <ListItem className={classes.listItem}>
+          <Link to="/user/:id">
+            <Button color="transparent" className={classes.navLink}>
+              PROFILE
+            </Button>
+          </Link>
+        </ListItem>
+
+        <ListItem className={classes.listItem}>
+          <Link to="/watch-list">
+            <Button color="transparent" className={classes.navLink}>
+              MY WATCH LIST
+            </Button>
+          </Link>
+        </ListItem>
+      </Fragment>
     </List>
   );
 }
