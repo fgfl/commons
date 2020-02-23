@@ -1,4 +1,3 @@
-/* eslint-disable default-case */
 import React, { useState } from 'react';
 import Signup from './Signup';
 import Notifications from './Notifications';
@@ -22,6 +21,7 @@ const UserForm = (props) => {
 	const [step, setStep] = useState(1);
 	const [clicked, setClicked] = useState({});
 
+	//Sets the category to clicked on categories component
 	const setThisOneClicked = (key) => {
 		setClicked((prev) => {
 			let state = { ...prev };
@@ -34,6 +34,7 @@ const UserForm = (props) => {
 		});
 	};
 
+	//Handles login submit
 	const handleSubmit = () => {
 		let user = {
 			name: name,
@@ -78,7 +79,7 @@ const UserForm = (props) => {
 		);
 	};
 
-	// Proceed to next step
+	// Proceed to next step of the signup form
 	const nextStep = (justFinishedStep, data) => {
 		if (justFinishedStep === 1) {
 			if (data.name) {
@@ -132,7 +133,6 @@ const UserForm = (props) => {
 				return <Signup nextStep={nextStep} />;
 			case 2:
 				return <Notifications nextStep={nextStep} prevStep={prevStep} />;
-			// eslint-disable-next-line no-duplicate-case
 			case 3:
 				return (
 					<Categories

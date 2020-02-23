@@ -16,61 +16,61 @@ const App = (props) => {
   const [categories, setCategories] = useState([]);
   // const [events, setEvents] = useState([]);
 
+  // Loads initial page state and fetches bills/categories
   useEffect(() => {
     loginStatus();
     fetchBills();
   }, []);
 
-  const loginStatus = () => {
-    axios
-      .get(`${process.env.REACT_APP_PUBLIC_URL}/logged_in`, {
-        withCredentials: true
-      })
-      .then((response) => {
-        if (response.data.logged_in) {
-          handleLogin(response.data);
-        } else {
-          handleLogout();
-        }
-      })
-      .catch((error) => console.log('api errors:', error));
+  // Fetches bills from the Rails back end
+  const fetchBills = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_PUBLIC_URL}/bills`
+      );
+      console.log(response.data.bills);
+      setBills(response.data.bills);
+      setCategories(response.data.categories);
+    } catch (error) {
+      console.error('Error occured on fetchBills:', error);
+    }
   };
 
-  const handleLogout = () => {
-    setUser({});
-    setLoggedIn(false);
+  const loginStatus = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_PUBLIC_URL}/logged_in`
+      );
+      if (response.data.logged_in) {
+        handleLogin(response.data);
+      } else {
+        handleLogout();
+      }
+    } catch (error) {
+      console.error('Error occured on loginStatus:', error);
+    }
   };
 
-  const fetchBills = () => {
-    axios
-      .get(`${process.env.REACT_APP_PUBLIC_URL}/bills`)
-      .then((response) => {
-        setBills(response.data.bills);
-        setCategories(response.data.categories);
-      })
-      .catch((error) => console.log('api errors:', error));
+  const handleProfileUpdate = async (user) => {
+    try {
+      axios.put(`${process.env.REACT_APP_PUBLIC_URL}/users/${user.id}`, {
+        user
+      });
+      setUser(user);
+    } catch (error) {
+      console.error(`Failed setting profile: ${error}`);
+    }
   };
 
+  // Login/logout handlers
   const handleLogin = (data) => {
     setUser(data.user);
     setLoggedIn(true);
   };
 
-  const handleProfileUpdate = (user) => {
-    console.log(user);
-    axios
-      .put(
-        `${process.env.REACT_APP_PUBLIC_URL}/users/${user.id}`,
-        { user },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        console.log('done put for update user infor');
-        setUser(user);
-      })
-      .catch((res) => {
-        console.error(`Failed setting profile: ${res}`);
-      });
+  const handleLogout = () => {
+    setUser({});
+    setLoggedIn(false);
   };
 
   return (

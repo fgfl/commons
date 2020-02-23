@@ -63,7 +63,12 @@ export default function Bill(props) {
         }
         action={
           <IconButton aria-label='settings'>
-            <BookmarkIcon />
+            <BookmarkIcon
+              onClick={() => {
+                props.setThisOneClicked(props.key);
+                console.log('I was clicked');
+              }}
+            />
           </IconButton>
         }
         title={props.bill.title}
