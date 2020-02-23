@@ -35,7 +35,7 @@ const UserForm = (props) => {
   };
 
   //Handles login submit
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     let user = {
       name: name,
       username: username,
@@ -48,19 +48,20 @@ const UserForm = (props) => {
       phone_number: phoneNumber,
       categories: Object.keys(clicked)
     };
-    console.log(user);
 
-    axios
-      .post(`${process.env.REACT_APP_PUBLIC_URL}/users`, { user })
-      .then((response) => {
-        if (response.data.status === 'created') {
-          props.handleLogin(response.data);
-          setStep(step + 1);
-        } else {
-          setErrors(response.data.errors);
-        }
-      })
-      .catch((error) => console.log('api errors:', error));
+    try {
+      const response = axios.post(`${process.env.REACT_APP_PUBLIC_URL}/users`, {
+        user
+      });
+      if (response.data.status === 'created') {
+        props.handleLogin(response.data);
+        setStep(step + 1);
+      } else {
+        setErrors(response.data.errors);
+      }
+    } catch (error) {
+      console.error('api errors:', error);
+    }
   };
 
   const handleErrors = () => {
