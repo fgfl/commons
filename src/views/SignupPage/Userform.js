@@ -50,9 +50,12 @@ const UserForm = (props) => {
     };
 
     try {
-      const response = axios.post(`${process.env.REACT_APP_PUBLIC_URL}/users`, {
-        user
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_PUBLIC_URL}/users`,
+        {
+          user
+        }
+      );
       if (response.data.status === 'created') {
         props.handleLogin(response.data);
         setStep(step + 1);
