@@ -18,7 +18,7 @@ import Login from "./Login.js";
 
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
 
-import image from "assets/img/bg7.jpg";
+import image from "assets/img/bg.jpg";
 
 const useStyles = makeStyles(styles);
 
@@ -49,7 +49,7 @@ export default function LoginPage(props) {
       >
         <div className={classes.container}>
           <GridContainer justify="center">
-            <GridItem xs={12} sm={12} md={4}>
+            <GridItem>
               <Card className={classes[cardAnimaton]}>
                 <Login
                   handleLogin={props.handleLogin}

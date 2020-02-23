@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
 import PersonIcon from "@material-ui/icons/Person";
 import { Typography, TextField, Button, Avatar } from "@material-ui/core";
 
@@ -23,8 +24,6 @@ const Signup = props => {
       zIndex: 1000,
       marginTop: theme.spacing(4),
       marginBottom: theme.spacing(8),
-      display: "flex",
-      flexDirection: "column",
       alignItems: "center",
       border: 5,
       padding: theme.spacing(2),
@@ -32,6 +31,7 @@ const Signup = props => {
     },
     avatar: {
       zIndex: 1000,
+      margin: "0 auto",
       marginBottom: theme.spacing(2),
       width: "120px",
       height: "120px",
@@ -51,24 +51,19 @@ const Signup = props => {
       width: "100px",
       height: "100px",
       color: "white"
-    },
-    backDrop: {
-      position: "absolute",
-      height: "75%",
-      width: "100%",
-      bottom: 0,
-      left: 0,
-      zIndex: 0
     }
   }));
   const classes = useStyles();
 
   return (
-    <div className={classes.paper}>
+    <Container maxWidth="xs" className={classes.paper}>
       <Avatar className={classes.avatar}>
         <PersonIcon className={classes.accountCircle} />
       </Avatar>
-      <Typography variant="h4">Not a Member Yet? Sign Up!</Typography>
+      <Typography variant="h4">
+        Not a Member Yet?
+        <br /> Sign Up!
+      </Typography>
       <form className={classes.form} noValidate onSubmit={props.handleSubmit}>
         <TextField
           variant="outlined"
@@ -184,7 +179,7 @@ const Signup = props => {
         {props.errors ? props.handleErrors() : null}
       </form>
       <div className={classes.backDrop}></div>
-    </div>
+    </Container>
   );
 };
 export default Signup;
