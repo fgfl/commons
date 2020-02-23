@@ -1,62 +1,62 @@
-import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import axios from 'axios';
 
-import Home from "views/HomePage/Home.js";
+import Home from 'views/HomePage/Home.js';
 // import LandingPage from "views/LandingPage/LandingPage.js";
-import ProfilePage from "views/ProfilePage/ProfilePage.js";
-import LoginPage from "views/LoginPage/LoginPage.js";
-import SignupPage from "views/SignupPage/SignupPage.js";
-import WatchListPage from "views/WatchListPage/WatchListPage.js";
+import ProfilePage from 'views/ProfilePage/ProfilePage.js';
+import LoginPage from 'views/LoginPage/LoginPage.js';
+import SignupPage from 'views/SignupPage/SignupPage.js';
+import WatchListPage from 'views/WatchListPage/WatchListPage.js';
 
-const App = props => {
+const App = (props) => {
   const [user, setUser] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
   const [bills, setBills] = useState([]);
   const [categories, setCategories] = useState([]);
   // const [events, setEvents] = useState([]);
 
+  useEffect(() => {
+    loginStatus();
+    fetchBills();
+  }, []);
+
   const loginStatus = () => {
     axios
       .get(`${process.env.REACT_APP_PUBLIC_URL}/logged_in`, {
         withCredentials: true
       })
-      .then(response => {
+      .then((response) => {
         if (response.data.logged_in) {
           handleLogin(response.data);
         } else {
           handleLogout();
         }
       })
-      .catch(error => console.log("api errors:", error));
+      .catch((error) => console.log('api errors:', error));
+  };
+
+  const handleLogout = () => {
+    setUser({});
+    setLoggedIn(false);
   };
 
   const fetchBills = () => {
     axios
       .get(`${process.env.REACT_APP_PUBLIC_URL}/bills`)
-      .then(response => {
+      .then((response) => {
         setBills(response.data.bills);
         setCategories(response.data.categories);
       })
-      .catch(error => console.log("api errors:", error));
+      .catch((error) => console.log('api errors:', error));
   };
 
-  const fetchBills = () => {
-    axios
-      .get("http://localhost:3001/bills")
-      .then(response => {
-        setBills(response.data.bills);
-        setCategories(response.data.categories);
-      })
-      .catch(error => console.log("api errors:", error));
-  };
-
-  const handleLogin = data => {
+  const handleLogin = (data) => {
     setUser(data.user);
     setLoggedIn(true);
   };
 
-  const handleProfileUpdate = user => {
+  const handleProfileUpdate = (user) => {
     console.log(user);
     axios
       .put(
@@ -64,28 +64,11 @@ const App = props => {
         { user },
         { withCredentials: true }
       )
-      .then(res => {
-        console.log("done put for update user infor");
+      .then((res) => {
+        console.log('done put for update user infor');
         setUser(user);
       })
-      .catch(res => {
-        console.error(`Failed setting profile: ${res}`);
-      });
-  };
-
-  const handleProfileUpdate = user => {
-    console.log(user);
-    axios
-      .put(
-        `http://localhost:3001/users/${user.id}`,
-        { user },
-        { withCredentials: true }
-      )
-      .then(res => {
-        console.log("done put for update user infor");
-        setUser(user);
-      })
-      .catch(res => {
+      .catch((res) => {
         console.error(`Failed setting profile: ${res}`);
       });
   };
@@ -96,8 +79,8 @@ const App = props => {
         <Switch>
           <Route
             exact
-            path="/"
-            render={props => (
+            path='/'
+            render={(props) => (
               <Home
                 {...props}
                 bills={bills}
@@ -108,8 +91,8 @@ const App = props => {
             )}
           />
           <Route
-            path="/login-page"
-            render={props => (
+            path='/login-page'
+            render={(props) => (
               <LoginPage
                 {...props}
                 handleLogin={handleLogin}
@@ -119,8 +102,8 @@ const App = props => {
             )}
           />
           <Route
-            path="/signup-page"
-            render={props => (
+            path='/signup-page'
+            render={(props) => (
               <SignupPage
                 {...props}
                 categories={categories}
@@ -130,8 +113,8 @@ const App = props => {
             )}
           />
           <Route
-            path="/watch-list"
-            render={props => (
+            path='/watch-list'
+            render={(props) => (
               <WatchListPage
                 {...props}
                 bills={bills}
@@ -142,7 +125,7 @@ const App = props => {
             )}
           />
           <Route
-            path="/user/:id"
+            path='/user/:id'
             render={() => (
               <ProfilePage
                 user={user}

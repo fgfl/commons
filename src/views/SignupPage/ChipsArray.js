@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Chip from "@material-ui/core/Chip";
-import Paper from "@material-ui/core/Paper";
-import DoneItem from "@material-ui/icons/Done";
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Chip from '@material-ui/core/Chip';
+import Paper from '@material-ui/core/Paper';
+import DoneItem from '@material-ui/icons/Done';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
-    justifyContent: "center",
-    flexWrap: "wrap",
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
     padding: theme.spacing(0.5)
   },
   chip: {
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ChipsArray = props => {
+const ChipsArray = (props) => {
   const categories = props.categories;
 
   console.log(categories);
@@ -26,9 +26,9 @@ const ChipsArray = props => {
 
   return (
     <Paper className={classes.root}>
-      {chipData.map(data => {
+      {chipData.map((data) => {
         console.log(props);
-        let color = props.clicked[data.id] ? "blue" : "grey";
+        let color = props.clicked[data.id] ? 'blue' : 'grey';
 
         return (
           <Chip
