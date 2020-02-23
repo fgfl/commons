@@ -20,6 +20,7 @@ const Signup = (props) => {
       password_confirmation: ''
     }
   });
+  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event;
@@ -77,6 +78,7 @@ const Signup = (props) => {
 
   const proceed = (event) => {
     event.preventDefault();
+    setSubmitted(true);
     validateForm(state.errors)
       ? props.nextStep(1, state)
       : console.error('Invalid Form');
@@ -146,7 +148,9 @@ const Signup = (props) => {
           value={props.name}
           onChange={(e) => handleChange(e.target)}
         />
-        {errors.name.length > 0 && <span className="error">{errors.name}</span>}
+        {submitted && errors.name.length > 0 && (
+          <span className="error">{errors.name}</span>
+        )}
         <TextField
           variant="outlined"
           margin="normal"
@@ -160,7 +164,7 @@ const Signup = (props) => {
           value={props.username}
           onChange={(e) => handleChange(e.target)}
         />
-        {errors.username.length > 0 && (
+        {submitted && errors.username.length > 0 && (
           <span className="error">{errors.username}</span>
         )}
         <TextField
@@ -176,7 +180,7 @@ const Signup = (props) => {
           value={props.email}
           onChange={(e) => handleChange(e.target)}
         />
-        {errors.email.length > 0 && (
+        {submitted && errors.email.length > 0 && (
           <span className="error">{errors.email}</span>
         )}
         <TextField
@@ -191,7 +195,7 @@ const Signup = (props) => {
           autoComplete="current-password"
           onChange={(e) => handleChange(e.target)}
         />
-        {errors.password.length > 0 && (
+        {submitted && errors.password.length > 0 && (
           <span className="error">{errors.password}</span>
         )}
         <TextField
@@ -206,7 +210,7 @@ const Signup = (props) => {
           autoComplete="current-password"
           onChange={(e) => handleChange(e.target)}
         />
-        {errors.password_confirmation.length > 0 && (
+        {submitted && errors.password_confirmation.length > 0 && (
           <span className="error">{errors.password_confirmation}</span>
         )}
         <TextField
