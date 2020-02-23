@@ -1,38 +1,38 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
-import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
-import { red } from "@material-ui/core/colors";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import BookmarkIcon from "@material-ui/icons/Bookmark";
-import clsx from "clsx";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
+import { red } from '@material-ui/core/colors';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
+import clsx from 'clsx';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    textAlign: "left",
-    marginBottom: "16px"
+    textAlign: 'left',
+    marginBottom: '16px'
   },
   expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest
     })
   },
   expandOpen: {
-    transform: "rotate(180deg)"
+    transform: 'rotate(180deg)'
   },
   avatar: {
     backgroundColor: red[500],
-    width: "60px",
-    height: "60px",
+    width: '60px',
+    height: '60px',
     fontWeight: 900
   }
 }));
@@ -50,27 +50,32 @@ export default function Bill(props) {
       <CardHeader
         avatar={
           <div>
-            <Avatar aria-label="bill" className={classes.avatar}>
+            <Avatar aria-label='bill' className={classes.avatar}>
               {props.bill.code}
             </Avatar>
             <Typography
-              color="textSecondary"
-              style={{ fontSize: "0.75em", textAlign: "center" }}
+              color='textSecondary'
+              style={{ fontSize: '0.75em', textAlign: 'center' }}
             >
               Second <br /> Reading
             </Typography>
           </div>
         }
         action={
-          <IconButton aria-label="settings">
-            <BookmarkIcon />
+          <IconButton aria-label='settings'>
+            <BookmarkIcon
+              onClick={() => {
+                props.setThisOneClicked(props.key);
+                console.log('I was clicked');
+              }}
+            />
           </IconButton>
         }
         title={props.bill.title}
-        subheader={"Introduced on " + props.bill.introduced_date}
+        subheader={'Introduced on ' + props.bill.introduced_date}
       />
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography variant='body2' color='textSecondary' component='p'>
           {props.bill.description}
         </Typography>
         <Typography>
@@ -87,12 +92,12 @@ export default function Bill(props) {
           })}
           onClick={handleExpandClick}
           aria-expanded={expanded}
-          aria-label="show more"
+          aria-label='show more'
         >
           <ExpandMoreIcon />
         </IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+      <Collapse in={expanded} timeout='auto' unmountOnExit>
         <CardContent>
           <Typography paragraph>Summary:</Typography>
           <Typography paragraph>
