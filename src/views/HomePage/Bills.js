@@ -38,9 +38,8 @@ export default function Bill(props) {
     let color = props.clicked[bill.id] ? 'red' : 'grey';
     return (
       <BillCard
-        key={bill.id}
-        setThisOneClicked={props.setThisOneClicked}
         key={props.bill.id}
+        setThisOneClicked={props.setThisOneClicked}
         bill={props.bill}
         style={{ color: color }}
       />
