@@ -23,11 +23,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'aquamarine',
 
     [theme.breakpoints.up('sm')]: {
-      flexDirection: 'row'
-    }
+      flexDirection: 'row',
+    },
   },
   avatar: {},
-  buttons: {}
+  buttons: {},
 }));
 
 const Profile = ({ user, handleProfileUpdate }) => {
