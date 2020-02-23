@@ -35,7 +35,9 @@ export default function LoginPage(props) {
         absolute
         color="transparent"
         brand="Commons"
-        rightLinks={<HeaderLinks loggedIn={props.loggedInStatus} />}
+        rightLinks={
+          <HeaderLinks user={props.user} loggedIn={props.loggedInStatus} />
+        }
         {...rest}
       />
       <div

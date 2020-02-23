@@ -47,7 +47,9 @@ export default function WatchListPage(props) {
     <div>
       <Header
         brand="Commons"
-        rightLinks={<HeaderLinks loggedIn={props.loggedInStatus} />}
+        rightLinks={
+          <HeaderLinks user={props.user} loggedIn={props.loggedInStatus} />
+        }
         fixed
         color="transparent"
         changeColorOnScroll={{
