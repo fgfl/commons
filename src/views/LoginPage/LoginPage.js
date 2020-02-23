@@ -23,13 +23,16 @@ import image from 'assets/img/bg.jpg';
 const useStyles = makeStyles(styles);
 
 export default function LoginPage(props) {
-  console.log(props.history);
   const [cardAnimaton, setCardAnimation] = React.useState('cardHidden');
+
   setTimeout(function() {
     setCardAnimation('');
   }, 700);
+
   const classes = useStyles();
+
   const { ...rest } = props;
+
   return (
     <div>
       <Header
@@ -53,6 +56,7 @@ export default function LoginPage(props) {
               <Card className={classes[cardAnimaton]}>
                 <Login
                   handleLogin={props.handleLogin}
+                  loggedInStatus={props.loggedInStatus}
                   history={props.history}
                 />
               </Card>
