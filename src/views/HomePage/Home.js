@@ -42,8 +42,6 @@ export default function Home(props) {
 
 	const [childCategory, setChildCategory] = useState(0);
 
-	useEffect(() => console.log('Category ID: ', childCategory), [childCategory]);
-
 	return (
 		<div>
 			<Header
