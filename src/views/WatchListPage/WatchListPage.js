@@ -18,6 +18,7 @@ import HeaderLinks from "components/Header/HeaderLinks.js";
 import styles from "assets/jss/material-kit-react/views/components.js";
 import CategoryDropdown from "../HomePage/CategoryDropdown";
 import Bill from "../HomePage/Bill";
+import image from "assets/img/bg2.jpg";
 
 const useStyles = makeStyles(styles);
 
@@ -50,17 +51,18 @@ export default function WatchListPage(props) {
         }}
         {...rest}
       />
-      <Parallax image={require("assets/img/bg4.jpg")}>
+      <div
+        className={classes.pageHeader}
+        style={{
+          backgroundImage: "url(" + image + ")",
+          backgroundSize: "cover",
+          backgroundPosition: "top center"
+        }}
+      ></div>
+      <Parallax image={require("assets/img/bg2.jpg")}>
         <div className={classes.container}>
           <GridContainer>
-            <GridItem>
-              <div className={classes.brand}>
-                <h1 className={classes.title}>Welcome to Commons</h1>
-                <h3 className={classes.subtitle}>
-                  Get informed. Stay engaged.
-                </h3>
-              </div>
-            </GridItem>
+            <GridItem></GridItem>
           </GridContainer>
         </div>
       </Parallax>

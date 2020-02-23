@@ -51,12 +51,14 @@ export default function Home(props) {
         }}
         {...rest}
       />
-      <Parallax image={require("assets/img/bg4.jpg")}>
+      <Parallax
+        image={require("assets/img/erik-mclean-f7wX87Zs4fU-unsplash.jpg")}
+      >
         <div className={classes.container}>
           <GridContainer>
             <GridItem>
               <div className={classes.brand}>
-                <h1 className={classes.title}>Welcome to Commons</h1>
+                <h1 className={classes.title}>Commons</h1>
                 <h3 className={classes.subtitle}>
                   Get informed. Stay engaged.
                 </h3>

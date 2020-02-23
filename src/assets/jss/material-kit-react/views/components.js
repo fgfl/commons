@@ -7,20 +7,24 @@ const componentsStyle = {
     textAlign: "left"
   },
   title: {
-    fontSize: "4.2rem",
-    fontWeight: "600",
+    fontSize: "4rem",
     display: "inline-block",
-    position: "relative"
+    position: "relative",
+    fontFamily: "Prompt",
+    fontSize: "4em",
+    fontWeight: "600"
   },
   subtitle: {
     fontSize: "1.313rem",
+    fontWeight: "900",
     maxWidth: "500px",
     margin: "10px 0 0"
   },
   main: {
     background: "#FFFFFF",
     position: "relative",
-    zIndex: "3"
+    zIndex: "3",
+    padding: "2em"
   },
   mainRaised: {
     margin: "-60px 30px 0px",
