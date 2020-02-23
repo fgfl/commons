@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
-import NavBar from './components/Nav';
-import Home from './components/Home';
-import Watch from './components/Watch';
-import Login from './components/registrations/Login';
-import UserForm from './components/registrations/Signup/UserForm';
-import Profile from './components/profile/Profile';
 
-const App = () => {
+import Home from 'views/HomePage/Home.js';
+// import LandingPage from "views/LandingPage/LandingPage.js";
+import ProfilePage from 'views/ProfilePage/ProfilePage.js';
+import LoginPage from 'views/LoginPage/LoginPage.js';
+import SignupPage from 'views/SignupPage/SignupPage.js';
+import WatchListPage from 'views/WatchListPage/WatchListPage.js';
+
+const App = (props) => {
 	const [user, setUser] = useState();
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [bills, setBills] = useState([]);
 	const [categories, setCategories] = useState([]);
-	const [events, setEvents] = useState([]);
+	// const [events, setEvents] = useState([]);
 
 	useEffect(() => {
 		loginStatus();
@@ -22,9 +23,7 @@ const App = () => {
 
 	const loginStatus = () => {
 		axios
-			.get(`${process.env.REACT_APP_PUBLIC_URL}/logged_in`, {
-				withCredentials: true
-			})
+			.get(`${process.env.REACT_APP_PUBLIC_URL}/logged_in`)
 			.then((response) => {
 				if (response.data.logged_in) {
 					handleLogin(response.data);
@@ -33,6 +32,11 @@ const App = () => {
 				}
 			})
 			.catch((error) => console.log('api errors:', error));
+	};
+
+	const handleLogout = () => {
+		setUser({});
+		setLoggedIn(false);
 	};
 
 	const fetchBills = () => {
@@ -50,19 +54,10 @@ const App = () => {
 		setLoggedIn(true);
 	};
 
-	const handleLogout = () => {
-		setUser({});
-		setLoggedIn(false);
-	};
-
 	const handleProfileUpdate = (user) => {
 		console.log(user);
 		axios
-			.put(
-				`${process.env.REACT_APP_PUBLIC_URL}/users/${user.id}`,
-				{ user },
-				{ withCredentials: true }
-			)
+			.put(`${process.env.REACT_APP_PUBLIC_URL}/users/${user.id}`, { user })
 			.then((res) => {
 				console.log('done put for update user infor');
 				setUser(user);
@@ -74,8 +69,7 @@ const App = () => {
 
 	return (
 		<div>
-			<Router>
-				<NavBar user={user} handleLogout={handleLogout} loggedIn={loggedIn} />
+			<Router history={props.hist}>
 				<Switch>
 					<Route
 						exact
@@ -91,21 +85,20 @@ const App = () => {
 						)}
 					/>
 					<Route
-						exact
-						path='/login'
+						path='/login-page'
 						render={(props) => (
-							<Login
+							<LoginPage
 								{...props}
 								handleLogin={handleLogin}
 								loggedInStatus={loggedIn}
+								history={props.history}
 							/>
 						)}
 					/>
 					<Route
-						exact
-						path='/signup'
+						path='/signup-page'
 						render={(props) => (
-							<UserForm
+							<SignupPage
 								{...props}
 								categories={categories}
 								handleLogin={handleLogin}
@@ -114,26 +107,24 @@ const App = () => {
 						)}
 					/>
 					<Route
-						exact
-						path='/logout'
+						path='/watch-list'
 						render={(props) => (
-							<Home
+							<WatchListPage
 								{...props}
 								bills={bills}
 								categories={categories}
-								handleLogin={handleLogout}
+								handleLogin={handleLogin}
 								loggedInStatus={loggedIn}
 							/>
 						)}
 					/>
-					<Route path='/Watch' component={Watch} />
 					<Route
 						path='/user/:id'
 						render={() => (
-							<Profile
+							<ProfilePage
 								user={user}
 								handleProfileUpdate={handleProfileUpdate}
-							></Profile>
+							/>
 						)}
 					/>
 				</Switch>

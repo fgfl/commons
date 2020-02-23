@@ -50,11 +50,7 @@ const UserForm = (props) => {
 		console.log(user);
 
 		axios
-			.post(
-				`${process.env.REACT_APP_PUBLIC_URL}/users`,
-				{ user },
-				{ withCredentials: true }
-			)
+			.post(`${process.env.REACT_APP_PUBLIC_URL}/users`, { user })
 			.then((response) => {
 				if (response.data.status === 'created') {
 					props.handleLogin(response.data);
