@@ -14,7 +14,7 @@ import GridContainer from 'components/Grid/GridContainer.js';
 import GridItem from 'components/Grid/GridItem.js';
 import Button from 'components/CustomButtons/Button.js';
 import Card from 'components/Card/Card.js';
-import UserForm from './UserForm';
+import UserForm from './Userform';
 
 import styles from 'assets/jss/material-kit-react/views/loginPage.js';
 
@@ -33,8 +33,8 @@ export default function LoginPage(props) {
     <div>
       <Header
         absolute
-        color='transparent'
-        brand='Commons'
+        color="transparent"
+        brand="Commons"
         rightLinks={<HeaderLinks />}
         {...rest}
       />
@@ -43,11 +43,11 @@ export default function LoginPage(props) {
         style={{
           backgroundImage: 'url(' + image + ')',
           backgroundSize: 'cover',
-          backgroundPosition: 'top center'
+          backgroundPosition: 'top center',
         }}
       >
         <div className={classes.container}>
-          <GridContainer justify='center'>
+          <GridContainer justify="center">
             <GridItem>
               <Card className={classes[cardAnimaton]}>
                 <UserForm
