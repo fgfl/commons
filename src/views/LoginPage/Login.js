@@ -18,13 +18,8 @@ const Login = (props) => {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState('');
 
-  // componentWillMount() {
-  //   return this.props.loggedInStatus ? this.redirect() : null;
-  // }
-
   useEffect(() => {
     if (props.loggedInStatus) {
-      console.log('logged in');
       redirect('/');
     }
   });
@@ -33,14 +28,13 @@ const Login = (props) => {
     event.preventDefault();
     let user = {
       email: email,
-      password: password
+      password: password,
     };
 
     axios
       .post(`${process.env.REACT_APP_PUBLIC_URL}/login`, { user })
       .then((response) => {
-        if (response.data.logged_in) {
-          console.log('RESPONSE', response.data);
+        if (response.data.status === 'created') {
           props.handleLogin(response.data);
           redirect('/');
         } else {
@@ -50,19 +44,18 @@ const Login = (props) => {
       .catch((error) => console.log('api errors:', error));
   };
 
-  const redirect = () => {
-    props.history.push('/');
+  const redirect = (uri) => {
+    props.history.push(uri);
   };
 
   const handleErrors = () => {
-    console.log(errors);
     return (
       <div>
         <ul>
           {errors.map((error) => {
             return (
               <li key={error}>
-                <Typography variant='body1'>{error}</Typography>
+                <Typography variant="body1">{error}</Typography>
               </li>
             );
           })}
@@ -80,28 +73,28 @@ const Login = (props) => {
       flexDirection: 'column',
       alignItems: 'center',
       border: 5,
-      padding: theme.spacing(2)
+      padding: theme.spacing(2),
     },
     avatar: {
       zIndex: 1000,
       margin: theme.spacing(1),
       width: '10em',
       height: '10em',
-      backgroundColor: '#29c0a8'
+      backgroundColor: '#29c0a8',
     },
     form: {
       zIndex: 1000,
       width: '100%', // Fix IE 11 issue.
       marginTop: theme.spacing(1),
-      textAlign: 'center'
+      textAlign: 'center',
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
-      backgroundColor: '#29c0a8'
+      backgroundColor: '#29c0a8',
     },
     accountCirle: {
       fontSize: '9.5em',
-      color: 'white'
+      color: 'white',
     },
     backDrop: {
       backgroundColor: 'grey',
@@ -110,13 +103,13 @@ const Login = (props) => {
       width: '100%',
       bottom: 0,
       left: 0,
-      zIndex: 0
-    }
+      zIndex: 0,
+    },
   }));
   const classes = useStyles();
 
   return (
-    <Container component='main' maxWidth='xs'>
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -124,14 +117,14 @@ const Login = (props) => {
         </Avatar>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
-            variant='outlined'
-            margin='normal'
+            variant="outlined"
+            margin="normal"
             required
             fullWidth
-            id='email'
-            label='Email Address'
-            name='email'
-            autoComplete='email'
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
             autoFocus
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -139,47 +132,47 @@ const Login = (props) => {
           {errors ? (
             <TextField
               error
-              variant='outlined'
-              margin='normal'
+              variant="outlined"
+              margin="normal"
               required
               fullWidth
-              name='password'
-              label='Password'
-              type='password'
-              id='password'
-              autoComplete='current-password'
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
               onChange={(e) => setPassword(e.target.value)}
             />
           ) : (
             <TextField
-              variant='outlined'
-              margin='normal'
+              variant="outlined"
+              margin="normal"
               required
               fullWidth
-              name='password'
-              label='Password'
-              type='password'
-              id='password'
-              autoComplete='current-password'
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
               onChange={(e) => setPassword(e.target.value)}
             />
           )}
           <Button
-            type='submit'
+            type="submit"
             fullWidth
-            variant='contained'
-            color='primary'
+            variant="contained"
+            color="primary"
             className={classes.submit}
           >
             LOGIN
           </Button>
-          <Grid container justify='center'>
+          <Grid container justify="center">
             <Grid item>
               <Link
-                href='#'
-                variant='body2'
+                href="#"
+                variant="body2"
                 component={RouterLink}
-                to='/signup'
+                to="/signup-page"
               >
                 {'Not a member? Sign up'}
               </Link>
