@@ -45,13 +45,13 @@ export default function Home(props) {
   return (
     <div>
       <Header
-        brand='Commons'
-        rightLinks={<HeaderLinks />}
+        brand="Commons"
+        rightLinks={<HeaderLinks loggedIn={props.loggedInStatus} />}
         fixed
-        color='transparent'
+        color="transparent"
         changeColorOnScroll={{
           height: 400,
-          color: 'white'
+          color: 'white',
         }}
         {...rest}
       />
@@ -84,7 +84,6 @@ export default function Home(props) {
           childCategory={childCategory}
         />
       </div>
-      <Footer />
     </div>
   );
 }

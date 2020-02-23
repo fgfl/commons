@@ -27,14 +27,14 @@ export default function LandingPage(props) {
   return (
     <div>
       <Header
-        color='transparent'
+        color="transparent"
         routes={dashboardRoutes}
-        brand='Material Kit React'
-        rightLinks={<HeaderLinks />}
+        brand="Material Kit React"
+        rightLinks={<HeaderLinks loggedIn={props.loggedInStatus} />}
         fixed
         changeColorOnScroll={{
           height: 400,
-          color: 'white'
+          color: 'white',
         }}
         {...rest}
       />
@@ -51,13 +51,13 @@ export default function LandingPage(props) {
               </h4>
               <br />
               <Button
-                color='danger'
-                size='lg'
-                href='https://www.youtube.com/watch?v=dQw4w9WgXcQ&ref=creativetim'
-                target='_blank'
-                rel='noopener noreferrer'
+                color="danger"
+                size="lg"
+                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ref=creativetim"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <i className='fas fa-play' />
+                <i className="fas fa-play" />
                 Watch video
               </Button>
             </GridItem>
