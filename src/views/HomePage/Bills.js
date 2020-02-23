@@ -34,7 +34,13 @@ export default function Bills(props) {
     setExpanded(!expanded);
   };
 
-  const billCards = props.bills.map((bill) => {
+  const bills = props.bills.filter((bill) => {
+    return props.childCategory === 0
+      ? bill
+      : bill.categories.includes(props.childCategory);
+  });
+
+  const billCards = bills.map((bill) => {
     let color = props.clicked[bill.id] ? 'red' : 'grey';
     return (
       <BillCard

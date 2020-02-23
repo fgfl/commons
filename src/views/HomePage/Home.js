@@ -81,6 +81,7 @@ export default function Home(props) {
           bills={props.bills}
           clicked={clicked}
           setThisOneClicked={setThisOneClicked}
+          childCategory={childCategory}
         />
       </div>
       <Footer />
