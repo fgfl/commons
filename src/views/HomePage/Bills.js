@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Bill(props) {
+export default function Bills(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -38,9 +38,9 @@ export default function Bill(props) {
     let color = props.clicked[bill.id] ? 'red' : 'grey';
     return (
       <BillCard
-        key={props.bill.id}
+        key={bill.id}
         setThisOneClicked={props.setThisOneClicked}
-        bill={props.bill}
+        bill={bill}
         style={{ color: color }}
       />
     );
