@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import Profile from '../components/profile/Profile';
+import Profile from '../views/ProfilePage/Profile';
+import FindMyMp from '../components/FindMyMp/FindMyMp';
 
 const user = {
   name: 'Fred',
@@ -15,6 +16,30 @@ const user = {
   email_notification: true,
   sms_notification: true,
 };
-storiesOf('Profile', module).add('Default', () => (
-  <Profile user={user}></Profile>
-));
+storiesOf('Profile', module)
+  .add('Default', () => {
+    const user = {
+      name: 'Fred',
+      username: 'Ffff',
+      email: 'fff@fff.com',
+      password_digest: 'hello',
+      phone_number: '123-456-7890',
+      postal_code: 'A1B 2C3',
+      email_notification: true,
+      sms_notification: true,
+    };
+    return (
+      <Fragment>
+        <Profile user={user}></Profile>
+      </Fragment>
+    );
+  })
+  .add('No postal code saved', () => {
+    user.postal_code = '';
+
+    return (
+      <Fragment>
+        <Profile user={user}></Profile>
+      </Fragment>
+    );
+  });
