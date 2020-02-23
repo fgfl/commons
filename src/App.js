@@ -49,9 +49,9 @@ const App = (props) => {
 			.catch((error) => console.log('api errors:', error));
 	};
 
-	const handleLogin = (data) => {
-		setUser(data.user);
-		setLoggedIn(true);
+	const handleLogout = () => {
+		setUser({});
+		setLoggedIn(false);
 	};
 
 	const handleProfileUpdate = (user) => {
