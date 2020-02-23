@@ -10,6 +10,7 @@ import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import PersonIcon from "@material-ui/icons/Person";
+import Container from "@material-ui/core/Container";
 
 const Notifications = props => {
   let data = {
@@ -43,9 +44,6 @@ const Notifications = props => {
     paper: {
       zIndex: 1000,
       marginTop: theme.spacing(4),
-      marginBottom: theme.spacing(8),
-      display: "flex",
-      flexDirection: "column",
       alignItems: "center",
       border: 5,
       padding: theme.spacing(2),
@@ -53,6 +51,7 @@ const Notifications = props => {
     },
     avatar: {
       zIndex: 1000,
+      margin: "0 auto",
       marginBottom: theme.spacing(2),
       width: "120px",
       height: "120px",
@@ -80,13 +79,19 @@ const Notifications = props => {
       bottom: 0,
       left: 0,
       zIndex: 0
+    },
+    buttons: {
+      textAlign: "center"
+    },
+    button: {
+      margin: "1em"
     }
   }));
   const classes = useStyles();
 
   return (
     <div>
-      <div className={classes.paper}>
+      <Container maxWidth="xs" className={classes.paper}>
         <Avatar className={classes.avatar}>
           <PersonIcon className={classes.accountCirle} />
         </Avatar>
@@ -120,14 +125,26 @@ const Notifications = props => {
             />
           </FormGroup>
         </FormControl>
-      </div>
-      <Button color="secondary" variant="contained" onClick={back}>
-        Back
-      </Button>
+      </Container>
+      <Container maxWidth="xs" className={classes.buttons}>
+        <Button
+          className={classes.button}
+          color="secondary"
+          variant="contained"
+          onClick={back}
+        >
+          Back
+        </Button>
 
-      <Button color="primary" variant="contained" onClick={proceed}>
-        Continue
-      </Button>
+        <Button
+          className={classes.button}
+          color="primary"
+          variant="contained"
+          onClick={proceed}
+        >
+          Continue
+        </Button>
+      </Container>
     </div>
   );
 };

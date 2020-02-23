@@ -51,6 +51,9 @@ const Signup = props => {
       width: "100px",
       height: "100px",
       color: "white"
+    },
+    button: {
+      margin: "1em"
     }
   }));
   const classes = useStyles();
@@ -173,7 +176,12 @@ const Signup = props => {
           autoComplete="postal-code"
           onChange={e => (data.postal_code = e.target.value)}
         />
-        <Button color="primary" variant="contained" onClick={proceed}>
+        <Button
+          classNames={classes.button}
+          color="primary"
+          variant="contained"
+          onClick={proceed}
+        >
           Continue
         </Button>
         {props.errors ? props.handleErrors() : null}
