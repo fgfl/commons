@@ -27,24 +27,27 @@ const Signup = (props) => {
 
     switch (name) {
       case 'name':
-        errors.name = value.length < 1 ? 'Name must be present!' : '';
+        errors.name =
+          value.length < 4 || !validNameRegex.test(value)
+            ? 'Name must be 4 characters long and only contain letters and spaces.'
+            : '';
         break;
       case 'username':
-        errors.name =
+        errors.username =
           value.length < 4 || !validUsernameRegex.test(value)
-            ? 'Username must be 4 characters long and only contain valid characters!'
+            ? 'Username must be 4 characters long and only contain alphanumeric characters and underscores.'
             : '';
         break;
       case 'email':
-        errors.email = validEmailRegex.test(value) ? '' : 'Email is not valid!';
+        errors.email = validEmailRegex.test(value) ? '' : 'Email is not valid.';
         break;
       case 'password':
         errors.password =
-          value.length < 8 ? 'Password must be 8 characters long!' : '';
+          value.length < 5 ? 'Password must be 5 characters long!' : '';
         break;
-      case 'password confirmation':
-        errors.password =
-          value.length !== state.password
+      case 'password_confirmation':
+        errors.password_confirmation =
+          value != state.password
             ? 'Password and password confirmation must match!'
             : '';
         break;
@@ -56,20 +59,30 @@ const Signup = (props) => {
       [name]: value,
       errors
     }));
-    console.log(errors);
-    console.log('STATE', state.errors);
   };
 
-  const validUsernameRegex = RegExp(/^([a-zA-Z0-9 _-]+)$/);
+  const validNameRegex = RegExp(/^([a-zA-Z -]+)$/);
+
+  const validUsernameRegex = RegExp(/^([a-zA-Z0-9_-]+)$/);
 
   const validEmailRegex = RegExp(
     /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
   );
 
+  const validateForm = (errors) => {
+    let valid = true;
+    Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
+    return valid;
+  };
+
   const proceed = (event) => {
     event.preventDefault();
-    props.nextStep(1, state);
+    validateForm(state.errors)
+      ? props.nextStep(1, state)
+      : console.error('Invalid Form');
   };
+
+  const { errors } = state;
 
   const useStyles = makeStyles((theme) => ({
     paper: {
@@ -133,6 +146,7 @@ const Signup = (props) => {
           value={props.name}
           onChange={(e) => handleChange(e.target)}
         />
+        {errors.name.length > 0 && <span className="error">{errors.name}</span>}
         <TextField
           variant="outlined"
           margin="normal"
@@ -146,6 +160,9 @@ const Signup = (props) => {
           value={props.username}
           onChange={(e) => handleChange(e.target)}
         />
+        {errors.username.length > 0 && (
+          <span className="error">{errors.username}</span>
+        )}
         <TextField
           variant="outlined"
           margin="normal"
@@ -159,67 +176,42 @@ const Signup = (props) => {
           value={props.email}
           onChange={(e) => handleChange(e.target)}
         />
-        {props.errors ? (
-          <TextField
-            error
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={(e) => handleChange(e.target)}
-          />
-        ) : (
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={(e) => handleChange(e.target)}
-          />
+        {errors.email.length > 0 && (
+          <span className="error">{errors.email}</span>
         )}
-        {props.errors ? (
-          <TextField
-            error
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password_confirmation"
-            label="Confirm Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={(e) => handleChange(e.target)}
-          />
-        ) : (
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password_confirmation"
-            label="Confirm Password"
-            type="password"
-            id="password-confirmation"
-            autoComplete="current-password"
-            onChange={(e) => handleChange(e.target)}
-          />
-        )}
-
         <TextField
           variant="outlined"
           margin="normal"
           required
+          fullWidth
+          name="password"
+          label="Password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+          onChange={(e) => handleChange(e.target)}
+        />
+        {errors.password.length > 0 && (
+          <span className="error">{errors.password}</span>
+        )}
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          name="password_confirmation"
+          label="Confirm Password"
+          type="password"
+          id="password-confirmation"
+          autoComplete="current-password"
+          onChange={(e) => handleChange(e.target)}
+        />
+        {errors.password_confirmation.length > 0 && (
+          <span className="error">{errors.password_confirmation}</span>
+        )}
+        <TextField
+          variant="outlined"
+          margin="normal"
           fullWidth
           name="postal_code"
           label="Postal Code"
@@ -236,7 +228,6 @@ const Signup = (props) => {
         >
           Continue
         </Button>
-        {props.errors ? props.handleErrors() : null}
       </form>
       <div className={classes.backDrop}></div>
     </Container>
