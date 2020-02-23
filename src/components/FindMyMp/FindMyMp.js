@@ -7,6 +7,7 @@ import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
+import { Divider } from '@material-ui/core';
 
 export default function FindMyMp({ user }) {
   const [postalCode, setPostalCode] = useState(user.postal_code);
@@ -36,6 +37,9 @@ export default function FindMyMp({ user }) {
     },
     mymp: {
       textAlign: 'left',
+    },
+    divider: {
+      margin: '0.5em',
     },
   }));
 
@@ -152,6 +156,7 @@ export default function FindMyMp({ user }) {
         <Typography variant="h5">
           Look up your representative in the House of Commons
         </Typography>
+        <Divider className={classes.divider}></Divider>
         <form>
           <TextField
             id="outlined-basic"
