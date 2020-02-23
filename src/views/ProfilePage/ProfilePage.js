@@ -38,10 +38,12 @@ export default function ProfilePage(props) {
         <div>
           <div className={classes.container}>
             <GridContainer justify="center">
-              <Profile
-                user={props.user}
-                handleProfileUpdate={props.handleProfileUpdate}
-              />
+              {props.user && (
+                <Profile
+                  user={props.user}
+                  handleProfileUpdate={props.handleProfileUpdate}
+                />
+              )}
             </GridContainer>
           </div>
         </div>
