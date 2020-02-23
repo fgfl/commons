@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import Profile from '../views/ProfilePage/Profile';
+import FindMyMp from 'components/FindMyMp/FindMyMp';
 
 const user = {
   name: 'Fred',
@@ -16,5 +17,8 @@ const user = {
   sms_notification: true,
 };
 storiesOf('Profile', module).add('Default', () => (
-  <Profile user={user}></Profile>
+  <Fragment>
+    <Profile user={user}></Profile>
+    <FindMyMp></FindMyMp>
+  </Fragment>
 ));
