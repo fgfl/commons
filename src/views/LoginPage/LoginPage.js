@@ -1,32 +1,32 @@
-import React from "react";
+import React from 'react';
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Icon from "@material-ui/core/Icon";
+import { makeStyles } from '@material-ui/core/styles';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Icon from '@material-ui/core/Icon';
 // @material-ui/icons
-import Email from "@material-ui/icons/Email";
-import People from "@material-ui/icons/People";
+import Email from '@material-ui/icons/Email';
+import People from '@material-ui/icons/People';
 // core components
-import Header from "components/Header/Header.js";
-import HeaderLinks from "components/Header/HeaderLinks.js";
-import Footer from "components/Footer/Footer.js";
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-import Button from "components/CustomButtons/Button.js";
-import Card from "components/Card/Card.js";
-import Login from "./Login.js";
+import Header from 'components/Header/Header.js';
+import HeaderLinks from 'components/Header/HeaderLinks.js';
+import Footer from 'components/Footer/Footer.js';
+import GridContainer from 'components/Grid/GridContainer.js';
+import GridItem from 'components/Grid/GridItem.js';
+import Button from 'components/CustomButtons/Button.js';
+import Card from 'components/Card/Card.js';
+import Login from './Login.js';
 
-import styles from "assets/jss/material-kit-react/views/loginPage.js";
+import styles from 'assets/jss/material-kit-react/views/loginPage.js';
 
-import image from "assets/img/bg.jpg";
+import image from 'assets/img/bg.jpg';
 
 const useStyles = makeStyles(styles);
 
 export default function LoginPage(props) {
   console.log(props.history);
-  const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
+  const [cardAnimaton, setCardAnimation] = React.useState('cardHidden');
   setTimeout(function() {
-    setCardAnimation("");
+    setCardAnimation('');
   }, 700);
   const classes = useStyles();
   const { ...rest } = props;
@@ -34,21 +34,21 @@ export default function LoginPage(props) {
     <div>
       <Header
         absolute
-        color="transparent"
-        brand="Commons"
+        color='transparent'
+        brand='Commons'
         rightLinks={<HeaderLinks />}
         {...rest}
       />
       <div
         className={classes.pageHeader}
         style={{
-          backgroundImage: "url(" + image + ")",
-          backgroundSize: "cover",
-          backgroundPosition: "top center"
+          backgroundImage: 'url(' + image + ')',
+          backgroundSize: 'cover',
+          backgroundPosition: 'top center'
         }}
       >
         <div className={classes.container}>
-          <GridContainer justify="center">
+          <GridContainer justify='center'>
             <GridItem>
               <Card className={classes[cardAnimaton]}>
                 <Login
