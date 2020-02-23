@@ -30,17 +30,17 @@ export default function FindMyMp({ user }) {
       width: '100%',
       height: '200px',
       textAlign: 'center',
-      color: 'white'
+      color: 'white',
     },
     title: {
-      padding: '24px'
+      padding: '24px',
     },
     mymp: {
-      textAlign: 'left'
+      textAlign: 'left',
     },
     divider: {
-      margin: '0.5em'
-    }
+      margin: '0.5em',
+    },
   }));
 
   const classes = useStyles();
