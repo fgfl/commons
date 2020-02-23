@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import Login from '../components/registrations/Login';
+import Login from '../views/LoginPage/Login';
 
 storiesOf('Login', module)
   .addParameters({
