@@ -16,20 +16,27 @@ const App = props => {
   const [categories, setCategories] = useState([]);
   // const [events, setEvents] = useState([]);
 
-  useEffect(() => {
-    loginStatus();
-    fetchBills();
-  }, []);
-
   const loginStatus = () => {
     axios
-      .get("http://localhost:3001/logged_in", { withCredentials: true })
+      .get(`${process.env.REACT_APP_PUBLIC_URL}/logged_in`, {
+        withCredentials: true
+      })
       .then(response => {
         if (response.data.logged_in) {
           handleLogin(response.data);
         } else {
           handleLogout();
         }
+      })
+      .catch(error => console.log("api errors:", error));
+  };
+
+  const fetchBills = () => {
+    axios
+      .get(`${process.env.REACT_APP_PUBLIC_URL}/bills`)
+      .then(response => {
+        setBills(response.data.bills);
+        setCategories(response.data.categories);
       })
       .catch(error => console.log("api errors:", error));
   };
@@ -49,9 +56,21 @@ const App = props => {
     setLoggedIn(true);
   };
 
-  const handleLogout = () => {
-    setUser({});
-    setLoggedIn(false);
+  const handleProfileUpdate = user => {
+    console.log(user);
+    axios
+      .put(
+        `${process.env.REACT_APP_PUBLIC_URL}/users/${user.id}`,
+        { user },
+        { withCredentials: true }
+      )
+      .then(res => {
+        console.log("done put for update user infor");
+        setUser(user);
+      })
+      .catch(res => {
+        console.error(`Failed setting profile: ${res}`);
+      });
   };
 
   const handleProfileUpdate = user => {
