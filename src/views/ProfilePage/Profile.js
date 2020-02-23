@@ -42,12 +42,10 @@ const Profile = ({ user, handleProfileUpdate }) => {
           </Avatar>
         </Grid>
         <Grid item>
-          {user && (
-            <ProfileText
-              user={user}
-              handleProfileUpdate={handleProfileUpdate}
-            ></ProfileText>
-          )}
+          <ProfileText
+            user={user}
+            handleProfileUpdate={handleProfileUpdate}
+          ></ProfileText>
         </Grid>
       </Grid>
       <FindMyMp user={user}></FindMyMp>
