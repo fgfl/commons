@@ -54,7 +54,7 @@ const App = (props) => {
   const handleProfileUpdate = async (user) => {
     try {
       axios.put(`${process.env.REACT_APP_PUBLIC_URL}/users/${user.id}`, {
-        user
+        user,
       });
       setUser(user);
     } catch (error) {
@@ -79,7 +79,7 @@ const App = (props) => {
         <Switch>
           <Route
             exact
-            path='/'
+            path="/"
             render={(props) => (
               <Home
                 {...props}
@@ -91,7 +91,7 @@ const App = (props) => {
             )}
           />
           <Route
-            path='/login-page'
+            path="/login-page"
             render={(props) => (
               <LoginPage
                 {...props}
@@ -102,7 +102,7 @@ const App = (props) => {
             )}
           />
           <Route
-            path='/signup-page'
+            path="/signup-page"
             render={(props) => (
               <SignupPage
                 {...props}
@@ -113,7 +113,7 @@ const App = (props) => {
             )}
           />
           <Route
-            path='/watch-list'
+            path="/watch-list"
             render={(props) => (
               <WatchListPage
                 {...props}
@@ -125,7 +125,7 @@ const App = (props) => {
             )}
           />
           <Route
-            path='/user/:id'
+            path="/user/:id"
             render={() => (
               <ProfilePage
                 user={user}
