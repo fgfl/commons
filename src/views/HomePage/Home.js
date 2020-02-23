@@ -45,13 +45,13 @@ export default function Home(props) {
   return (
     <div>
       <Header
-        brand='Commons'
+        brand="Commons"
         rightLinks={<HeaderLinks />}
         fixed
-        color='transparent'
+        color="transparent"
         changeColorOnScroll={{
           height: 400,
-          color: 'white'
+          color: 'white',
         }}
         {...rest}
       />
@@ -83,7 +83,6 @@ export default function Home(props) {
           setThisOneClicked={setThisOneClicked}
         />
       </div>
-      <Footer />
     </div>
   );
 }
