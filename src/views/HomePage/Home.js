@@ -46,7 +46,7 @@ export default function Home(props) {
     <div>
       <Header
         brand="Commons"
-        rightLinks={<HeaderLinks />}
+        rightLinks={<HeaderLinks loggedIn={props.loggedInStatus} />}
         fixed
         color="transparent"
         changeColorOnScroll={{
