@@ -60,7 +60,7 @@ const UserForm = (props) => {
         setErrors(response.data.errors);
       }
     } catch (error) {
-      console.error('api errors:', error);
+      console.error('Error occured on Sign Up:', error);
     }
   };
 
