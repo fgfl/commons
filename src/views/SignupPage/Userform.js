@@ -1,29 +1,29 @@
-import React, { useState } from "react";
-import Signup from "./Signup";
-import Notifications from "./Notifications";
-import Categories from "./Categories";
-import Confirmation from "./Confirmation";
-import Success from "./Success";
-import axios from "axios";
-import { Typography } from "@material-ui/core";
+import React, { useState } from 'react';
+import Signup from './Signup';
+import Notifications from './Notifications';
+import Categories from './Categories';
+import Confirmation from './Confirmation';
+import Success from './Success';
+import axios from 'axios';
+import { Typography } from '@material-ui/core';
 
-const UserForm = props => {
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [postalCode, setPostalCode] = useState("");
-  const [errors, setErrors] = useState("");
+const UserForm = (props) => {
+  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [postalCode, setPostalCode] = useState('');
+  const [errors, setErrors] = useState('');
   const [emailNotification, setEmailNotification] = useState(false);
   const [smsNotification, setSmsNotification] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [step, setStep] = useState(1);
   const [clicked, setClicked] = useState({});
 
   //Sets the category to clicked on categories component
-  const setThisOneClicked = key => {
-    setClicked(prev => {
+  const setThisOneClicked = (key) => {
+    setClicked((prev) => {
       let state = { ...prev };
       if (state[key]) {
         delete state[key];
@@ -51,26 +51,30 @@ const UserForm = props => {
     console.log(user);
 
     axios
-      .post("http://localhost:3001/users", { user }, { withCredentials: true })
-      .then(response => {
-        if (response.data.status === "created") {
+      .post(
+        `${process.env.REACT_APP_PUBLIC_URL}/users`,
+        { user },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        if (response.data.status === 'created') {
           props.handleLogin(response.data);
           setStep(step + 1);
         } else {
           setErrors(response.data.errors);
         }
       })
-      .catch(error => console.log("api errors:", error));
+      .catch((error) => console.log('api errors:', error));
   };
 
   const handleErrors = () => {
     return (
       <div>
         <ul>
-          {errors.map(error => {
+          {errors.map((error) => {
             return (
               <li key={error}>
-                <Typography variant="body1">{error}</Typography>
+                <Typography variant='body1'>{error}</Typography>
               </li>
             );
           })}
@@ -127,7 +131,7 @@ const UserForm = props => {
     setStep(step - 1);
   };
 
-  const renderSwitch = param => {
+  const renderSwitch = (param) => {
     switch (param) {
       case 1:
         return <Signup nextStep={nextStep} />;
