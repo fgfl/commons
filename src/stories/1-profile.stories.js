@@ -3,7 +3,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import Profile from '../components/profile/Profile';
+import Profile from '../views/ProfilePage/Profile';
 
 const user = {
   name: 'Fred',
