@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -46,6 +46,8 @@ export default function BillCard(props) {
   const [clicked, setClicked] = useState(false);
   const [color, setColor] = useState('grey');
 
+  useEffect(() => {});
+
   const setThisOneClicked = () => {
     if (clicked) {
       setClicked(false);
@@ -56,20 +58,31 @@ export default function BillCard(props) {
     }
   };
 
+  let watchedBills = [];
+
+  const findWatchedBills = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_COMMONS_API}/bill_users`
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error(`Error occurred while fetching watch bills`);
+    }
+  };
+
   const handleWatchSubmit = async () => {
-    const watchlist_bill = JSON.stringify({
+    const watchlist_bill = {
       watchlist_bill: { bill_id: props.bill.id, user_id: props.user.id }
-    });
+    };
 
     console.log(watchlist_bill);
 
     try {
-      const response = await axios.post(
+      await axios.post(
         `${process.env.REACT_APP_COMMONS_API}/bill_users`,
-        {
-          watchlist_bill
-        },
-        console.log(response.data)
+
+        watchlist_bill
       );
     } catch (error) {
       console.error(`Error occurred while setting watch list`);
@@ -131,7 +144,7 @@ export default function BillCard(props) {
               onClick={() => {
                 setThisOneClicked();
                 console.log('I was clicked');
-                handleWatchSubmit();
+                findWatchedBills();
               }}
             />
           </IconButton>
