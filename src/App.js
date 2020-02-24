@@ -26,9 +26,8 @@ const App = (props) => {
   const fetchBills = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_PUBLIC_URL}/bills`
+        `${process.env.REACT_APP_COMMONS_API}/bills`
       );
-      console.log(response.data.bills);
       setBills(response.data.bills);
       setCategories(response.data.categories);
     } catch (error) {
@@ -39,7 +38,7 @@ const App = (props) => {
   const loginStatus = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_PUBLIC_URL}/logged_in`
+        `${process.env.REACT_APP_COMMONS_API}/logged_in`
       );
       if (response.data.logged_in) {
         handleLogin(response.data);

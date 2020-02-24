@@ -32,7 +32,7 @@ const Login = (props) => {
     };
 
     axios
-      .post(`${process.env.REACT_APP_PUBLIC_URL}/login`, { user })
+      .post(`${process.env.REACT_APP_COMMONS_API}/login`, { user })
       .then((response) => {
         if (response.data.status === 'created') {
           props.handleLogin(response.data);
