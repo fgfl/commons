@@ -13,7 +13,7 @@ const Signup = (props) => {
     email: '',
     password: '',
     passwordConfirmation: '',
-    postal_code: '',
+    postalCode: '',
     errors: {
       name: '',
       username: '',

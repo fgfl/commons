@@ -18,8 +18,6 @@ const Confirmation = (props) => {
     props.nextStep(4);
   };
 
-  console.log(props.details);
-  console.log(props.details.categories);
   const categories = props.details.categories.map((categoryId) => {
     return (
       <Typography key={categoryId}>{idToCategoryName(categoryId)}</Typography>
@@ -70,7 +68,7 @@ const Confirmation = (props) => {
         <Avatar className={classes.avatar}>
           <PersonIcon className={classes.accountCircle} />
         </Avatar>
-        <Typography variant='h4'>Confirm your details</Typography>
+        <Typography variant="h4">Confirm your details</Typography>
       </div>
       <Typography>Name: {props.details.name}</Typography>
       <Typography>Username: {props.details.username}</Typography>
@@ -78,11 +76,11 @@ const Confirmation = (props) => {
       <Typography>Selected Categories:</Typography>
       {categories}
 
-      <Button color='secondary' variant='contained' onClick={back}>
+      <Button color="secondary" variant="contained" onClick={back}>
         Back
       </Button>
 
-      <Button color='primary' variant='contained' onClick={proceed}>
+      <Button color="primary" variant="contained" onClick={proceed}>
         Submit
       </Button>
       <div>{props.errors ? props.handleErrors() : null}</div>
