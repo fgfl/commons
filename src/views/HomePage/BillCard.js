@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -13,6 +13,8 @@ import { red } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import clsx from 'clsx';
+
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,22 +41,51 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Bill(props) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [events, setEvents] = useState('No events currently loaded.');
+
+  const getEventsForBill = async (bill_id) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_COMMONS_API}/events/${bill_id}`,
+        {
+          bill_id
+        }
+      );
+      setEvents(response.data.events);
+    } catch (error) {
+      console.error(
+        `Error occured while fetching events for bill ${props.bill.code}`
+      );
+    }
+  };
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+    getEventsForBill(props.bill.id);
   };
+
+  const eventCards =
+    Array.isArray(events) &&
+    events.map((event) => {
+      return (
+        <CardContent key={event.id}>
+          <Typography paragraph>{event.title}</Typography>
+          <Typography paragraph>{event.publication_date}</Typography>
+        </CardContent>
+      );
+    });
 
   return (
     <Card className={classes.root}>
       <CardHeader
         avatar={
           <div>
-            <Avatar aria-label='bill' className={classes.avatar}>
+            <Avatar aria-label="bill" className={classes.avatar}>
               {props.bill.code}
             </Avatar>
             <Typography
-              color='textSecondary'
+              color="textSecondary"
               style={{ fontSize: '0.75em', textAlign: 'center' }}
             >
               Second <br /> Reading
@@ -62,7 +93,7 @@ export default function Bill(props) {
           </div>
         }
         action={
-          <IconButton aria-label='settings'>
+          <IconButton aria-label="settings">
             <BookmarkIcon
               onClick={() => {
                 props.setThisOneClicked(props.key);
@@ -75,7 +106,7 @@ export default function Bill(props) {
         subheader={'Introduced on ' + props.bill.introduced_date}
       />
       <CardContent>
-        <Typography variant='body2' color='textSecondary' component='p'>
+        <Typography variant="body2" color="textSecondary" component="p">
           {props.bill.description}
         </Typography>
         <Typography>
@@ -86,42 +117,20 @@ export default function Bill(props) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
+        <Typography>View Events for this Bill</Typography>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded
           })}
           onClick={handleExpandClick}
           aria-expanded={expanded}
-          aria-label='show more'
+          aria-label="show more"
         >
           <ExpandMoreIcon />
         </IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout='auto' unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Summary:</Typography>
-          <Typography paragraph>
-            The general provisions of the enactment set out rules of
-            interpretation and specify that no recourse is to be taken on the
-            basis of sections 9 to 20 or any order made under those sections, or
-            on the basis of the provisions of the Agreement, without the consent
-            of the Attorney General of Canada.
-          </Typography>
-          <Typography paragraph>
-            Part 1 approves the Agreement, provides for the payment by Canada of
-            its share of the expenditures associated with the operation of the
-            institutional and administrative aspects of the Agreement and gives
-            the Governor in Council the power to make orders in accordance with
-            the Agreement.
-          </Typography>
-          <Typography paragraph>
-            Part 2 amends certain Acts to bring them into conformity with
-            Canada’s obligations under the Agreement.
-          </Typography>
-          <Typography paragraph>
-            Part 3 contains the coming into force provisions.
-          </Typography>
-        </CardContent>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent>{eventCards}</CardContent>
       </Collapse>
     </Card>
   );
