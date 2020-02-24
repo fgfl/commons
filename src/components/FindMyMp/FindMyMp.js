@@ -122,7 +122,8 @@ export default function FindMyMp({ user }) {
     setLoading(true);
     axios
       .get(
-        `https://cors-anywhere.herokuapp.com/https://represent.opennorth.ca/postcodes/${postalCode}?sets=federal-electoral-districts`
+        `https://cors-anywhere.herokuapp.com/https://represent.opennorth.ca/postcodes/${postalCode}?sets=federal-electoral-districts`,
+        { withCredentials: false }
       )
       .then((response) => {
         if (response.data) {
