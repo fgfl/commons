@@ -54,11 +54,10 @@ const App = (props) => {
     console.log(user);
     try {
       const res = await axios.put(
-        `${process.env.REACT_APP_PUBLIC_URL}/users/${user.id}`,
+        `${process.env.REACT_APP_COMMONS_API}/users/${user.id}`,
         {
           user,
-        },
-        { credentials: 'same-origin' }
+        }
       );
       if (res.data.status === 200) {
         console.log('res 200');
