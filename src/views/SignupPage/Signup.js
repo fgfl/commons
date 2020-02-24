@@ -1,23 +1,129 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import PersonIcon from '@material-ui/icons/Person';
 import { Typography, TextField, Button, Avatar } from '@material-ui/core';
 
+import axios from 'axios';
+
 const Signup = (props) => {
-  let data = {
+  const [state, setState] = useState({
     name: '',
     username: '',
     email: '',
     password: '',
-    password_confirmation: '',
-    postal_code: ''
+    passwordConfirmation: '',
+    postalCode: '',
+    errors: {
+      name: '',
+      username: '',
+      email: '',
+      password: '',
+      passwordConfirmation: ''
+    },
+    available: {
+      usernameTaken: '',
+      emailTaken: ''
+    }
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleChange = (event) => {
+    const { name, value } = event;
+    let errors = state.errors;
+
+    switch (name) {
+      case 'name':
+        errors.name =
+          value.length < 4 || !validNameRegex.test(value)
+            ? 'Name must be 4 characters long and only contain letters and spaces.'
+            : '';
+        break;
+      case 'username':
+        errors.username =
+          value.length < 4 || !validUsernameRegex.test(value)
+            ? 'Username must be 4 characters long and only contain alphanumeric characters and underscores.'
+            : '';
+        break;
+      case 'email':
+        errors.email = validEmailRegex.test(value) ? '' : 'Email is not valid.';
+        break;
+      case 'password':
+        errors.password =
+          value.length < 5 ? 'Password must be 5 characters long!' : '';
+        break;
+      case 'passwordConfirmation':
+        errors.passwordConfirmation =
+          value != state.password
+            ? 'Password and password confirmation must match!'
+            : '';
+        break;
+      default:
+        break;
+    }
+    setState((prevState) => ({
+      ...prevState,
+      [name]: value,
+      errors,
+      available: {
+        usernameTaken: '',
+        emailTaken: ''
+      }
+    }));
   };
 
-  const proceed = (event) => {
-    event.preventDefault();
-    props.nextStep(1, data);
+  const validNameRegex = RegExp(/^([a-zA-Z -]+)$/);
+
+  const validUsernameRegex = RegExp(/^([a-zA-Z0-9_-]+)$/);
+
+  const validEmailRegex = RegExp(
+    /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+  );
+
+  const checkAvailability = async (param, field) => {
+    const user = { [field]: param };
+
+    try {
+      const checkParam = await axios.post(
+        `${process.env.REACT_APP_COMMONS_API}/${field}_exists`,
+        { user }
+      );
+      return checkParam.status === 200 && true;
+    } catch (error) {
+      const fieldUp = field.charAt(0).toUpperCase() + field.slice(1);
+      setState((prevState) => ({
+        ...prevState,
+        available: {
+          ...prevState.available,
+          [`${field}Taken`]: `${fieldUp} ${param} is already associated with a user account.`
+        }
+      }));
+      console.error(error);
+      return false;
+    }
   };
+
+  const validateForm = (errors) => {
+    let valid = true;
+    Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
+    return valid;
+  };
+
+  const checkValidations = async () => {
+    let usernameAvailable = await checkAvailability(state.username, 'username');
+    let emailAvailable = await checkAvailability(state.email, 'email');
+    const formValidated = validateForm(state.errors);
+    return usernameAvailable && emailAvailable && formValidated && true;
+  };
+
+  const proceed = async (event) => {
+    event.preventDefault();
+    setSubmitted(true);
+    const validated = await checkValidations();
+    validated ? props.nextStep(1, state) : console.error('Invalid Form');
+  };
+
+  const { errors, available } = state;
 
   const useStyles = makeStyles((theme) => ({
     paper: {
@@ -59,132 +165,118 @@ const Signup = (props) => {
   const classes = useStyles();
 
   return (
-    <Container maxWidth='xs' className={classes.paper}>
+    <Container maxWidth="xs" className={classes.paper}>
       <Avatar className={classes.avatar}>
         <PersonIcon className={classes.accountCircle} />
       </Avatar>
-      <Typography variant='h4'>
+      <Typography variant="h4">
         Not a Member Yet?
         <br /> Sign Up!
       </Typography>
       <form className={classes.form} noValidate onSubmit={props.handleSubmit}>
         <TextField
-          variant='outlined'
-          margin='normal'
+          variant="outlined"
+          margin="normal"
           required
           fullWidth
-          id='name'
-          label='Name'
-          name='name'
-          autoComplete='name'
+          id="name"
+          label="Name"
+          name="name"
+          autoComplete="name"
           autoFocus
           value={props.name}
-          onChange={(e) => (data.name = e.target.value)}
+          onChange={(e) => handleChange(e.target)}
         />
+        {submitted && errors.name.length > 0 && (
+          <span className="error">{errors.name}</span>
+        )}
         <TextField
-          variant='outlined'
-          margin='normal'
+          variant="outlined"
+          margin="normal"
           required
           fullWidth
-          id='username'
-          label='Username'
-          name='username'
-          autoComplete='username'
+          id="username"
+          label="Username"
+          name="username"
+          autoComplete="username"
           autoFocus
           value={props.username}
-          onChange={(e) => (data.username = e.target.value)}
+          onChange={(e) => handleChange(e.target)}
         />
+        {submitted && errors.username.length > 0 && (
+          <span className="error">{errors.username}</span>
+        )}
+        {submitted && available.usernameTaken.length > 0 && (
+          <span className="error">{available.usernameTaken}</span>
+        )}
         <TextField
-          variant='outlined'
-          margin='normal'
+          variant="outlined"
+          margin="normal"
           required
           fullWidth
-          id='email'
-          label='Email Address'
-          name='email'
-          autoComplete='email'
+          id="email"
+          label="Email Address"
+          name="email"
+          autoComplete="email"
           autoFocus
           value={props.email}
-          onChange={(e) => (data.email = e.target.value)}
+          onChange={(e) => handleChange(e.target)}
         />
-        {props.errors ? (
-          <TextField
-            error
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            name='password'
-            label='Password'
-            type='password'
-            id='password'
-            autoComplete='current-password'
-            onChange={(e) => (data.password = e.target.value)}
-          />
-        ) : (
-          <TextField
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            name='password'
-            label='Password'
-            type='password'
-            id='password'
-            autoComplete='current-password'
-            onChange={(e) => (data.password = e.target.value)}
-          />
+        {submitted && errors.email.length > 0 && (
+          <span className="error">{errors.email}</span>
         )}
-        {props.errors ? (
-          <TextField
-            error
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            name='password_confirmation'
-            label='Confirm Password'
-            type='password'
-            id='password'
-            autoComplete='current-password'
-            onChange={(e) => (data.password_confirmation = e.target.value)}
-          />
-        ) : (
-          <TextField
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            name='password_confirmation'
-            label='Confirm Password'
-            type='password'
-            id='password-confirmation'
-            autoComplete='current-password'
-            onChange={(e) => (data.password_confirmation = e.target.value)}
-          />
+        {submitted && available.emailTaken.length > 0 && (
+          <span className="error">{available.emailTaken}</span>
         )}
-
         <TextField
-          variant='outlined'
-          margin='normal'
+          variant="outlined"
+          margin="normal"
           required
           fullWidth
-          name='postal_code'
-          label='Postal Code'
-          type='postal'
-          id='postal-code'
-          autoComplete='postal-code'
-          onChange={(e) => (data.postal_code = e.target.value)}
+          name="password"
+          label="Password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+          onChange={(e) => handleChange(e.target)}
+        />
+        {submitted && errors.password.length > 0 && (
+          <span className="error">{errors.password}</span>
+        )}
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          name="passwordConfirmation"
+          label="Confirm Password"
+          type="password"
+          id="password-confirmation"
+          autoComplete="current-password"
+          onChange={(e) => handleChange(e.target)}
+        />
+        {submitted && errors.passwordConfirmation.length > 0 && (
+          <span className="error">{errors.passwordConfirmation}</span>
+        )}
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          name="postal_code"
+          label="Postal Code"
+          type="postal"
+          id="postal-code"
+          autoComplete="postal-code"
+          onChange={(e) => handleChange(e.target)}
         />
         <Button
           classNames={classes.button}
-          color='primary'
-          variant='contained'
+          color="primary"
+          variant="contained"
           onClick={proceed}
         >
           Continue
         </Button>
-        {props.errors ? props.handleErrors() : null}
       </form>
       <div className={classes.backDrop}></div>
     </Container>
