@@ -23,20 +23,23 @@ import image from 'assets/img/bg.jpg';
 const useStyles = makeStyles(styles);
 
 export default function LoginPage(props) {
-  console.log(props.history);
   const [cardAnimaton, setCardAnimation] = React.useState('cardHidden');
+
   setTimeout(function() {
     setCardAnimation('');
   }, 700);
+
   const classes = useStyles();
+
   const { ...rest } = props;
+
   return (
     <div>
       <Header
         absolute
-        color='transparent'
-        brand='Commons'
-        rightLinks={<HeaderLinks />}
+        color="transparent"
+        brand="Commons"
+        rightLinks={<HeaderLinks loggedIn={props.loggedInStatus} />}
         {...rest}
       />
       <div
@@ -44,15 +47,16 @@ export default function LoginPage(props) {
         style={{
           backgroundImage: 'url(' + image + ')',
           backgroundSize: 'cover',
-          backgroundPosition: 'top center'
+          backgroundPosition: 'top center',
         }}
       >
         <div className={classes.container}>
-          <GridContainer justify='center'>
+          <GridContainer justify="center">
             <GridItem>
               <Card className={classes[cardAnimaton]}>
                 <Login
                   handleLogin={props.handleLogin}
+                  loggedInStatus={props.loggedInStatus}
                   history={props.history}
                 />
               </Card>
