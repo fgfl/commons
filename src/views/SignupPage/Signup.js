@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import PersonIcon from '@material-ui/icons/Person';
 import { Typography, TextField, Button, Avatar } from '@material-ui/core';
+
+import axios from 'axios';
 
 const Signup = (props) => {
   const [state, setState] = useState({
@@ -10,14 +12,18 @@ const Signup = (props) => {
     username: '',
     email: '',
     password: '',
-    password_confirmation: '',
+    passwordConfirmation: '',
     postal_code: '',
     errors: {
       name: '',
       username: '',
       email: '',
       password: '',
-      password_confirmation: ''
+      passwordConfirmation: ''
+    },
+    available: {
+      usernameTaken: '',
+      emailTaken: ''
     }
   });
   const [submitted, setSubmitted] = useState(false);
@@ -46,8 +52,8 @@ const Signup = (props) => {
         errors.password =
           value.length < 5 ? 'Password must be 5 characters long!' : '';
         break;
-      case 'password_confirmation':
-        errors.password_confirmation =
+      case 'passwordConfirmation':
+        errors.passwordConfirmation =
           value != state.password
             ? 'Password and password confirmation must match!'
             : '';
@@ -58,7 +64,11 @@ const Signup = (props) => {
     setState((prevState) => ({
       ...prevState,
       [name]: value,
-      errors
+      errors,
+      available: {
+        usernameTaken: '',
+        emailTaken: ''
+      }
     }));
   };
 
@@ -70,21 +80,50 @@ const Signup = (props) => {
     /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
   );
 
+  const checkAvailability = async (param, field) => {
+    const user = { [field]: param };
+
+    try {
+      const checkParam = await axios.post(
+        `${process.env.REACT_APP_COMMONS_API}/${field}_exists`,
+        { user }
+      );
+      return checkParam.status === 200 && true;
+    } catch (error) {
+      const fieldUp = field.charAt(0).toUpperCase() + field.slice(1);
+      setState((prevState) => ({
+        ...prevState,
+        available: {
+          ...prevState.available,
+          [`${field}Taken`]: `${fieldUp} ${param} is already associated with a user account.`
+        }
+      }));
+      console.error(error);
+      return false;
+    }
+  };
+
   const validateForm = (errors) => {
     let valid = true;
     Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
     return valid;
   };
 
-  const proceed = (event) => {
-    event.preventDefault();
-    setSubmitted(true);
-    validateForm(state.errors)
-      ? props.nextStep(1, state)
-      : console.error('Invalid Form');
+  const checkValidations = async () => {
+    let usernameAvailable = await checkAvailability(state.username, 'username');
+    let emailAvailable = await checkAvailability(state.email, 'email');
+    const formValidated = validateForm(state.errors);
+    return usernameAvailable && emailAvailable && formValidated && true;
   };
 
-  const { errors } = state;
+  const proceed = async (event) => {
+    event.preventDefault();
+    setSubmitted(true);
+    const validated = await checkValidations();
+    validated ? props.nextStep(1, state) : console.error('Invalid Form');
+  };
+
+  const { errors, available } = state;
 
   const useStyles = makeStyles((theme) => ({
     paper: {
@@ -167,6 +206,9 @@ const Signup = (props) => {
         {submitted && errors.username.length > 0 && (
           <span className="error">{errors.username}</span>
         )}
+        {submitted && available.usernameTaken.length > 0 && (
+          <span className="error">{available.usernameTaken}</span>
+        )}
         <TextField
           variant="outlined"
           margin="normal"
@@ -182,6 +224,9 @@ const Signup = (props) => {
         />
         {submitted && errors.email.length > 0 && (
           <span className="error">{errors.email}</span>
+        )}
+        {submitted && available.emailTaken.length > 0 && (
+          <span className="error">{available.emailTaken}</span>
         )}
         <TextField
           variant="outlined"
@@ -203,15 +248,15 @@ const Signup = (props) => {
           margin="normal"
           required
           fullWidth
-          name="password_confirmation"
+          name="passwordConfirmation"
           label="Confirm Password"
           type="password"
           id="password-confirmation"
           autoComplete="current-password"
           onChange={(e) => handleChange(e.target)}
         />
-        {submitted && errors.password_confirmation.length > 0 && (
-          <span className="error">{errors.password_confirmation}</span>
+        {submitted && errors.passwordConfirmation.length > 0 && (
+          <span className="error">{errors.passwordConfirmation}</span>
         )}
         <TextField
           variant="outlined"

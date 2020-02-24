@@ -26,9 +26,8 @@ const App = (props) => {
   const fetchBills = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_PUBLIC_URL}/bills`
+        `${process.env.REACT_APP_COMMONS_API}/bills`
       );
-      console.log(response.data.bills);
       setBills(response.data.bills);
       setCategories(response.data.categories);
     } catch (error) {
@@ -39,7 +38,7 @@ const App = (props) => {
   const loginStatus = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_PUBLIC_URL}/logged_in`
+        `${process.env.REACT_APP_COMMONS_API}/logged_in`
       );
       if (response.data.logged_in) {
         handleLogin(response.data);
@@ -53,7 +52,7 @@ const App = (props) => {
 
   const handleProfileUpdate = async (user) => {
     try {
-      axios.put(`${process.env.REACT_APP_PUBLIC_URL}/users/${user.id}`, {
+      axios.put(`${process.env.REACT_APP_COMMONS_API}/users/${user.id}`, {
         user
       });
       setUser(user);
@@ -79,7 +78,7 @@ const App = (props) => {
         <Switch>
           <Route
             exact
-            path='/'
+            path="/"
             render={(props) => (
               <Home
                 {...props}
@@ -91,7 +90,7 @@ const App = (props) => {
             )}
           />
           <Route
-            path='/login-page'
+            path="/login-page"
             render={(props) => (
               <LoginPage
                 {...props}
@@ -102,7 +101,7 @@ const App = (props) => {
             )}
           />
           <Route
-            path='/signup-page'
+            path="/signup-page"
             render={(props) => (
               <SignupPage
                 {...props}
@@ -113,7 +112,7 @@ const App = (props) => {
             )}
           />
           <Route
-            path='/watch-list'
+            path="/watch-list"
             render={(props) => (
               <WatchListPage
                 {...props}
@@ -125,7 +124,7 @@ const App = (props) => {
             )}
           />
           <Route
-            path='/user/:id'
+            path="/user/:id"
             render={() => (
               <ProfilePage
                 user={user}

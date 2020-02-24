@@ -51,7 +51,7 @@ const UserForm = (props) => {
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_PUBLIC_URL}/users`,
+        `${process.env.REACT_APP_COMMONS_API}/users`,
         {
           user
         }
@@ -74,7 +74,7 @@ const UserForm = (props) => {
           {errors.map((error) => {
             return (
               <li key={error}>
-                <Typography variant='body1'>{error}</Typography>
+                <Typography variant="body1">{error}</Typography>
               </li>
             );
           })}
