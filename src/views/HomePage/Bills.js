@@ -41,15 +41,7 @@ export default function Bills(props) {
   });
 
   const billCards = bills.map((bill) => {
-    let color = props.clicked[bill.id] ? 'red' : 'grey';
-    return (
-      <BillCard
-        key={bill.id}
-        setThisOneClicked={props.setThisOneClicked}
-        bill={bill}
-        style={{ color: color }}
-      />
-    );
+    return <BillCard user={props.user} key={bill.id} bill={bill} />;
   });
 
   return billCards;
