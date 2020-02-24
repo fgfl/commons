@@ -51,7 +51,7 @@ const UserForm = (props) => {
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_PUBLIC_URL}/users`,
+        `${process.env.REACT_APP_COMMONS_API}/users`,
         {
           user
         }
@@ -74,7 +74,7 @@ const UserForm = (props) => {
           {errors.map((error) => {
             return (
               <li key={error}>
-                <Typography variant='body1'>{error}</Typography>
+                <Typography variant="body1">{error}</Typography>
               </li>
             );
           })}
@@ -98,11 +98,11 @@ const UserForm = (props) => {
       if (data.password) {
         setPassword(data.password);
       }
-      if (data.password_confirmation) {
-        setPasswordConfirmation(data.password_confirmation);
+      if (data.passwordConfirmation) {
+        setPasswordConfirmation(data.passwordConfirmation);
       }
-      if (data.postal_code) {
-        setPostalCode(data.postal_code);
+      if (data.postalCode) {
+        setPostalCode(data.postalCode);
       }
       setStep(step + 1);
     }
