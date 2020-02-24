@@ -78,11 +78,12 @@ const App = (props) => {
         <Switch>
           <Route
             exact
-            path="/"
+            path='/'
             render={(props) => (
               <Home
                 {...props}
                 bills={bills}
+                user={user}
                 categories={categories}
                 handleLogout={handleLogout}
                 loggedInStatus={loggedIn}
@@ -90,7 +91,7 @@ const App = (props) => {
             )}
           />
           <Route
-            path="/login-page"
+            path='/login-page'
             render={(props) => (
               <LoginPage
                 {...props}
@@ -101,7 +102,7 @@ const App = (props) => {
             )}
           />
           <Route
-            path="/signup-page"
+            path='/signup-page'
             render={(props) => (
               <SignupPage
                 {...props}
@@ -112,11 +113,12 @@ const App = (props) => {
             )}
           />
           <Route
-            path="/watch-list"
+            path='/watch-list'
             render={(props) => (
               <WatchListPage
                 {...props}
                 bills={bills}
+                user={user}
                 categories={categories}
                 handleLogin={handleLogin}
                 loggedInStatus={loggedIn}
@@ -124,7 +126,7 @@ const App = (props) => {
             )}
           />
           <Route
-            path="/user/:id"
+            path='/user/:id'
             render={() => (
               <ProfilePage
                 user={user}

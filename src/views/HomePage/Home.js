@@ -22,36 +22,21 @@ import Bills from './Bills';
 const useStyles = makeStyles(styles);
 
 export default function Home(props) {
-  const [clicked, setClicked] = useState({});
   const classes = useStyles();
   const { ...rest } = props;
-
-  const setThisOneClicked = (key) => {
-    setClicked((prev) => {
-      let state = { ...prev };
-      if (state[key]) {
-        delete state[key];
-      } else {
-        state[key] = true;
-      }
-      return state;
-    });
-  };
-
-  const setBillToWatch = () => {};
 
   const [childCategory, setChildCategory] = useState(0);
 
   return (
     <div>
       <Header
-        brand="Commons"
+        brand='Commons'
         rightLinks={<HeaderLinks loggedIn={props.loggedInStatus} />}
         fixed
-        color="transparent"
+        color='transparent'
         changeColorOnScroll={{
           height: 400,
-          color: 'white',
+          color: 'white'
         }}
         {...rest}
       />
@@ -78,9 +63,8 @@ export default function Home(props) {
           passCategory={setChildCategory}
         />
         <Bills
+          user={props.user}
           bills={props.bills}
-          clicked={clicked}
-          setThisOneClicked={setThisOneClicked}
           childCategory={childCategory}
         />
       </div>

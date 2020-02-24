@@ -46,13 +46,13 @@ export default function WatchListPage(props) {
   return (
     <div>
       <Header
-        brand="Commons"
+        brand='Commons'
         rightLinks={<HeaderLinks loggedIn={props.loggedInStatus} />}
         fixed
-        color="transparent"
+        color='transparent'
         changeColorOnScroll={{
           height: 400,
-          color: 'white',
+          color: 'white'
         }}
         {...rest}
       />
@@ -61,7 +61,7 @@ export default function WatchListPage(props) {
         style={{
           backgroundImage: 'url(' + image + ')',
           backgroundSize: 'cover',
-          backgroundPosition: 'top center',
+          backgroundPosition: 'top center'
         }}
       ></div>
       <Parallax image={require('assets/img/bg2.jpg')}>
@@ -79,6 +79,7 @@ export default function WatchListPage(props) {
         />
         <Bills
           bills={props.bills}
+          user={props.user}
           clicked={clicked}
           setThisOneClicked={setThisOneClicked}
         />

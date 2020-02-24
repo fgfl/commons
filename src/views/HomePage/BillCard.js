@@ -39,10 +39,42 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Bill(props) {
+export default function BillCard(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
   const [events, setEvents] = useState('No events currently loaded.');
+  const [clicked, setClicked] = useState(false);
+  const [color, setColor] = useState('grey');
+
+  const setThisOneClicked = () => {
+    if (clicked) {
+      setClicked(false);
+      setColor('grey');
+    } else {
+      setClicked(true);
+      setColor('red');
+    }
+  };
+
+  const handleWatchSubmit = async () => {
+    const watchlist_bill = JSON.stringify({
+      watchlist_bill: { bill_id: props.bill.id, user_id: props.user.id }
+    });
+
+    console.log(watchlist_bill);
+
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_COMMONS_API}/bill_users`,
+        {
+          watchlist_bill
+        },
+        console.log(response.data)
+      );
+    } catch (error) {
+      console.error(`Error occurred while setting watch list`);
+    }
+  };
 
   const getEventsForBill = async (bill_id) => {
     try {
@@ -81,11 +113,11 @@ export default function Bill(props) {
       <CardHeader
         avatar={
           <div>
-            <Avatar aria-label="bill" className={classes.avatar}>
+            <Avatar aria-label='bill' className={classes.avatar}>
               {props.bill.code}
             </Avatar>
             <Typography
-              color="textSecondary"
+              color='textSecondary'
               style={{ fontSize: '0.75em', textAlign: 'center' }}
             >
               Second <br /> Reading
@@ -93,11 +125,13 @@ export default function Bill(props) {
           </div>
         }
         action={
-          <IconButton aria-label="settings">
+          <IconButton aria-label='settings'>
             <BookmarkIcon
+              style={{ color: color }}
               onClick={() => {
-                props.setThisOneClicked(props.key);
+                setThisOneClicked();
                 console.log('I was clicked');
+                handleWatchSubmit();
               }}
             />
           </IconButton>
@@ -106,7 +140,7 @@ export default function Bill(props) {
         subheader={'Introduced on ' + props.bill.introduced_date}
       />
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography variant='body2' color='textSecondary' component='p'>
           {props.bill.description}
         </Typography>
         <Typography>
@@ -124,12 +158,12 @@ export default function Bill(props) {
           })}
           onClick={handleExpandClick}
           aria-expanded={expanded}
-          aria-label="show more"
+          aria-label='show more'
         >
           <ExpandMoreIcon />
         </IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+      <Collapse in={expanded} timeout='auto' unmountOnExit>
         <CardContent>{eventCards}</CardContent>
       </Collapse>
     </Card>
