@@ -37,7 +37,7 @@ const Login = (props) => {
     };
 
     axios
-      .post(`${process.env.REACT_APP_PUBLIC_URL}/login`, { user })
+      .post(`${process.env.REACT_APP_COMMONS_API}/login`, { user })
       .then((response) => {
         if (response.data.logged_in) {
           console.log('RESPONSE', response.data);
@@ -62,7 +62,7 @@ const Login = (props) => {
           {errors.map((error) => {
             return (
               <li key={error}>
-                <Typography variant='body1'>{error}</Typography>
+                <Typography variant="body1">{error}</Typography>
               </li>
             );
           })}
@@ -116,7 +116,7 @@ const Login = (props) => {
   const classes = useStyles();
 
   return (
-    <Container component='main' maxWidth='xs'>
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -124,14 +124,14 @@ const Login = (props) => {
         </Avatar>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
-            variant='outlined'
-            margin='normal'
+            variant="outlined"
+            margin="normal"
             required
             fullWidth
-            id='email'
-            label='Email Address'
-            name='email'
-            autoComplete='email'
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
             autoFocus
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -139,47 +139,47 @@ const Login = (props) => {
           {errors ? (
             <TextField
               error
-              variant='outlined'
-              margin='normal'
+              variant="outlined"
+              margin="normal"
               required
               fullWidth
-              name='password'
-              label='Password'
-              type='password'
-              id='password'
-              autoComplete='current-password'
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
               onChange={(e) => setPassword(e.target.value)}
             />
           ) : (
             <TextField
-              variant='outlined'
-              margin='normal'
+              variant="outlined"
+              margin="normal"
               required
               fullWidth
-              name='password'
-              label='Password'
-              type='password'
-              id='password'
-              autoComplete='current-password'
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
               onChange={(e) => setPassword(e.target.value)}
             />
           )}
           <Button
-            type='submit'
+            type="submit"
             fullWidth
-            variant='contained'
-            color='primary'
+            variant="contained"
+            color="primary"
             className={classes.submit}
           >
             LOGIN
           </Button>
-          <Grid container justify='center'>
+          <Grid container justify="center">
             <Grid item>
               <Link
-                href='#'
-                variant='body2'
+                href="#"
+                variant="body2"
                 component={RouterLink}
-                to='/signup'
+                to="/signup"
               >
                 {'Not a member? Sign up'}
               </Link>

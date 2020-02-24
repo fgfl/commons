@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
@@ -13,16 +13,55 @@ import PersonIcon from '@material-ui/icons/Person';
 import Container from '@material-ui/core/Container';
 
 const Notifications = (props) => {
-  let data = {
+  const [state, setState] = useState({
     smsNotification: false,
     emailNotification: false,
-    phoneNumber: ''
+    phoneNumber: '',
+    errors: {
+      phoneNumber: ''
+    }
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  // let state = {
+  //   smsNotification: false,
+  //   emailNotification: false,
+  //   phoneNumber: ''
+  // };
+
+  const handleChange = (event) => {
+    const { name, value } = event;
+    let errors = state.errors;
+
+    const parsedValue = value.replace(/\D+/g, '');
+
+    errors.phoneNumber =
+      parsedValue.length === 0 || parsedValue.length === 10
+        ? ''
+        : 'Phone number must be exactly 10 digits long.';
+
+    setState((prevState) => ({
+      ...prevState,
+      phoneNumber: parsedValue,
+      errors
+    }));
+  };
+
+  const validateForm = (errors) => {
+    let valid = true;
+    Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
+    return valid;
   };
 
   const proceed = (e) => {
     e.preventDefault();
-    props.nextStep(2, data);
+    setSubmitted(true);
+    validateForm(state.errors)
+      ? props.nextStep(2, state)
+      : console.error('Invalid Form');
   };
+
+  const { errors } = state;
 
   const back = (e) => {
     e.preventDefault();
@@ -30,13 +69,13 @@ const Notifications = (props) => {
   };
 
   const handleEmailCheck = () => {
-    if (data.smsNotification === false) {
-      data.smsNotification = true;
+    if (state.smsNotification === false) {
+      state.smsNotification = true;
     }
   };
   const handleSmsCheck = () => {
-    if (data.emailNotification === false) {
-      data.emailNotification = true;
+    if (state.emailNotification === false) {
+      state.emailNotification = true;
     }
   };
 
@@ -91,46 +130,49 @@ const Notifications = (props) => {
 
   return (
     <div>
-      <Container maxWidth='xs' className={classes.paper}>
+      <Container maxWidth="xs" className={classes.paper}>
         <Avatar className={classes.avatar}>
           <PersonIcon className={classes.accountCirle} />
         </Avatar>
-        <Typography variant='h4'>Get updates!</Typography>
-        <FormControl component='fieldset' className={classes.formControl}>
-          <FormLabel component='legend'>
+        <Typography variant="h4">Get updates!</Typography>
+        <FormControl component="fieldset" className={classes.formControl}>
+          <FormLabel component="legend">
             How would you like to receive notifications?
           </FormLabel>
           <FormGroup>
             <FormControlLabel
               control={<Checkbox />}
-              label='Receive notifications by email'
+              label="Receive notifications by email"
               onChange={handleEmailCheck}
             />
             <FormControlLabel
               control={<Checkbox />}
-              label='Receive notifications by SMS message'
+              label="Receive notifications by SMS message"
               onChange={handleSmsCheck}
             />
             <TextField
-              variant='outlined'
-              margin='normal'
+              variant="outlined"
+              margin="normal"
               fullWidth
-              id='phoneNumber'
-              label='Phone Number'
-              name='phoneNumber'
-              autoComplete='phoneNumber'
+              id="phoneNumber"
+              label="Phone Number"
+              name="phoneNumber"
+              autoComplete="phoneNumber"
               autoFocus
               value={props.phoneNumber}
-              onChange={(e) => (data.phoneNumber = e.target.value)}
+              onChange={(e) => handleChange(e.target)}
             />
+            {submitted && errors.phoneNumber.length > 0 && (
+              <span className="error">{errors.phoneNumber}</span>
+            )}
           </FormGroup>
         </FormControl>
       </Container>
-      <Container maxWidth='xs' className={classes.buttons}>
+      <Container maxWidth="xs" className={classes.buttons}>
         <Button
           className={classes.button}
-          color='secondary'
-          variant='contained'
+          color="secondary"
+          variant="contained"
           onClick={back}
         >
           Back
@@ -138,8 +180,8 @@ const Notifications = (props) => {
 
         <Button
           className={classes.button}
-          color='primary'
-          variant='contained'
+          color="primary"
+          variant="contained"
           onClick={proceed}
         >
           Continue

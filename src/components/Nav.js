@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
 const NavBar = (props) => {
   const handleClick = () => {
     axios
-      .delete(`${process.env.REACT_APP_PUBLIC_URL}/logout`)
+      .delete(`${process.env.REACT_APP_COMMONS_API}/logout`)
       .then((response) => {
         props.handleLogout();
         console.log('logged out');
