@@ -98,11 +98,11 @@ const UserForm = (props) => {
       if (data.password) {
         setPassword(data.password);
       }
-      if (data.password_confirmation) {
-        setPasswordConfirmation(data.password_confirmation);
+      if (data.passwordConfirmation) {
+        setPasswordConfirmation(data.passwordConfirmation);
       }
-      if (data.postal_code) {
-        setPostalCode(data.postal_code);
+      if (data.postalCode) {
+        setPostalCode(data.postalCode);
       }
       setStep(step + 1);
     }
