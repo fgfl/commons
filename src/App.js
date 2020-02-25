@@ -86,7 +86,7 @@ const App = (props) => {
   const handleLogout = () => {
     axios
       .delete(`${process.env.REACT_APP_COMMONS_API}/logout`)
-      .then((response) => {
+      .then(() => {
         setUser({});
         setLoggedIn(false);
         props.history.push('/');
