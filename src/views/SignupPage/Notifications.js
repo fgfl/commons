@@ -105,9 +105,6 @@ const Notifications = (props) => {
       width: '100px',
       height: '100px',
       color: 'white'
-    },
-    button: {
-      margin: '1em'
     }
   }));
   const classes = useStyles();

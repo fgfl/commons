@@ -1,5 +1,6 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -20,6 +21,8 @@ const Categories = (props) => {
   const useStyles = makeStyles((theme) => ({
     paper: {
       zIndex: 1000,
+      margin: '0 auto',
+      marginTop: theme.spacing(4),
       marginTop: theme.spacing(4),
       display: 'flex',
       flexDirection: 'column',
@@ -44,39 +47,34 @@ const Categories = (props) => {
       height: '100px',
       color: 'white'
     },
-    backDrop: {
-      position: 'absolute',
-      height: '75%',
-      width: '100%',
-      bottom: 0,
-      left: 0,
-      zIndex: 0
+    buttons: {
+      margin: '0 auto'
     }
   }));
   const classes = useStyles();
 
   return (
-    <div>
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <PersonIcon className={classes.accountCirle} />
-        </Avatar>
-        <Typography variant='h4'>
-          Pick the topics you are interested in
-        </Typography>
-      </div>
+    <div className={classes.paper}>
+      <Avatar className={classes.avatar}>
+        <PersonIcon className={classes.accountCirle} />
+      </Avatar>
+      <Typography variant='h4'>
+        Pick the topics you are interested in
+      </Typography>
       <ChipsArray
         categories={props.categories}
         clicked={props.clicked}
         setThisOneClicked={props.setThisOneClicked}
       />
-      <Button color='secondary' variant='contained' onClick={back}>
-        Back
-      </Button>
+      <Container className={classes.buttons}>
+        <Button color='secondary' variant='contained' onClick={back}>
+          Back
+        </Button>
 
-      <Button color='primary' variant='contained' onClick={proceed}>
-        Continue
-      </Button>
+        <Button color='primary' variant='contained' onClick={proceed}>
+          Continue
+        </Button>
+      </Container>
     </div>
   );
 };

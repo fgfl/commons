@@ -48,7 +48,7 @@ export default function LoginPage(props) {
         }}
       >
         <div className={classes.container}>
-          <Container maxWidth='xs'>
+          <Container maxWidth='s'>
             <GridItem>
               <Card className={classes[cardAnimaton]}>
                 <UserForm
