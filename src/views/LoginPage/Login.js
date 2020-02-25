@@ -13,9 +13,16 @@ import PersonIcon from '@material-ui/icons/Person';
 import { Typography } from '@material-ui/core';
 
 const Login = (props) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState('');
+  const [state, setState] = useState({
+    email: '',
+    password: '',
+    errors: {
+      email: 'Email is not valid.',
+      password: 'Password must be 5 characters long!'
+    },
+    invalid: ''
+  });
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     if (props.loggedInStatus) {
@@ -23,44 +30,75 @@ const Login = (props) => {
     }
   });
 
-  const handleSubmit = (event) => {
+  const handleChange = (event) => {
+    const { name, value } = event;
+    let errors = state.errors;
+
+    switch (name) {
+      case 'email':
+        errors.email =
+          value.length === 0 || !validEmailRegex.test(value)
+            ? 'Email is not valid.'
+            : '';
+        break;
+      case 'password':
+        errors.password =
+          value.length === 0 || value.length < 5
+            ? 'Password must be 5 characters long!'
+            : '';
+        break;
+      default:
+        break;
+    }
+    setState((prevState) => ({
+      ...prevState,
+      [name]: value,
+      errors,
+      invalid: ''
+    }));
+  };
+
+  const validEmailRegex = RegExp(
+    /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+  );
+
+  const validateForm = (errors) => {
+    let valid = true;
+    Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
+    return valid;
+  };
+
+  const { email, password, errors, invalid } = state;
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    setSubmitted(true);
+
     let user = {
       email: email,
       password: password
     };
 
-    axios
-      .post(`${process.env.REACT_APP_COMMONS_API}/login`, { user })
-      .then((response) => {
-        if (response.data.status === 'created') {
-          props.handleLogin(response.data);
-          redirect('/');
-        } else {
-          setErrors(response.data.errors);
-        }
-      })
-      .catch((error) => console.log('api errors:', error));
+    if (validateForm(state.errors)) {
+      try {
+        const response = await axios.post(
+          `${process.env.REACT_APP_COMMONS_API}/login`,
+          { user }
+        );
+        props.handleLogin(response.data);
+        redirect('/');
+      } catch (error) {
+        setState((prevState) => ({
+          ...prevState,
+          invalid: `Email or password is not valid.`
+        }));
+        console.error(error);
+      }
+    }
   };
 
   const redirect = (uri) => {
     props.history.push(uri);
-  };
-
-  const handleErrors = () => {
-    return (
-      <div>
-        <ul>
-          {errors.map((error) => {
-            return (
-              <li key={error}>
-                <Typography variant='body1'>{error}</Typography>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    );
   };
 
   const useStyles = makeStyles((theme) => ({
@@ -107,72 +145,63 @@ const Login = (props) => {
       <Avatar className={classes.avatar}>
         <PersonIcon className={classes.accountCircle} />
       </Avatar>
-      <Typography variant='h4'>Login</Typography>
+      <Typography variant="h4">Login</Typography>
       <form className={classes.form} noValidate onSubmit={handleSubmit}>
         <TextField
-          variant='outlined'
-          margin='normal'
+          variant="outlined"
+          margin="normal"
           required
           fullWidth
-          id='email'
-          label='Email Address'
-          name='email'
-          autoComplete='email'
+          id="email"
+          label="Email Address"
+          name="email"
+          autoComplete="email"
           autoFocus
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={state.email}
+          onChange={(e) => handleChange(e.target)}
         />
-        {errors ? (
-          <TextField
-            error
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            name='password'
-            label='Password'
-            type='password'
-            id='password'
-            autoComplete='current-password'
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        ) : (
-          <TextField
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            name='password'
-            label='Password'
-            type='password'
-            id='password'
-            autoComplete='current-password'
-            onChange={(e) => setPassword(e.target.value)}
-          />
+        {submitted && errors.email.length > 0 && (
+          <span className="error">{errors.email}</span>
+        )}
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          name="password"
+          label="Password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+          onChange={(e) => handleChange(e.target)}
+        />
+        {submitted && errors.password.length > 0 && (
+          <span className="error">{errors.password}</span>
+        )}
+        {submitted && invalid.length > 0 && (
+          <span className="error">{invalid}</span>
         )}
         <Button
-          type='submit'
+          type="submit"
           fullWidth
-          variant='contained'
-          color='primary'
+          variant="contained"
+          color="primary"
           className={classes.submit}
         >
           LOGIN
         </Button>
-        <Grid container justify='center'>
+        <Grid container justify="center">
           <Grid item>
             <Link
-              href='#'
-              variant='body2'
+              href="#"
+              variant="body2"
               component={RouterLink}
-              to='/signup-page'
+              to="/signup-page"
             >
               {'Not a member? Sign up'}
             </Link>
           </Grid>
         </Grid>
-
-        {errors ? handleErrors() : null}
       </form>
       <div className={classes.backDrop}></div>
     </div>

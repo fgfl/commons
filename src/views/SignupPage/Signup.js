@@ -33,7 +33,6 @@ const Signup = (props) => {
   const handleChange = (event) => {
     const { name, value } = event;
     let errors = state.errors;
-    console.log(errors);
 
     switch (name) {
       case 'name':
