@@ -72,10 +72,10 @@ export default function Header(props) {
     [classes.appBar]: true,
     [classes[color]]: color,
     [classes.absolute]: absolute,
-    [classes.fixed]: fixed,
+    [classes.fixed]: fixed
   });
   const brandComponent = (
-    <Link to="/">
+    <Link to='/'>
       <Button className={classes.title}>{brand}</Button>
     </Link>
   );
@@ -85,33 +85,33 @@ export default function Header(props) {
         {leftLinks !== undefined ? brandComponent : null}
         <div className={classes.flex}>
           {leftLinks !== undefined ? (
-            <Hidden smDown implementation="css">
+            <Hidden smDown implementation='css'>
               {leftLinks}
             </Hidden>
           ) : (
             brandComponent
           )}
         </div>
-        <Hidden smDown implementation="css">
+        <Hidden smDown implementation='css'>
           {rightLinks}
         </Hidden>
         <Hidden mdUp>
           <IconButton
-            color="inherit"
-            aria-label="open drawer"
+            color='inherit'
+            aria-label='open drawer'
             onClick={handleDrawerToggle}
           >
             <Menu />
           </IconButton>
         </Hidden>
       </Toolbar>
-      <Hidden mdUp implementation="js">
+      <Hidden mdUp implementation='js'>
         <Drawer
-          variant="temporary"
+          variant='temporary'
           anchor={'right'}
           open={mobileOpen}
           classes={{
-            paper: classes.drawerPaper,
+            paper: classes.drawerPaper
           }}
           onClose={handleDrawerToggle}
         >
@@ -126,7 +126,7 @@ export default function Header(props) {
 }
 
 Header.defaultProp = {
-  color: 'white',
+  color: 'white'
 };
 
 Header.propTypes = {
@@ -139,7 +139,7 @@ Header.propTypes = {
     'transparent',
     'white',
     'rose',
-    'dark',
+    'dark'
   ]),
   rightLinks: PropTypes.node,
   leftLinks: PropTypes.node,
@@ -163,7 +163,7 @@ Header.propTypes = {
       'transparent',
       'white',
       'rose',
-      'dark',
-    ]).isRequired,
-  }),
+      'dark'
+    ]).isRequired
+  })
 };

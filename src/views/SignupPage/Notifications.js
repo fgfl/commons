@@ -9,8 +9,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import PersonIcon from '@material-ui/icons/Person';
 import Container from '@material-ui/core/Container';
+import AnnouncementIcon from '@material-ui/icons/Announcement';
 
 const Notifications = (props) => {
   const [state, setState] = useState({
@@ -22,12 +22,6 @@ const Notifications = (props) => {
     }
   });
   const [submitted, setSubmitted] = useState(false);
-
-  // let state = {
-  //   smsNotification: false,
-  //   emailNotification: false,
-  //   phoneNumber: ''
-  // };
 
   const handleChange = (event) => {
     const { name, value } = event;
@@ -83,6 +77,7 @@ const Notifications = (props) => {
     paper: {
       zIndex: 1000,
       marginTop: theme.spacing(4),
+      marginBottom: theme.spacing(4),
       alignItems: 'center',
       border: 5,
       padding: theme.spacing(2),
@@ -96,83 +91,67 @@ const Notifications = (props) => {
       height: '120px',
       backgroundColor: '#29c0a8'
     },
-    form: {
+    formControl: {
       zIndex: 1000,
       width: '100%', // Fix IE 11 issue.
       marginTop: theme.spacing(1),
-      textAlign: 'center'
+      textAlign: 'left'
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
       backgroundColor: '#29c0a8'
     },
-    accountCirle: {
-      width: '100px',
-      height: '100px',
+    accountCircle: {
+      width: '90px',
+      height: '90px',
       color: 'white'
-    },
-    backDrop: {
-      position: 'absolute',
-      height: '75%',
-      width: '100%',
-      bottom: 0,
-      left: 0,
-      zIndex: 0
-    },
-    buttons: {
-      textAlign: 'center'
-    },
-    button: {
-      margin: '1em'
     }
   }));
   const classes = useStyles();
 
   return (
     <div>
-      <Container maxWidth="xs" className={classes.paper}>
+      <Container maxWidth='xs' className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <PersonIcon className={classes.accountCirle} />
+          <AnnouncementIcon className={classes.accountCircle} />
         </Avatar>
-        <Typography variant="h4">Get updates!</Typography>
-        <FormControl component="fieldset" className={classes.formControl}>
-          <FormLabel component="legend">
+        <Typography variant='h4'>Get updates!</Typography>
+        <FormControl component='fieldset' className={classes.formControl}>
+          <FormLabel component='legend'>
             How would you like to receive notifications?
           </FormLabel>
           <FormGroup>
             <FormControlLabel
               control={<Checkbox />}
-              label="Receive notifications by email"
+              label='Receive notifications by email'
               onChange={handleEmailCheck}
             />
             <FormControlLabel
               control={<Checkbox />}
-              label="Receive notifications by SMS message"
+              label='Receive notifications by SMS message'
               onChange={handleSmsCheck}
             />
             <TextField
-              variant="outlined"
-              margin="normal"
+              variant='outlined'
+              margin='normal'
               fullWidth
-              id="phoneNumber"
-              label="Phone Number"
-              name="phoneNumber"
-              autoComplete="phoneNumber"
+              id='phoneNumber'
+              label='Phone Number'
+              name='phoneNumber'
+              autoComplete='phoneNumber'
               autoFocus
               value={props.phoneNumber}
               onChange={(e) => handleChange(e.target)}
             />
             {submitted && errors.phoneNumber.length > 0 && (
-              <span className="error">{errors.phoneNumber}</span>
+              <span className='error'>{errors.phoneNumber}</span>
             )}
           </FormGroup>
         </FormControl>
-      </Container>
-      <Container maxWidth="xs" className={classes.buttons}>
         <Button
           className={classes.button}
-          color="secondary"
-          variant="contained"
+          color='secondary'
+          variant='contained'
           onClick={back}
         >
           Back
@@ -180,8 +159,8 @@ const Notifications = (props) => {
 
         <Button
           className={classes.button}
-          color="primary"
-          variant="contained"
+          color='primary'
+          variant='contained'
           onClick={proceed}
         >
           Continue

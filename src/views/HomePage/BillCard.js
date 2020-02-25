@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -12,8 +12,9 @@ import Link from '@material-ui/core/Link';
 import { red } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
-import clsx from 'clsx';
+import Tooltip from '@material-ui/core/Tooltip';
 
+import clsx from 'clsx';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -49,10 +50,53 @@ const useStyles = makeStyles((theme) => ({
  *  onRender: ()
  * }} props
  */
-export default function Bill(props) {
+export default function BillCard(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
   const [events, setEvents] = useState('No events currently loaded.');
+  const [color, setColor] = useState('');
+
+  useEffect(() => {
+    props.user && findWatchedBills(props.user.id);
+    props.user && props.user.user_bills.includes(props.bill.id)
+      ? setColor('red')
+      : setColor('grey');
+    console.log(props.user);
+  }, []);
+
+  const findWatchedBills = async (user_id) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_COMMONS_API}/bills/${user_id}`
+      );
+      let watchedBills = response.data.user_bills;
+      if (watchedBills.includes(props.bill.id)) {
+        setColor('red');
+      }
+    } catch (error) {
+      console.error(`Error occurred while fetching watch bills`);
+    }
+  };
+
+  const handleWatchSubmit = async () => {
+    const watchlist_bill = {
+      id: { bill_id: props.bill.id, user_id: props.user.id }
+    };
+    color === 'grey' ? setColor('red') : setColor('grey');
+
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_COMMONS_API}/bill_users`,
+        watchlist_bill
+      );
+      props.updateWatchlist(response.data.watchlist);
+      response.data.watchlist.includes(props.bill.id)
+        ? setColor('red')
+        : setColor('grey');
+    } catch (error) {
+      console.error(`Error occurred while setting watch list: ${error}`);
+    }
+  };
 
   const getEventsForBill = async (bill_id) => {
     try {
@@ -65,7 +109,7 @@ export default function Bill(props) {
       setEvents(response.data.events);
     } catch (error) {
       console.error(
-        `Error occured while fetching events for bill ${props.bill.code}`
+        `Error occurred while fetching events for bill ${props.bill.code}`
       );
     }
   };
@@ -94,23 +138,28 @@ export default function Bill(props) {
             <Avatar aria-label="bill" className={classes.avatar}>
               {props.bill.code}
             </Avatar>
-            <Typography
-              color="textSecondary"
-              style={{ fontSize: '0.75em', textAlign: 'center' }}
-            >
-              Second <br /> Reading
-            </Typography>
           </div>
         }
         action={
-          <IconButton aria-label="settings">
-            <BookmarkIcon
-              onClick={() => {
-                props.setThisOneClicked(props.key);
-                console.log('I was clicked');
-              }}
-            />
-          </IconButton>
+          props.user ? (
+            <IconButton aria-label="settings">
+              <BookmarkIcon
+                style={{ color: color }}
+                onClick={() => {
+                  handleWatchSubmit();
+                }}
+              />
+            </IconButton>
+          ) : (
+            <Tooltip
+              title="Sign in to add bills to watchlist."
+              placement="right"
+            >
+              <IconButton aria-label="settings">
+                <BookmarkIcon style={{ color: color }} />
+              </IconButton>
+            </Tooltip>
+          )
         }
         title={props.bill.title}
         subheader={'Introduced on ' + props.bill.introduced_date}

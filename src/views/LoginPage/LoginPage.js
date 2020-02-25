@@ -1,7 +1,7 @@
 import React from 'react';
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
-import InputAdornment from '@material-ui/core/InputAdornment';
+import Container from '@material-ui/core/Container';
 import Icon from '@material-ui/core/Icon';
 // @material-ui/icons
 import Email from '@material-ui/icons/Email';
@@ -18,7 +18,7 @@ import Login from './Login.js';
 
 import styles from 'assets/jss/material-kit-react/views/loginPage.js';
 
-import image from 'assets/img/bg.jpg';
+import image from 'assets/img/house_of_commons.jpg';
 
 const useStyles = makeStyles(styles);
 
@@ -39,11 +39,11 @@ export default function LoginPage(props) {
       style={{
         backgroundImage: 'url(' + image + ')',
         backgroundSize: 'cover',
-        backgroundPosition: 'top center',
+        backgroundPosition: 'top center'
       }}
     >
       <div className={classes.container}>
-        <GridContainer justify="center">
+        <Container maxWidth='xs'>
           <GridItem>
             <Card className={classes[cardAnimaton]}>
               <Login
@@ -53,7 +53,7 @@ export default function LoginPage(props) {
               />
             </Card>
           </GridItem>
-        </GridContainer>
+        </Container>
       </div>
       <Footer whiteFont />
     </div>
