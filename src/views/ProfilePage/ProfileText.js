@@ -33,14 +33,14 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
     password,
     passwordConfirmation,
     phoneNumber,
-    postalCode,
+    postalCode
   ]);
 
   const useStyles = makeStyles((theme) => ({
     profileTable: {
       display: 'flex',
-      flexDirection: 'row',
-    },
+      flexDirection: 'row'
+    }
   }));
   const classes = useStyles();
 
@@ -87,7 +87,7 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
     },
     sms_notification: () => {
       return '';
-    },
+    }
   };
 
   const validateForm = () => {
@@ -101,7 +101,7 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
       phone_number: phoneNumber,
       postal_code: postalCode,
       email_notification: emailNotification,
-      sms_notification: smsNotification,
+      sms_notification: smsNotification
     };
     const newValidity = {};
     let isValid = true;
@@ -129,7 +129,7 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
       phone_number: phoneNumber,
       postal_code: postalCode,
       email_notification: emailNotification,
-      sms_notification: smsNotification,
+      sms_notification: smsNotification
     };
 
     if (validateForm()) {
@@ -145,17 +145,17 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
   return (
     <form onSubmit={(e) => e.preventDefault()}>
       <TextField
-        variant="outlined"
-        margin="normal"
+        variant='outlined'
+        margin='normal'
         error={formErrors.name && formErrors.name.length > 0}
         helperText={formErrors.name}
         required
         fullWidth
-        id="name"
+        id='name'
         label={mapUserFieldToLabel('name')}
         name={mapUserFieldToLabel('name')}
         InputProps={{
-          readOnly: !editStatus,
+          readOnly: !editStatus
         }}
         defaultValue={name}
         onChange={(e) => {
@@ -163,33 +163,33 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
         }}
       />
       <TextField
-        variant="outlined"
-        margin="normal"
+        variant='outlined'
+        margin='normal'
         error={formErrors.username && formErrors.username.length > 0}
         helperText={formErrors.username}
         required
         fullWidth
-        id="username"
+        id='username'
         label={mapUserFieldToLabel('username')}
         name={mapUserFieldToLabel('username')}
         InputProps={{
-          readOnly: !editStatus,
+          readOnly: !editStatus
         }}
         defaultValue={username}
         onChange={(e) => setUsername(e.target.value)}
       />
       <TextField
-        variant="outlined"
-        margin="normal"
+        variant='outlined'
+        margin='normal'
         error={formErrors.email && formErrors.email.length > 0}
         helperText={formErrors.email}
         required
         fullWidth
-        id="email"
+        id='email'
         label={mapUserFieldToLabel('email')}
         name={mapUserFieldToLabel('email')}
         InputProps={{
-          readOnly: !editStatus,
+          readOnly: !editStatus
         }}
         defaultValue={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -197,68 +197,68 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
       {editStatus && (
         <Fragment>
           <TextField
-            variant="outlined"
-            type="password"
-            margin="normal"
+            variant='outlined'
+            type='password'
+            margin='normal'
             error={formErrors.password && formErrors.password.length > 0}
             helperText={formErrors.password}
             fullWidth
-            id="password"
+            id='password'
             label={mapUserFieldToLabel('password_digest')}
             name={mapUserFieldToLabel('password_digest')}
             InputProps={{
-              readOnly: !editStatus,
+              readOnly: !editStatus
             }}
-            defaultValue=""
+            defaultValue=''
             onChange={(e) => setPassword(e.target.value)}
           />
           <TextField
-            variant="outlined"
-            type="password"
-            margin="normal"
+            variant='outlined'
+            type='password'
+            margin='normal'
             error={
               formErrors.password_confirmation &&
               formErrors.password_confirmation.length > 0
             }
             helperText={formErrors.password_confirmation}
             fullWidth
-            id="password_confirmation"
-            label="Confirm password"
-            name="Confirm password"
+            id='password_confirmation'
+            label='Confirm password'
+            name='Confirm password'
             InputProps={{
-              readOnly: !editStatus,
+              readOnly: !editStatus
             }}
-            defaultValue=""
+            defaultValue=''
             onChange={(e) => setPasswordConfirmation(e.target.value)}
           />
         </Fragment>
       )}
       <TextField
-        variant="outlined"
-        margin="normal"
+        variant='outlined'
+        margin='normal'
         error={formErrors.phone_number && formErrors.phone_number.length > 0}
         helperText={formErrors.phone_number}
         fullWidth
-        id="phone_number"
+        id='phone_number'
         label={mapUserFieldToLabel('phone_number')}
         name={mapUserFieldToLabel('phone_number')}
         InputProps={{
-          readOnly: !editStatus,
+          readOnly: !editStatus
         }}
         defaultValue={phoneNumber}
         onChange={(e) => setPhoneNumber(e.target.value)}
       />
       <TextField
-        variant="outlined"
-        margin="normal"
+        variant='outlined'
+        margin='normal'
         error={formErrors.postal_code && formErrors.postal_code.length > 0}
         helperText={formErrors.postal_code}
         fullWidth
-        id="postal_code"
+        id='postal_code'
         label={mapUserFieldToLabel('postal_code')}
         name={mapUserFieldToLabel('postal_code')}
         InputProps={{
-          readOnly: !editStatus,
+          readOnly: !editStatus
         }}
         defaultValue={postalCode}
         onChange={(e) => setPostalCode(e.target.value)}
@@ -288,13 +288,13 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
       />
 
       <div>
-        <Grid container direction="row" justify="flex-end" alignItems="center">
+        <Grid container>
           {editStatus ? (
             <Fragment>
-              <Grid item="true">
+              <Grid item='true'>
                 <Button
-                  type="submit"
-                  variant="contained"
+                  type='submit'
+                  variant='contained'
                   onClick={(e) => saveForm()}
                 >
                   Save
@@ -302,7 +302,7 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
               </Grid>
               <Grid item>
                 <Button
-                  variant="contained"
+                  variant='contained'
                   onClick={(e) => setEditStatus(false)}
                 >
                   Cancel
@@ -311,7 +311,7 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
             </Fragment>
           ) : (
             <Grid item>
-              <Button variant="contained" onClick={(e) => setEditStatus(true)}>
+              <Button variant='contained' onClick={(e) => setEditStatus(true)}>
                 Edit
               </Button>
             </Grid>

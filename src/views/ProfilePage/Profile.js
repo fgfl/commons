@@ -5,51 +5,69 @@ import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import PersonIcon from '@material-ui/icons/Person';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
 import ProfileText from './ProfileText';
 import FindMyMp from './FindMyMp';
+import { Typography } from '@material-ui/core';
+import profilePageStyle from 'assets/jss/material-kit-react/views/profilePage';
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
+  root: {
     flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-
-    padding: '0.5em',
-
-    border: '5px',
-    backgroundColor: 'aquamarine',
-
-    [theme.breakpoints.up('sm')]: {
-      flexDirection: 'row',
-    },
+    padding: theme.spacing(2)
   },
-  avatar: {},
-  buttons: {},
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary
+  },
+  avatar: {
+    margin: '0 auto',
+    width: '100px',
+    height: '100px',
+    marginBottom: theme.spacing(2)
+  },
+  personIcon: {
+    width: '75px',
+    height: '75px'
+  },
+  profileName: {
+    textAlign: 'center'
+  },
+  form: {
+    padding: theme.spacing(2)
+  }
 }));
 
 const Profile = ({ user, handleProfileUpdate }) => {
   const classes = useStyles();
-  // direction="row" alignItems="center" wrap="wrap"
+
   return (
-    <Container>
-      <Grid container className={classes.container}>
-        <Grid item>
+    <div className={classes.root}>
+      <Grid container justify='center' alignItems='center'>
+        <Grid item xs={12} sm={6}>
           <Avatar className={classes.avatar}>
-            <PersonIcon className={classes.accountCirle} />
+            <PersonIcon className={classes.personIcon} />
           </Avatar>
+          <Typography variant='h5' className={classes.profileName}>
+            {user.name}
+          </Typography>
         </Grid>
-        <Grid item>
-          <ProfileText
-            user={user}
-            handleProfileUpdate={handleProfileUpdate}
-          ></ProfileText>
+
+        <Grid item xs={12} sm={6}>
+          <div className={classes.form}>
+            <ProfileText
+              user={user}
+              handleProfileUpdate={handleProfileUpdate}
+            ></ProfileText>
+          </div>
         </Grid>
       </Grid>
-      <FindMyMp user={user}></FindMyMp>
-    </Container>
+      <Grid container>
+        <FindMyMp user={user} />
+      </Grid>
+    </div>
   );
 };
 
