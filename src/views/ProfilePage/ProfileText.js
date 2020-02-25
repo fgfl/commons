@@ -16,8 +16,8 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState(user.phone_number);
-  const [postalCode, setPostalCode] = useState(user.postal_code);
+  const [phoneNumber, setPhoneNumber] = useState(user.phone_number || '');
+  const [postalCode, setPostalCode] = useState(user.postal_code || '');
   const [emailNotification, setEmailNotification] = useState(
     user.email_notification
   );
