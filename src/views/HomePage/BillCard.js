@@ -19,26 +19,36 @@ import axios from 'axios';
 const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: 'left',
-    marginBottom: '16px'
+    marginBottom: '16px',
   },
   expand: {
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
     transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest
-    })
+      duration: theme.transitions.duration.shortest,
+    }),
   },
   expandOpen: {
-    transform: 'rotate(180deg)'
+    transform: 'rotate(180deg)',
   },
   avatar: {
     backgroundColor: red[500],
     width: '60px',
     height: '60px',
-    fontWeight: 900
-  }
+    fontWeight: 900,
+  },
 }));
 
+/**
+ *
+ * @param {{
+ *  key: Number,
+ *  setThisOneClicked: (),
+ *  bill: { bill_state },
+ *  style: { style_object },
+ *  onRender: ()
+ * }} props
+ */
 export default function Bill(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
@@ -49,7 +59,7 @@ export default function Bill(props) {
       const response = await axios.get(
         `${process.env.REACT_APP_COMMONS_API}/events/${bill_id}`,
         {
-          bill_id
+          bill_id,
         }
       );
       setEvents(response.data.events);
@@ -120,7 +130,7 @@ export default function Bill(props) {
         <Typography>View Events for this Bill</Typography>
         <IconButton
           className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded
+            [classes.expandOpen]: expanded,
           })}
           onClick={handleExpandClick}
           aria-expanded={expanded}

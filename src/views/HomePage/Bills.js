@@ -6,24 +6,24 @@ import BillCard from './BillCard';
 const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: 'left',
-    marginBottom: '16px'
+    marginBottom: '16px',
   },
   expand: {
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
     transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest
-    })
+      duration: theme.transitions.duration.shortest,
+    }),
   },
   expandOpen: {
-    transform: 'rotate(180deg)'
+    transform: 'rotate(180deg)',
   },
   avatar: {
     backgroundColor: red[500],
     width: '60px',
     height: '60px',
-    fontWeight: 900
-  }
+    fontWeight: 900,
+  },
 }));
 
 export default function Bills(props) {
