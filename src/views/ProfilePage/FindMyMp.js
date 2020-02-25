@@ -27,8 +27,8 @@ export default function FindMyMp({ user }) {
     root: {
       flexGrow: 1,
       width: '100%',
-      height: '200px',
-      textAlign: 'center'
+      textAlign: 'center',
+      padding: '2em'
     },
     title: {
       padding: '24px'
@@ -41,6 +41,10 @@ export default function FindMyMp({ user }) {
     },
     submit: {
       margin: '0.75em'
+    },
+    button: {
+      marginTop: theme.spacing(2),
+      marginRight: theme.spacing(2)
     }
   }));
 
@@ -66,73 +70,69 @@ export default function FindMyMp({ user }) {
 
   const handleMp = () => {
     return (
-      <div>
-        <Container maxWidth='sm'>
-          <Grid container spacing={3}>
-            <Grid item xs={9} className={classes.myMp}>
-              <Typography variant='h4'>
-                <strong>Your Representative</strong>
+      <Container xs={12} className={classes.root}>
+        <Grid container>
+          <Grid item xs={12} sm={9} className={classes.myMp}>
+            <Typography variant='h4'>
+              <strong>Your Representative</strong>
+            </Typography>
+            <Typography>
+              <strong>Name:</strong> {mpName}
+            </Typography>
+            <Typography>
+              <strong>Party: </strong>
+              {mpParty}
+            </Typography>
+            <Typography>
+              <strong>Riding: </strong>
+              {mpRiding}
+            </Typography>
+            <Typography>
+              <strong>Website: </strong>
+              <a href={mpWebsite} target='_blank'>
+                {mpWebsite}
+              </a>
+            </Typography>
+            <Typography>
+              <strong>Email: </strong>
+              {mpEmail}
+            </Typography>
+            <Typography variant='h5'>
+              <strong>Federal Office: </strong>
+              <Typography>
+                <strong>Address: </strong>
+                {mpOfficeLocal.postal}
               </Typography>
               <Typography>
-                <strong>Name:</strong> {mpName}
+                <strong>Telephone: </strong>
+                {mpOfficeLocal.tel}
+              </Typography>
+            </Typography>
+            <Typography variant='h5'>
+              <strong>Local Office: </strong>
+              <Typography>
+                <strong>Address: </strong>
+                {mpOfficeOttawa.postal}
               </Typography>
               <Typography>
-                <strong>Party: </strong>
-                {mpParty}
+                <strong>Telephone: </strong>
+                {mpOfficeOttawa.tel}
               </Typography>
-              <Typography>
-                <strong>Riding: </strong>
-                {mpRiding}
-              </Typography>
-              <Typography>
-                <strong>Website: </strong>
-                <a href={mpWebsite} target='_blank'>
-                  {mpWebsite}
-                </a>
-              </Typography>
-              <Typography>
-                <strong>Email: </strong>
-                {mpEmail}
-              </Typography>
-              <Typography variant='h5'>
-                <strong>Federal Office: </strong>
-                <Typography>
-                  <strong>Address: </strong>
-                  {mpOfficeLocal.postal}
-                </Typography>
-                <Typography>
-                  <strong>Telephone: </strong>
-                  {mpOfficeLocal.tel}
-                </Typography>
-              </Typography>
-              <Typography variant='h5'>
-                <strong>Local Office: </strong>
-                <Typography>
-                  <strong>Address: </strong>
-                  {mpOfficeOttawa.postal}
-                </Typography>
-                <Typography>
-                  <strong>Telephone: </strong>
-                  {mpOfficeOttawa.tel}
-                </Typography>
-              </Typography>
-            </Grid>
-            <Grid item xs={3}>
-              <img alt='Your MP' src={mpPhoto} />
-            </Grid>
-            <Grid container>
-              <Button variant='contained'>
-                <Link href={`mailto:${mpEmail.toLowerCase()}`}>
-                  Email My MP
-                </Link>
-              </Button>
-              <Button variant='contained'>
-                <Link href={`tel:+${mpOfficeOttawa.tel}`}>Call My MP</Link>
-              </Button>
-            </Grid>
+            </Typography>
           </Grid>
-        </Container>
-      </div>
+          <Grid item xs={12} sm={3}>
+            <img alt='Your MP' src={mpPhoto} />
+          </Grid>
+          <Grid container>
+            <Button variant='contained' className={classes.button}>
+              <Link href={`mailto:${mpEmail.toLowerCase()}`}>Email My MP</Link>
+            </Button>
+            <Button variant='contained' className={classes.button}>
+              <Link href={`tel:+${mpOfficeOttawa.tel}`}>Call My MP</Link>
+            </Button>
+          </Grid>
+        </Grid>
+      </Container>
     );
   };
 

@@ -25,14 +25,14 @@ export default function ProfilePage(props) {
     <div>
       <Parallax small filter image={require('assets/img/profile-bg.jpg')} />
       <div className={classNames(classes.main, classes.mainRaised)}>
-        <div className={classes.container}>
+        <Container xs={12}>
           {props.user && (
             <Profile
               user={props.user}
               handleProfileUpdate={props.handleProfileUpdate}
             />
           )}
-        </div>
+        </Container>
       </div>
       <Footer />
     </div>
