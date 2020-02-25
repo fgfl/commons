@@ -34,17 +34,16 @@ export default function LoginPage(props) {
   const { ...rest } = props;
 
   return (
-
     <div
       className={classes.pageHeader}
       style={{
         backgroundImage: 'url(' + image + ')',
         backgroundSize: 'cover',
-        backgroundPosition: 'top center',
+        backgroundPosition: 'top center'
       }}
     >
       <div className={classes.container}>
-        <GridContainer justify="center">
+        <Container xs={12} sm={6}>
           <GridItem>
             <Card className={classes[cardAnimaton]}>
               <Login
@@ -54,7 +53,7 @@ export default function LoginPage(props) {
               />
             </Card>
           </GridItem>
-        </GridContainer>
+        </Container>
       </div>
       <Footer whiteFont />
     </div>
