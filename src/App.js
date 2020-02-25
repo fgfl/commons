@@ -8,8 +8,10 @@ import ProfilePage from 'views/ProfilePage/ProfilePage.js';
 import LoginPage from 'views/LoginPage/LoginPage.js';
 import SignupPage from 'views/SignupPage/SignupPage.js';
 import WatchListPage from 'views/WatchListPage/WatchListPage.js';
+import LoadingSpinner from 'views/LoadingSpinner/LoadingSpinner.js';
 import Header from 'components/Header/Header';
-import HeaderLinks from 'components/Header/HeaderLinks';
+
+import useLoading from 'hooks/useLoading';
 
 const App = (props) => {
   const [user, setUser] = useState();
@@ -17,6 +19,9 @@ const App = (props) => {
   const [bills, setBills] = useState([]);
   const [categories, setCategories] = useState([]);
   // const [events, setEvents] = useState([]);
+  const { loading, updateLoadingState } = useLoading(
+    bills.length === 0 ? true : false
+  );
 
   // Loads initial page state and fetches bills/categories
   useEffect(() => {
@@ -32,6 +37,7 @@ const App = (props) => {
       );
       setBills(response.data.bills);
       setCategories(response.data.categories);
+      updateLoadingState(false);
     } catch (error) {
       console.error('Error occured on fetchBills:', error);
     }
@@ -106,66 +112,69 @@ const App = (props) => {
           handleLogout={handleLogout}
           {...props}
         />
-        <Switch>
-          <Route
-            exact
-            path="/"
-            render={(props) => (
-              <Home
-                {...props}
-                bills={bills}
-                categories={categories}
-                handleLogout={handleLogout}
-                loggedInStatus={loggedIn}
-                user={user}
-              />
-            )}
-          />
-          <Route
-            path="/login-page"
-            render={(props) => (
-              <LoginPage
-                {...props}
-                handleLogin={handleLogin}
-                loggedInStatus={loggedIn}
-                history={props.history}
-              />
-            )}
-          />
-          <Route
-            path="/signup-page"
-            render={(props) => (
-              <SignupPage
-                {...props}
-                categories={categories}
-                handleLogin={handleLogin}
-                loggedInStatus={loggedIn}
-              />
-            )}
-          />
-          <Route
-            path="/watch-list"
-            render={(props) => (
-              <WatchListPage
-                {...props}
-                bills={bills}
-                categories={categories}
-                handleLogin={handleLogin}
-                loggedInStatus={loggedIn}
-              />
-            )}
-          />
-          <Route
-            path="/user/:id"
-            render={() => (
-              <ProfilePage
-                user={user}
-                handleProfileUpdate={handleProfileUpdate}
-                loggedInStatus={loggedIn}
-              />
-            )}
-          />
-        </Switch>
+        {loading && <LoadingSpinner></LoadingSpinner>}
+        {!loading && (
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={(props) => (
+                <Home
+                  {...props}
+                  bills={bills}
+                  categories={categories}
+                  handleLogout={handleLogout}
+                  loggedInStatus={loggedIn}
+                  user={user}
+                />
+              )}
+            />
+            <Route
+              path="/login-page"
+              render={(props) => (
+                <LoginPage
+                  {...props}
+                  handleLogin={handleLogin}
+                  loggedInStatus={loggedIn}
+                  history={props.history}
+                />
+              )}
+            />
+            <Route
+              path="/signup-page"
+              render={(props) => (
+                <SignupPage
+                  {...props}
+                  categories={categories}
+                  handleLogin={handleLogin}
+                  loggedInStatus={loggedIn}
+                />
+              )}
+            />
+            <Route
+              path="/watch-list"
+              render={(props) => (
+                <WatchListPage
+                  {...props}
+                  bills={bills}
+                  categories={categories}
+                  handleLogin={handleLogin}
+                  loggedInStatus={loggedIn}
+                />
+              )}
+            />
+            <Route
+              path="/user/:id"
+              render={() => (
+                <ProfilePage
+                  user={user}
+                  handleProfileUpdate={handleProfileUpdate}
+                  loggedInStatus={loggedIn}
+                />
+              )}
+            />
+          </Switch>
+        )}
       </Router>
     </div>
   );
