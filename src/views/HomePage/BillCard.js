@@ -43,10 +43,13 @@ export default function BillCard(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
   const [events, setEvents] = useState('No events currently loaded.');
-  const [color, setColor] = useState('grey');
+  const [color, setColor] = useState('');
 
   useEffect(() => {
     !props.user === {} && findWatchedBills(props.user.id);
+    props.user.user_bills.includes(props.bill.id)
+      ? setColor('red')
+      : setColor('grey');
   }, []);
 
   const findWatchedBills = async (user_id) => {
@@ -122,12 +125,6 @@ export default function BillCard(props) {
             <Avatar aria-label="bill" className={classes.avatar}>
               {props.bill.code}
             </Avatar>
-            {/* <Typography
-              color='textSecondary'
-              style={{ fontSize: '0.75em', textAlign: 'center' }}
-            >
-              Second <br /> Reading
-            </Typography> */}
           </div>
         }
         action={
@@ -135,7 +132,6 @@ export default function BillCard(props) {
             <BookmarkIcon
               style={{ color: color }}
               onClick={() => {
-                console.log('I was clicked');
                 handleWatchSubmit();
               }}
             />
