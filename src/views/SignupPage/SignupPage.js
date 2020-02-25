@@ -33,7 +33,7 @@ export default function LoginPage(props) {
       <Header
         absolute
         color='transparent'
-        brand='Commons'
+        brand='commons'
         rightLinks={
           <HeaderLinks user={props.user} loggedIn={props.loggedInStatus} />
         }

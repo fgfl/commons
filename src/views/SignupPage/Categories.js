@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import PersonIcon from '@material-ui/icons/Person';
 import ChipsArray from './ChipsArray';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
 
 const Categories = (props) => {
   const proceed = (e) => {
@@ -23,12 +24,11 @@ const Categories = (props) => {
       zIndex: 1000,
       margin: '0 auto',
       marginTop: theme.spacing(4),
-      marginTop: theme.spacing(4),
+      marginBottom: theme.spacing(4),
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       border: 5,
-      padding: theme.spacing(2),
       textAlign: 'center'
     },
     avatar: {
@@ -56,7 +56,7 @@ const Categories = (props) => {
   return (
     <div className={classes.paper}>
       <Avatar className={classes.avatar}>
-        <PersonIcon className={classes.accountCirle} />
+        <BookmarkIcon className={classes.accountCirle} />
       </Avatar>
       <Typography variant='h4'>
         Pick the topics you are interested in

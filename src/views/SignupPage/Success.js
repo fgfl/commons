@@ -5,9 +5,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import PersonIcon from '@material-ui/icons/Person';
-
-import idToCategoryName from './helpers/idToCategoryName';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 
 const Confirmation = (props) => {
   const back = (e) => {
@@ -56,7 +54,7 @@ const Confirmation = (props) => {
   return (
     <div className={classes.paper}>
       <Avatar className={classes.avatar}>
-        <PersonIcon className={classes.accountCircle} />
+        <ThumbUpIcon className={classes.accountCircle} />
       </Avatar>
       <Grid xs={12} className={classes.message}>
         <Typography variant='h4'>Thank you for signing up!</Typography>

@@ -41,7 +41,10 @@ const ChipsArray = (props) => {
             onClick={() => {
               props.setThisOneClicked(data.id);
             }}
-            style={{ backgroundColor: backgroundColor, color: color }}
+            style={{
+              backgroundColor: backgroundColor,
+              color: color
+            }}
           />
         );
       })}

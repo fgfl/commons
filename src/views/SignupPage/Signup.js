@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import PersonIcon from '@material-ui/icons/Person';
 import { Typography, TextField, Button, Avatar } from '@material-ui/core';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 import axios from 'axios';
 
@@ -155,8 +155,8 @@ const Signup = (props) => {
       backgroundColor: '#29c0a8'
     },
     accountCircle: {
-      width: '100px',
-      height: '100px',
+      width: '90px',
+      height: '90px',
       color: 'white'
     },
     button: {
@@ -168,7 +168,7 @@ const Signup = (props) => {
   return (
     <Container maxWidth='xs' className={classes.paper}>
       <Avatar className={classes.avatar}>
-        <PersonIcon className={classes.accountCircle} />
+        <PersonAddIcon className={classes.accountCircle} />
       </Avatar>
       <Typography variant='h4'>
         Not a Member Yet?
