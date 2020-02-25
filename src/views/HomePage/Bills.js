@@ -41,7 +41,7 @@ export default function Bills(props) {
   });
 
   const billCards = bills.map((bill) => {
-    let color = props.clicked[bill.id] ? 'red' : 'grey';
+    let color = props.clicked[bill.id] ? 'red' : '#CCC';
     return (
       <BillCard
         key={bill.id}

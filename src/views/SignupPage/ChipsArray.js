@@ -28,7 +28,8 @@ const ChipsArray = (props) => {
     <div>
       {chipData.map((data) => {
         console.log(props);
-        let color = props.clicked[data.id] ? 'blue' : 'grey';
+        let backgroundColor = props.clicked[data.id] ? '#3f51b5' : '#CCC';
+        let color = props.clicked[data.id] ? '#FFF' : '#000';
 
         return (
           <Chip
@@ -40,7 +41,7 @@ const ChipsArray = (props) => {
             onClick={() => {
               props.setThisOneClicked(data.id);
             }}
-            style={{ background: color }}
+            style={{ backgroundColor: backgroundColor, color: color }}
           />
         );
       })}
