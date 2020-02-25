@@ -27,8 +27,7 @@ export default function FindMyMp({ user }) {
     root: {
       flexGrow: 1,
       width: '100%',
-      textAlign: 'center',
-      padding: '2em'
+      textAlign: 'center'
     },
     title: {
       padding: '24px'
