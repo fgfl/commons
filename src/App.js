@@ -51,11 +51,20 @@ const App = (props) => {
   };
 
   const handleProfileUpdate = async (user) => {
+    console.log(user);
     try {
-      axios.put(`${process.env.REACT_APP_COMMONS_API}/users/${user.id}`, {
-        user
-      });
-      setUser(user);
+      const res = await axios.put(
+        `${process.env.REACT_APP_COMMONS_API}/users/${user.id}`,
+        {
+          user,
+        }
+      );
+      if (res.data.status === 200) {
+        console.log('res 200');
+        setUser(user);
+      } else {
+        console.error(`Failed setting profile: ${res.data.errors}`);
+      }
     } catch (error) {
       console.error(`Failed setting profile: ${error}`);
     }
@@ -86,6 +95,7 @@ const App = (props) => {
                 categories={categories}
                 handleLogout={handleLogout}
                 loggedInStatus={loggedIn}
+                user={user}
               />
             )}
           />
@@ -129,6 +139,7 @@ const App = (props) => {
               <ProfilePage
                 user={user}
                 handleProfileUpdate={handleProfileUpdate}
+                loggedInStatus={loggedIn}
               />
             )}
           />
