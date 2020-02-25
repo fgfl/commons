@@ -14,12 +14,8 @@ import profilePageStyle from 'assets/jss/material-kit-react/views/profilePage';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary
+    flexGrow: 1,
+    padding: theme.spacing(2)
   },
   avatar: {
     margin: '0 auto',
