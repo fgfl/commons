@@ -18,6 +18,7 @@ import HeaderLinks from 'components/Header/HeaderLinks.js';
 import styles from 'assets/jss/material-kit-react/views/components.js';
 import CategoryDropdown from '../HomePage/CategoryDropdown';
 import Bills from '../HomePage/Bills';
+import image from 'assets/img/bg2.jpg';
 
 const useStyles = makeStyles(styles);
 
@@ -38,7 +39,7 @@ export default function WatchListPage(props) {
         style={{
           backgroundImage: 'url(' + image + ')',
           backgroundSize: 'cover',
-          backgroundPosition: 'top center',
+          backgroundPosition: 'top center'
         }}
       ></div>
       <Parallax image={require('assets/img/bg2.jpg')}>

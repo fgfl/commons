@@ -70,6 +70,7 @@ export default function BillCard(props) {
     const watchlist_bill = {
       id: { bill_id: props.bill.id, user_id: props.user.id }
     };
+    color === 'grey' ? setColor('red') : setColor('grey');
 
     try {
       const response = await axios.post(
