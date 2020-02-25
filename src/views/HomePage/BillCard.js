@@ -47,13 +47,8 @@ export default function BillCard(props) {
   const [color, setColor] = useState('');
 
   useEffect(() => {
-<<<<<<< HEAD
     props.user && findWatchedBills(props.user.id);
     props.user && props.user.user_bills.includes(props.bill.id)
-=======
-    !props.user === {} && findWatchedBills(props.user.id);
-    !props.user === {} && props.user.user_bills.includes(props.bill.id)
->>>>>>> 69e64122f79a8d183ea3fda04aad8a0971fba271
       ? setColor('red')
       : setColor('grey');
     console.log(props.user);
@@ -130,13 +125,12 @@ export default function BillCard(props) {
       <CardHeader
         avatar={
           <div>
-            <Avatar aria-label='bill' className={classes.avatar}>
+            <Avatar aria-label="bill" className={classes.avatar}>
               {props.bill.code}
             </Avatar>
           </div>
         }
         action={
-<<<<<<< HEAD
           props.user ? (
             <IconButton aria-label="settings">
               <BookmarkIcon
@@ -156,22 +150,12 @@ export default function BillCard(props) {
               </IconButton>
             </Tooltip>
           )
-=======
-          <IconButton aria-label='settings'>
-            <BookmarkIcon
-              style={{ color: color }}
-              onClick={() => {
-                handleWatchSubmit();
-              }}
-            />
-          </IconButton>
->>>>>>> 69e64122f79a8d183ea3fda04aad8a0971fba271
         }
         title={props.bill.title}
         subheader={'Introduced on ' + props.bill.introduced_date}
       />
       <CardContent>
-        <Typography variant='body2' color='textSecondary' component='p'>
+        <Typography variant="body2" color="textSecondary" component="p">
           {props.bill.description}
         </Typography>
         <Typography>
@@ -189,12 +173,12 @@ export default function BillCard(props) {
           })}
           onClick={handleExpandClick}
           aria-expanded={expanded}
-          aria-label='show more'
+          aria-label="show more"
         >
           <ExpandMoreIcon />
         </IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout='auto' unmountOnExit>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>{eventCards}</CardContent>
       </Collapse>
     </Card>
