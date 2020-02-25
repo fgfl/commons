@@ -27,13 +27,19 @@ export default function Home(props) {
 
   const [childCategory, setChildCategory] = useState(0);
 
+  console.log(props.bills);
+
+  const bills = props.bills.filter((bill) => {
+    return props.user.bill.includes(bill.id);
+  });
+
   return (
     <div>
       <Header
-        brand='Commons'
+        brand="Commons"
         rightLinks={<HeaderLinks loggedIn={props.loggedInStatus} />}
         fixed
-        color='transparent'
+        color="transparent"
         changeColorOnScroll={{
           height: 400,
           color: 'white'
@@ -59,11 +65,13 @@ export default function Home(props) {
           categories={props.categories}
           passCategory={setChildCategory}
         />
-        <Bills
-          user={props.user}
-          bills={props.bills}
-          childCategory={childCategory}
-        />
+        {props.user && (
+          <Bills
+            user={props.user}
+            bills={bills}
+            childCategory={childCategory}
+          />
+        )}
       </div>
     </div>
   );

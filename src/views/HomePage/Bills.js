@@ -10,13 +10,6 @@ export default function Bills(props) {
       : bill.categories.includes(props.childCategory);
   });
 
-  // const filterBills = (props.criteria) => {
-  //   return props.bills.filter((bill) => {
-  //     return props.childCategory === 0
-  //       ? bill
-  //       : bill.categories.includes(props.criteria);
-  //   });
-  // }
   const billCards = bills.map((bill) => {
     return <BillCard user={props.user} key={bill.id} bill={bill} />;
   });
