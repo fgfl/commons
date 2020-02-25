@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 
@@ -37,7 +37,7 @@ const App = (props) => {
       );
       setBills(response.data.bills);
       setCategories(response.data.categories);
-      updateLoadingState(false);
+      doneLoading();
     } catch (error) {
       console.error('Error occured on fetchBills:', error);
     }
@@ -95,85 +95,95 @@ const App = (props) => {
       .catch((error) => console.log(error));
   };
 
+  /**
+   * For components to call when they render to remove loading spinner
+   */
+  const doneLoading = () => {
+    console.log(`in APP: update loading state: ${loading}`);
+    updateLoadingState(false);
+    console.log(`in APP: after update loading state: ${loading}`);
+  };
+
   return (
     <div>
       <Router history={props.hist}>
-        <Header
-          color="transparent"
-          brand="Commons"
-          // rightLinks={<HeaderLinks user={user} loggedIn={loggedIn} />}
-          fixed
-          changeColorOnScroll={{
-            height: 200,
-            color: 'white',
-          }}
-          user={user}
-          loggedIn={loggedIn}
-          handleLogout={handleLogout}
-          {...props}
-        />
         {loading && <LoadingSpinner></LoadingSpinner>}
         {!loading && (
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={(props) => (
-                <Home
-                  {...props}
-                  bills={bills}
-                  categories={categories}
-                  handleLogout={handleLogout}
-                  loggedInStatus={loggedIn}
-                  user={user}
-                />
-              )}
+          <Fragment>
+            <Header
+              color="transparent"
+              brand="Commons"
+              fixed
+              changeColorOnScroll={{
+                height: 200,
+                color: 'white',
+              }}
+              user={user}
+              loggedIn={loggedIn}
+              handleLogout={handleLogout}
+              {...props}
             />
-            <Route
-              path="/login-page"
-              render={(props) => (
-                <LoginPage
-                  {...props}
-                  handleLogin={handleLogin}
-                  loggedInStatus={loggedIn}
-                  history={props.history}
-                />
-              )}
-            />
-            <Route
-              path="/signup-page"
-              render={(props) => (
-                <SignupPage
-                  {...props}
-                  categories={categories}
-                  handleLogin={handleLogin}
-                  loggedInStatus={loggedIn}
-                />
-              )}
-            />
-            <Route
-              path="/watch-list"
-              render={(props) => (
-                <WatchListPage
-                  {...props}
-                  bills={bills}
-                  categories={categories}
-                  handleLogin={handleLogin}
-                  loggedInStatus={loggedIn}
-                />
-              )}
-            />
-            <Route
-              path="/user/:id"
-              render={() => (
-                <ProfilePage
-                  user={user}
-                  handleProfileUpdate={handleProfileUpdate}
-                  loggedInStatus={loggedIn}
-                />
-              )}
-            />
-          </Switch>
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={(props) => (
+                  <Home
+                    {...props}
+                    bills={bills}
+                    categories={categories}
+                    handleLogout={handleLogout}
+                    loggedInStatus={loggedIn}
+                    user={user}
+                  />
+                )}
+              />
+              <Route
+                path="/login-page"
+                render={(props) => (
+                  <LoginPage
+                    {...props}
+                    handleLogin={handleLogin}
+                    loggedInStatus={loggedIn}
+                    history={props.history}
+                  />
+                )}
+              />
+              <Route
+                path="/signup-page"
+                render={(props) => (
+                  <SignupPage
+                    {...props}
+                    categories={categories}
+                    handleLogin={handleLogin}
+                    loggedInStatus={loggedIn}
+                  />
+                )}
+              />
+              <Route
+                path="/watch-list"
+                render={(props) => (
+                  <WatchListPage
+                    {...props}
+                    bills={bills}
+                    categories={categories}
+                    handleLogin={handleLogin}
+                    loggedInStatus={loggedIn}
+                  />
+                )}
+              />
+              <Route
+                path="/user/:id"
+                render={() => (
+                  <ProfilePage
+                    user={user}
+                    handleProfileUpdate={handleProfileUpdate}
+                    loggedInStatus={loggedIn}
+                  />
+                )}
+              />
+            </Switch>
+          </Fragment>
         )}
       </Router>
     </div>
