@@ -1,40 +1,75 @@
-import React, { Component } from 'react';
-import Dialog from '@material-ui/core/Dialog';
-import AppBar from '@material-ui/core/AppBar';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import { Button } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
+import Avatar from '@material-ui/core/Avatar';
+import PersonIcon from '@material-ui/icons/Person';
 
-export class Success extends Component {
-  continue = (e) => {
+import idToCategoryName from './helpers/idToCategoryName';
+
+const Confirmation = (props) => {
+  const back = (e) => {
     e.preventDefault();
-    // PROCESS FORM //
-    this.props.nextStep();
+    props.prevStep();
   };
 
-  back = (e) => {
-    e.preventDefault();
-    this.props.prevStep();
+  const proceed = (event) => {
+    event.preventDefault();
+    props.nextStep(4);
   };
 
-  render() {
-    return (
-      <MuiThemeProvider>
-        <React.Fragment>
-          <Dialog open='true' fullWidth='true' maxWidth='sm'>
-            <AppBar title='Success' />
-            <h1>Thank You For Your Submission</h1>
-            <p>You will get an email with further instructions</p>
-            <Link to='/'>
-              <Button variant='contained' color='primary'>
-                Home
-              </Button>
-            </Link>
-          </Dialog>
-        </React.Fragment>
-      </MuiThemeProvider>
-    );
-  }
-}
+  const useStyles = makeStyles((theme) => ({
+    paper: {
+      zIndex: 1000,
+      marginTop: theme.spacing(4),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      border: 5,
+      padding: theme.spacing(2),
+      textAlign: 'center'
+    },
+    avatar: {
+      zIndex: 1000,
+      marginBottom: theme.spacing(2),
+      width: '120px',
+      height: '120px',
+      backgroundColor: '#29c0a8'
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+      backgroundColor: '#29c0a8'
+    },
+    accountCircle: {
+      width: '100px',
+      height: '100px',
+      color: 'white'
+    },
+    message: {
+      padding: theme.spacing(2)
+    }
+  }));
+  const classes = useStyles();
 
-export default Success;
+  return (
+    <div className={classes.paper}>
+      <Avatar className={classes.avatar}>
+        <PersonIcon className={classes.accountCircle} />
+      </Avatar>
+      <Grid xs={12} className={classes.message}>
+        <Typography variant='h4'>Thank you for signing up!</Typography>
+      </Grid>
+
+      <Link href='/'>
+        <Button color='primary' variant='contained'>
+          Back to Home
+        </Button>
+      </Link>
+      <div>{props.errors ? props.handleErrors() : null}</div>
+    </div>
+  );
+};
+
+export default Confirmation;

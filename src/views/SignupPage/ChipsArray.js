@@ -25,7 +25,7 @@ const ChipsArray = (props) => {
   const [chipData, setChipData] = useState(categories);
 
   return (
-    <Paper className={classes.root}>
+    <div>
       {chipData.map((data) => {
         console.log(props);
         let color = props.clicked[data.id] ? 'blue' : 'grey';
@@ -44,7 +44,7 @@ const ChipsArray = (props) => {
           />
         );
       })}
-    </Paper>
+    </div>
   );
 };
 

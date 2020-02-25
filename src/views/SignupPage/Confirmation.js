@@ -1,6 +1,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import PersonIcon from '@material-ui/icons/Person';
@@ -63,18 +64,18 @@ const Confirmation = (props) => {
   const classes = useStyles();
 
   return (
-    <div>
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <PersonIcon className={classes.accountCircle} />
-        </Avatar>
+    <div className={classes.paper}>
+      <Avatar className={classes.avatar}>
+        <PersonIcon className={classes.accountCircle} />
+      </Avatar>
+      <Grid xs={12} className={classes.left}>
         <Typography variant='h4'>Confirm your details</Typography>
         <Typography>Name: {props.details.name}</Typography>
         <Typography>Username: {props.details.username}</Typography>
         <Typography>Email: {props.details.email}</Typography>
         <Typography>Selected Categories:</Typography>
         {categories}
-      </div>
+      </Grid>
 
       <Button color='secondary' variant='contained' onClick={back}>
         Back
