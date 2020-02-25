@@ -8,6 +8,8 @@ import ProfilePage from 'views/ProfilePage/ProfilePage.js';
 import LoginPage from 'views/LoginPage/LoginPage.js';
 import SignupPage from 'views/SignupPage/SignupPage.js';
 import WatchListPage from 'views/WatchListPage/WatchListPage.js';
+import Header from 'components/Header/Header';
+import HeaderLinks from 'components/Header/HeaderLinks';
 
 const App = (props) => {
   const [user, setUser] = useState();
@@ -51,11 +53,20 @@ const App = (props) => {
   };
 
   const handleProfileUpdate = async (user) => {
+    console.log(user);
     try {
-      axios.put(`${process.env.REACT_APP_COMMONS_API}/users/${user.id}`, {
-        user
-      });
-      setUser(user);
+      const res = await axios.put(
+        `${process.env.REACT_APP_COMMONS_API}/users/${user.id}`,
+        {
+          user
+        }
+      );
+      if (res.data.status === 200) {
+        console.log('res 200');
+        setUser(user);
+      } else {
+        console.error(`Failed setting profile: ${res.data.errors}`);
+      }
     } catch (error) {
       console.error(`Failed setting profile: ${error}`);
     }
@@ -65,33 +76,54 @@ const App = (props) => {
   const handleLogin = (data) => {
     setUser(data.user);
     setLoggedIn(true);
+    console.log(data.user);
   };
 
   const handleLogout = () => {
-    setUser({});
-    setLoggedIn(false);
+    axios
+      .delete(`${process.env.REACT_APP_COMMONS_API}/logout`)
+      .then((response) => {
+        setUser({});
+        setLoggedIn(false);
+        props.history.push('/');
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
     <div>
       <Router history={props.hist}>
+        <Header
+          color="transparent"
+          brand="Commons"
+          // rightLinks={<HeaderLinks user={user} loggedIn={loggedIn} />}
+          fixed
+          changeColorOnScroll={{
+            height: 200,
+            color: 'white'
+          }}
+          user={user}
+          loggedIn={loggedIn}
+          handleLogout={handleLogout}
+          {...props}
+        />
         <Switch>
           <Route
             exact
-            path='/'
+            path="/"
             render={(props) => (
               <Home
                 {...props}
                 bills={bills}
-                user={user}
                 categories={categories}
                 handleLogout={handleLogout}
                 loggedInStatus={loggedIn}
+                user={user}
               />
             )}
           />
           <Route
-            path='/login-page'
+            path="/login-page"
             render={(props) => (
               <LoginPage
                 {...props}
@@ -102,7 +134,7 @@ const App = (props) => {
             )}
           />
           <Route
-            path='/signup-page'
+            path="/signup-page"
             render={(props) => (
               <SignupPage
                 {...props}
@@ -113,12 +145,11 @@ const App = (props) => {
             )}
           />
           <Route
-            path='/watch-list'
+            path="/watch-list"
             render={(props) => (
               <WatchListPage
                 {...props}
                 bills={bills}
-                user={user}
                 categories={categories}
                 handleLogin={handleLogin}
                 loggedInStatus={loggedIn}
@@ -126,11 +157,12 @@ const App = (props) => {
             )}
           />
           <Route
-            path='/user/:id'
+            path="/user/:id"
             render={() => (
               <ProfilePage
                 user={user}
                 handleProfileUpdate={handleProfileUpdate}
+                loggedInStatus={loggedIn}
               />
             )}
           />

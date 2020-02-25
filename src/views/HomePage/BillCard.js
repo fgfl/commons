@@ -46,7 +46,7 @@ export default function BillCard(props) {
   const [color, setColor] = useState('grey');
 
   useEffect(() => {
-    findWatchedBills(props.user.id);
+    !props.user === {} && findWatchedBills(props.user.id);
   }, []);
 
   const findWatchedBills = async (user_id) => {
@@ -55,8 +55,6 @@ export default function BillCard(props) {
         `${process.env.REACT_APP_COMMONS_API}/bills/${user_id}`
       );
       let watchedBills = response.data.user_bills;
-      console.log(props.bill.id);
-      console.log(watchedBills);
       if (watchedBills.includes(props.bill.id)) {
         setColor('red');
       }
@@ -75,7 +73,6 @@ export default function BillCard(props) {
         `${process.env.REACT_APP_COMMONS_API}/bill_users`,
         watchlist_bill
       );
-      console.log(response.status);
       if (color === 'red') {
         setColor('grey');
       } else {
@@ -123,7 +120,7 @@ export default function BillCard(props) {
       <CardHeader
         avatar={
           <div>
-            <Avatar aria-label='bill' className={classes.avatar}>
+            <Avatar aria-label="bill" className={classes.avatar}>
               {props.bill.code}
             </Avatar>
             {/* <Typography
@@ -135,7 +132,7 @@ export default function BillCard(props) {
           </div>
         }
         action={
-          <IconButton aria-label='settings'>
+          <IconButton aria-label="settings">
             <BookmarkIcon
               style={{ color: color }}
               onClick={() => {
@@ -149,7 +146,7 @@ export default function BillCard(props) {
         subheader={'Introduced on ' + props.bill.introduced_date}
       />
       <CardContent>
-        <Typography variant='body2' color='textSecondary' component='p'>
+        <Typography variant="body2" color="textSecondary" component="p">
           {props.bill.description}
         </Typography>
         <Typography>
@@ -167,12 +164,12 @@ export default function BillCard(props) {
           })}
           onClick={handleExpandClick}
           aria-expanded={expanded}
-          aria-label='show more'
+          aria-label="show more"
         >
           <ExpandMoreIcon />
         </IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout='auto' unmountOnExit>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>{eventCards}</CardContent>
       </Collapse>
     </Card>
