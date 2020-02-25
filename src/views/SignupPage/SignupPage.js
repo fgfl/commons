@@ -1,8 +1,7 @@
 import React from 'react';
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Icon from '@material-ui/core/Icon';
+import Container from '@material-ui/core/Container';
 // @material-ui/icons
 import Email from '@material-ui/icons/Email';
 import People from '@material-ui/icons/People';
@@ -33,8 +32,8 @@ export default function LoginPage(props) {
     <div>
       <Header
         absolute
-        color="transparent"
-        brand="Commons"
+        color='transparent'
+        brand='Commons'
         rightLinks={
           <HeaderLinks user={props.user} loggedIn={props.loggedInStatus} />
         }
@@ -45,11 +44,11 @@ export default function LoginPage(props) {
         style={{
           backgroundImage: 'url(' + image + ')',
           backgroundSize: 'cover',
-          backgroundPosition: 'top center',
+          backgroundPosition: 'top center'
         }}
       >
         <div className={classes.container}>
-          <GridContainer justify="center">
+          <Container maxWidth='xs'>
             <GridItem>
               <Card className={classes[cardAnimaton]}>
                 <UserForm
@@ -59,7 +58,7 @@ export default function LoginPage(props) {
                 />
               </Card>
             </GridItem>
-          </GridContainer>
+          </Container>
         </div>
         <Footer whiteFont />
       </div>

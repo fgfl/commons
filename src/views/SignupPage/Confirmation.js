@@ -68,19 +68,19 @@ const Confirmation = (props) => {
         <Avatar className={classes.avatar}>
           <PersonIcon className={classes.accountCircle} />
         </Avatar>
-        <Typography variant="h4">Confirm your details</Typography>
+        <Typography variant='h4'>Confirm your details</Typography>
+        <Typography>Name: {props.details.name}</Typography>
+        <Typography>Username: {props.details.username}</Typography>
+        <Typography>Email: {props.details.email}</Typography>
+        <Typography>Selected Categories:</Typography>
+        {categories}
       </div>
-      <Typography>Name: {props.details.name}</Typography>
-      <Typography>Username: {props.details.username}</Typography>
-      <Typography>Email: {props.details.email}</Typography>
-      <Typography>Selected Categories:</Typography>
-      {categories}
 
-      <Button color="secondary" variant="contained" onClick={back}>
+      <Button color='secondary' variant='contained' onClick={back}>
         Back
       </Button>
 
-      <Button color="primary" variant="contained" onClick={proceed}>
+      <Button color='primary' variant='contained' onClick={proceed}>
         Submit
       </Button>
       <div>{props.errors ? props.handleErrors() : null}</div>
