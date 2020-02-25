@@ -26,21 +26,22 @@ export default function FindMyMp({ user }) {
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
-      backgroundColor: 'blue',
       width: '100%',
       height: '200px',
-      textAlign: 'center',
-      color: 'white',
+      textAlign: 'center'
     },
     title: {
-      padding: '24px',
+      padding: '24px'
     },
-    mymp: {
-      textAlign: 'left',
+    myMp: {
+      textAlign: 'left'
     },
     divider: {
-      margin: '0.5em',
+      margin: '1em'
     },
+    submit: {
+      margin: '0.75em'
+    }
   }));
 
   const classes = useStyles();
@@ -66,10 +67,10 @@ export default function FindMyMp({ user }) {
   const handleMp = () => {
     return (
       <div>
-        <Container maxWidth="sm">
+        <Container maxWidth='sm'>
           <Grid container spacing={3}>
-            <Grid item xs={8} className={classes.mymp}>
-              <Typography variant="h4">
+            <Grid item xs={9} className={classes.myMp}>
+              <Typography variant='h4'>
                 <strong>Your Representative</strong>
               </Typography>
               <Typography>
@@ -85,7 +86,7 @@ export default function FindMyMp({ user }) {
               </Typography>
               <Typography>
                 <strong>Website: </strong>
-                <a href={mpWebsite} target="_blank">
+                <a href={mpWebsite} target='_blank'>
                   {mpWebsite}
                 </a>
               </Typography>
@@ -93,7 +94,7 @@ export default function FindMyMp({ user }) {
                 <strong>Email: </strong>
                 {mpEmail}
               </Typography>
-              <Typography variant="h5">
+              <Typography variant='h5'>
                 <strong>Federal Office: </strong>
                 <Typography>
                   <strong>Address: </strong>
@@ -104,7 +105,7 @@ export default function FindMyMp({ user }) {
                   {mpOfficeLocal.tel}
                 </Typography>
               </Typography>
-              <Typography variant="h5">
+              <Typography variant='h5'>
                 <strong>Local Office: </strong>
                 <Typography>
                   <strong>Address: </strong>
@@ -116,16 +117,16 @@ export default function FindMyMp({ user }) {
                 </Typography>
               </Typography>
             </Grid>
-            <Grid item xs={4}>
-              <img alt="Your MP" src={mpPhoto} />
+            <Grid item xs={3}>
+              <img alt='Your MP' src={mpPhoto} />
             </Grid>
             <Grid container>
-              <Button variant="contained">
+              <Button variant='contained'>
                 <Link href={`mailto:${mpEmail.toLowerCase()}`}>
                   Email My MP
                 </Link>
               </Button>
-              <Button variant="contained">
+              <Button variant='contained'>
                 <Link href={`tel:+${mpOfficeOttawa.tel}`}>Call My MP</Link>
               </Button>
             </Grid>
@@ -173,25 +174,30 @@ export default function FindMyMp({ user }) {
   const findForm = () => {
     return (
       <div className={classes.root}>
-        <Typography className={classes.title} variant="h4">
+        <Typography className={classes.title} variant='h4'>
           Find Your Member of Parliament
         </Typography>
-        <Typography variant="h5">
+        <Typography variant='h5'>
           Look up your representative in the House of Commons
         </Typography>
         <Divider className={classes.divider}></Divider>
         <form>
           <TextField
-            id="outlined-basic"
-            name="postalcode"
-            label="Postal Code"
-            variant="outlined"
+            id='outlined-basic'
+            name='postalCode'
+            label='Postal Code'
+            variant='outlined'
             error={errors && errors.length > 0}
             helperText={errors}
             value={postalCode}
             onChange={(e) => setPostalCode(e.target.value)}
           />
-          <Button variant="contained" color="primary" onClick={handleMpSubmit}>
+          <Button
+            variant='contained'
+            color='primary'
+            className={classes.submit}
+            onClick={handleMpSubmit}
+          >
             Submit
           </Button>
         </form>
