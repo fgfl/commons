@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import axios from 'axios';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -44,6 +44,24 @@ export default function FindMyMp({ user }) {
   }));
 
   const classes = useStyles();
+
+  useEffect(() => {
+    validate(postalCode);
+  }, [postalCode]);
+
+  const validate = (value) => {
+    const postalCodeRegex = /^(?!.*[DFIOQU])[A-VXY][0-9][A-Z]?[0-9][A-Z][0-9]$/;
+    let errorStr = '';
+    let isValid = true;
+
+    if (!(postalCode.length === 0 || postalCodeRegex.test(postalCode))) {
+      errorStr = 'Postal code must look like: A1A1A1.';
+      isValid = false;
+    }
+
+    setErrors(errorStr);
+    return isValid;
+  };
 
   const handleMp = () => {
     return (
@@ -120,32 +138,36 @@ export default function FindMyMp({ user }) {
   const handleMpSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
-    axios
-      .get(
-        `https://cors-anywhere.herokuapp.com/https://represent.opennorth.ca/postcodes/${postalCode}?sets=federal-electoral-districts`,
-        { withCredentials: false }
-      )
-      .then((response) => {
-        if (response.data) {
-          setMpName(response.data.representatives_centroid[0].name);
-          setMpParty(response.data.representatives_centroid[0].party_name);
-          setMpPhoto(response.data.representatives_centroid[0].photo_url);
-          setMpRiding(response.data.representatives_centroid[0].district_name);
-          setMpWebsite(response.data.representatives_centroid[0].url);
-          setMpEmail(response.data.representatives_centroid[0].email);
-          setMpOfficeLocal(
-            response.data.representatives_centroid[0].offices[0]
-          );
-          setMpOfficeOttawa(
-            response.data.representatives_centroid[0].offices[1]
-          );
-          console.log(response.data);
-        } else {
-          setErrors(response.data.errors);
-        }
-      })
-      .then(setLoading(false))
-      .catch((error) => console.log('api errors:', error));
+    if (validate()) {
+      axios
+        .get(
+          `https://cors-anywhere.herokuapp.com/https://represent.opennorth.ca/postcodes/${postalCode}?sets=federal-electoral-districts`,
+          { withCredentials: false }
+        )
+        .then((response) => {
+          if (response.data) {
+            setMpName(response.data.representatives_centroid[0].name);
+            setMpParty(response.data.representatives_centroid[0].party_name);
+            setMpPhoto(response.data.representatives_centroid[0].photo_url);
+            setMpRiding(
+              response.data.representatives_centroid[0].district_name
+            );
+            setMpWebsite(response.data.representatives_centroid[0].url);
+            setMpEmail(response.data.representatives_centroid[0].email);
+            setMpOfficeLocal(
+              response.data.representatives_centroid[0].offices[0]
+            );
+            setMpOfficeOttawa(
+              response.data.representatives_centroid[0].offices[1]
+            );
+            console.log(response.data);
+          } else {
+            setErrors(response.data.errors);
+          }
+        })
+        .then(setLoading(false))
+        .catch((error) => console.log('api errors:', error));
+    }
   };
 
   const findForm = () => {
@@ -164,6 +186,8 @@ export default function FindMyMp({ user }) {
             name="postalcode"
             label="Postal Code"
             variant="outlined"
+            error={errors && errors.length > 0}
+            helperText={errors}
             value={postalCode}
             onChange={(e) => setPostalCode(e.target.value)}
           />

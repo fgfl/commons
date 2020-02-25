@@ -22,41 +22,13 @@ import Bills from './Bills';
 const useStyles = makeStyles(styles);
 
 export default function Home(props) {
-  const [clicked, setClicked] = useState({});
   const classes = useStyles();
   const { ...rest } = props;
-
-  const setThisOneClicked = (key) => {
-    setClicked((prev) => {
-      let state = { ...prev };
-      if (state[key]) {
-        delete state[key];
-      } else {
-        state[key] = true;
-      }
-      return state;
-    });
-  };
-
-  const setBillToWatch = () => {};
 
   const [childCategory, setChildCategory] = useState(0);
 
   return (
     <div>
-      <Header
-        brand='commons'
-        rightLinks={
-          <HeaderLinks user={props.user} loggedIn={props.loggedInStatus} />
-        }
-        fixed
-        color='transparent'
-        changeColorOnScroll={{
-          height: 400,
-          color: 'white'
-        }}
-        {...rest}
-      />
       <Parallax
         image={require('assets/img/erik-mclean-f7wX87Zs4fU-unsplash.jpg')}
       >
@@ -80,10 +52,11 @@ export default function Home(props) {
           passCategory={setChildCategory}
         />
         <Bills
+          user={props.user}
           bills={props.bills}
-          clicked={clicked}
-          setThisOneClicked={setThisOneClicked}
           childCategory={childCategory}
+          setUser={props.setUser}
+          updateWatchlist={props.updateWatchlist}
         />
       </div>
     </div>

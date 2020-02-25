@@ -34,39 +34,29 @@ export default function LoginPage(props) {
   const { ...rest } = props;
 
   return (
-    <div>
-      <Header
-        absolute
-        color='transparent'
-        brand='commons'
-        rightLinks={
-          <HeaderLinks user={props.user} loggedIn={props.loggedInStatus} />
-        }
-        {...rest}
-      />
-      <div
-        className={classes.pageHeader}
-        style={{
-          backgroundImage: 'url(' + image + ')',
-          backgroundSize: 'cover',
-          backgroundPosition: 'top center'
-        }}
-      >
-        <div className={classes.container}>
-          <Container maxWidth='xs'>
-            <GridItem>
-              <Card className={classes[cardAnimaton]}>
-                <Login
-                  handleLogin={props.handleLogin}
-                  loggedInStatus={props.loggedInStatus}
-                  history={props.history}
-                />
-              </Card>
-            </GridItem>
-          </Container>
-        </div>
-        <Footer whiteFont />
+
+    <div
+      className={classes.pageHeader}
+      style={{
+        backgroundImage: 'url(' + image + ')',
+        backgroundSize: 'cover',
+        backgroundPosition: 'top center',
+      }}
+    >
+      <div className={classes.container}>
+        <GridContainer justify="center">
+          <GridItem>
+            <Card className={classes[cardAnimaton]}>
+              <Login
+                handleLogin={props.handleLogin}
+                loggedInStatus={props.loggedInStatus}
+                history={props.history}
+              />
+            </Card>
+          </GridItem>
+        </GridContainer>
       </div>
+      <Footer whiteFont />
     </div>
   );
 }
