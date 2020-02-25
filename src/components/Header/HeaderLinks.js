@@ -1,7 +1,7 @@
 /*eslint-disable*/
 import React, { Fragment } from 'react';
 import DeleteIcon from '@material-ui/icons/Delete';
-import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
 // react components for routing our app without refresh
 import { Link } from 'react-router-dom';
 
@@ -21,42 +21,56 @@ import styles from 'assets/jss/material-kit-react/components/headerLinksStyle.js
 
 const useStyles = makeStyles(styles);
 
-export default function HeaderLinks({ loggedIn }) {
+export default function HeaderLinks({
+  user,
+  loggedIn,
+  handleDrawerToggle,
+  handleLogout,
+}) {
   const classes = useStyles();
+
+  const handleLogoutClick = (e) => {
+    handleLogout();
+    handleDrawerToggle();
+  };
+
   return (
     <List className={classes.list}>
-      <ListItem className={classes.listItem}>
-        <Link to="/">
-          <Button color="transparent" className={classes.navLink}>
-            Home
-          </Button>
-        </Link>
-      </ListItem>
-
       {loggedIn ? (
         <Fragment>
           <ListItem className={classes.listItem}>
-            {/*<Tooltip title="Delete">
-          <IconButton aria-label="Delete">
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>*/}
-            <Link to="/user/:id">
-              <Button color="transparent" className={classes.navLink}>
-                PROFILE
-              </Button>
-            </Link>
+            {user && (
+              <Link to={`/user/${user.id}`}>
+                <Button
+                  color="transparent"
+                  className={classes.navLink}
+                  onClick={handleDrawerToggle}
+                >
+                  PROFILE
+                </Button>
+              </Link>
+            )}
           </ListItem>
 
           <ListItem className={classes.listItem}>
-            {/*<Tooltip title="Delete">
-          <IconButton aria-label="Delete">
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>*/}
             <Link to="/watch-list">
-              <Button color="transparent" className={classes.navLink}>
+              <Button
+                color="transparent"
+                className={classes.navLink}
+                onClick={handleDrawerToggle}
+              >
                 MY WATCH LIST
+              </Button>
+            </Link>
+          </ListItem>
+          <ListItem className={classes.listItem}>
+            <Link to="/">
+              <Button
+                color="transparent"
+                className={classes.navLink}
+                onClick={handleLogoutClick}
+              >
+                LOG OUT
               </Button>
             </Link>
           </ListItem>
@@ -64,50 +78,30 @@ export default function HeaderLinks({ loggedIn }) {
       ) : (
         <Fragment>
           <ListItem className={classes.listItem}>
-            {/*<Tooltip title="Delete">
-          <IconButton aria-label="Delete">
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>*/}
             <Link to="/login-page">
-              <Button color="transparent" className={classes.navLink}>
+              <Button
+                color="transparent"
+                className={classes.navLink}
+                onClick={handleDrawerToggle}
+              >
                 LOGIN
               </Button>
             </Link>
           </ListItem>
 
           <ListItem className={classes.listItem}>
-            {/*<Tooltip title="Delete">
-          <IconButton aria-label="Delete">
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>*/}
             <Link to="/signup-page">
-              <Button color="transparent" className={classes.navLink}>
+              <Button
+                color="transparent"
+                className={classes.navLink}
+                onClick={handleDrawerToggle}
+              >
                 SIGNUP
               </Button>
             </Link>
           </ListItem>
         </Fragment>
       )}
-      {/* For testing purpose. Remove these last two afterwards  */}
-      <Fragment>
-        <ListItem className={classes.listItem}>
-          <Link to="/user/:id">
-            <Button color="transparent" className={classes.navLink}>
-              PROFILE
-            </Button>
-          </Link>
-        </ListItem>
-
-        <ListItem className={classes.listItem}>
-          <Link to="/watch-list">
-            <Button color="transparent" className={classes.navLink}>
-              MY WATCH LIST
-            </Button>
-          </Link>
-        </ListItem>
-      </Fragment>
     </List>
   );
 }

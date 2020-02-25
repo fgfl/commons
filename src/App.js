@@ -61,6 +61,7 @@ const App = (props) => {
         }
       );
       if (res.data.status === 200) {
+
         setUser(user);
       } else {
         console.error(`Failed setting profile: ${res.data.errors}`);

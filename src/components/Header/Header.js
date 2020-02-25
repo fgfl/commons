@@ -18,6 +18,8 @@ import styles from 'assets/jss/material-kit-react/components/headerStyle.js';
 // react router
 import { Link } from 'react-router-dom';
 
+import HeaderLinks from './HeaderLinks';
+
 const useStyles = makeStyles(styles);
 
 export default function Header(props) {
@@ -33,9 +35,9 @@ export default function Header(props) {
       }
     };
   });
-  const handleDrawerToggle = () => {
+  function handleDrawerToggle() {
     setMobileOpen(!mobileOpen);
-  };
+  }
   const headerColorChange = () => {
     const { color, changeColorOnScroll } = props;
     const windowsScrollTop = window.pageYOffset;
@@ -55,7 +57,17 @@ export default function Header(props) {
         .classList.remove(classes[changeColorOnScroll.color]);
     }
   };
-  const { color, rightLinks, leftLinks, brand, fixed, absolute } = props;
+
+  const rightLinks = (
+    <HeaderLinks
+      user={props.user}
+      loggedIn={props.loggedIn}
+      handleDrawerToggle={(e) => handleDrawerToggle()}
+      handleLogout={props.handleLogout}
+    />
+  );
+
+  const { color, leftLinks, brand, fixed, absolute } = props;
   const appBarClasses = classNames({
     [classes.appBar]: true,
     [classes[color]]: color,

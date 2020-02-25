@@ -31,13 +31,6 @@ export default function LoginPage(props) {
   const { ...rest } = props;
   return (
     <div>
-      <Header
-        absolute
-        color="transparent"
-        brand="Commons"
-        rightLinks={<HeaderLinks loggedIn={props.loggedInStatus} />}
-        {...rest}
-      />
       <div
         className={classes.pageHeader}
         style={{
