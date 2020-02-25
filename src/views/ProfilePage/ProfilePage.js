@@ -3,6 +3,7 @@ import React from 'react';
 import classNames from 'classnames';
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 // @material-ui/icons
 
 // core components
@@ -24,17 +25,13 @@ export default function ProfilePage(props) {
     <div>
       <Parallax small filter image={require('assets/img/profile-bg.jpg')} />
       <div className={classNames(classes.main, classes.mainRaised)}>
-        <div>
-          <div className={classes.container}>
-            <GridContainer justify="center">
-              {props.user && (
-                <Profile
-                  user={props.user}
-                  handleProfileUpdate={props.handleProfileUpdate}
-                />
-              )}
-            </GridContainer>
-          </div>
+        <div className={classes.container}>
+          {props.user && (
+            <Profile
+              user={props.user}
+              handleProfileUpdate={props.handleProfileUpdate}
+            />
+          )}
         </div>
       </div>
       <Footer />

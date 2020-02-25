@@ -46,10 +46,10 @@ export default function BillCard(props) {
   const [color, setColor] = useState('');
 
   useEffect(() => {
-    !props.user === {} && findWatchedBills(props.user.id);
-    props.user.user_bills.includes(props.bill.id)
-      ? setColor('red')
-      : setColor('grey');
+    // !props.user === {} && findWatchedBills(props.user.id);
+    // props.user.user_bills.includes(props.bill.id)
+    //   ? setColor('red')
+    //   : setColor('grey');
   }, []);
 
   const findWatchedBills = async (user_id) => {
@@ -123,13 +123,13 @@ export default function BillCard(props) {
       <CardHeader
         avatar={
           <div>
-            <Avatar aria-label="bill" className={classes.avatar}>
+            <Avatar aria-label='bill' className={classes.avatar}>
               {props.bill.code}
             </Avatar>
           </div>
         }
         action={
-          <IconButton aria-label="settings">
+          <IconButton aria-label='settings'>
             <BookmarkIcon
               style={{ color: color }}
               onClick={() => {
@@ -142,7 +142,7 @@ export default function BillCard(props) {
         subheader={'Introduced on ' + props.bill.introduced_date}
       />
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography variant='body2' color='textSecondary' component='p'>
           {props.bill.description}
         </Typography>
         <Typography>
@@ -160,12 +160,12 @@ export default function BillCard(props) {
           })}
           onClick={handleExpandClick}
           aria-expanded={expanded}
-          aria-label="show more"
+          aria-label='show more'
         >
           <ExpandMoreIcon />
         </IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+      <Collapse in={expanded} timeout='auto' unmountOnExit>
         <CardContent>{eventCards}</CardContent>
       </Collapse>
     </Card>
