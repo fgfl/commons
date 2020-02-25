@@ -25,7 +25,7 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
   const [formErrors, setFormErrors] = useState({});
 
   useEffect(() => {
-    parseForm();
+    validateForm();
   }, [
     name,
     username,
@@ -78,7 +78,7 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
     },
     postal_code: (value) => {
       const postalCodeRegex = /^(?!.*[DFIOQU])[A-VXY][0-9][A-Z]?[0-9][A-Z][0-9]$/;
-      return postalCodeRegex.test(value)
+      return (value && value.length === 0) || postalCodeRegex.test(value)
         ? ''
         : 'Postal code must look like: A1A1A1.';
     },
@@ -91,20 +91,6 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
   };
 
   const validateForm = (form) => {
-    const newValidity = {};
-    let isValid = true;
-    for (const key in form) {
-      const problem = validationFunctions[key](form[key]);
-      newValidity[key] = problem;
-      if (problem && problem.length) {
-        isValid = false;
-      }
-    }
-    setFormErrors(newValidity);
-    return isValid;
-  };
-
-  const parseForm = () => {
     const formValues = {
       id: user.id,
       name: name,
@@ -117,7 +103,19 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
       email_notification: emailNotification,
       sms_notification: smsNotification,
     };
-    return validateForm(formValues);
+    const newValidity = {};
+    let isValid = true;
+
+    for (const key in formValues) {
+      const problem = validationFunctions[key](formValues[key]);
+      newValidity[key] = problem;
+      if (problem && problem.length) {
+        isValid = false;
+      }
+    }
+
+    setFormErrors(newValidity);
+    return isValid;
   };
 
   const saveForm = () => {
@@ -134,7 +132,7 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
       sms_notification: smsNotification,
     };
 
-    if (parseForm()) {
+    if (validateForm()) {
       setEditStatus(false);
       handleProfileUpdate(formValues);
     }
