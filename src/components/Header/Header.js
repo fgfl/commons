@@ -57,7 +57,17 @@ export default function Header(props) {
         .classList.remove(classes[changeColorOnScroll.color]);
     }
   };
-  const { color, rightLinks, leftLinks, brand, fixed, absolute } = props;
+
+  const rightLinks = (
+    <HeaderLinks
+      user={props.user}
+      loggedIn={props.loggedIn}
+      handleDrawerToggle={(e) => handleDrawerToggle()}
+      handleLogout={props.handleLogout}
+    />
+  );
+
+  const { color, leftLinks, brand, fixed, absolute } = props;
   const appBarClasses = classNames({
     [classes.appBar]: true,
     [classes[color]]: color,
@@ -83,13 +93,7 @@ export default function Header(props) {
           )}
         </div>
         <Hidden smDown implementation="css">
-          {
-            <HeaderLinks
-              user={props.user}
-              loggedIn={props.loggedIn}
-              handleDrawerToggle={(e) => handleDrawerToggle()}
-            />
-          }
+          {rightLinks}
         </Hidden>
         <Hidden mdUp>
           <IconButton
@@ -113,11 +117,7 @@ export default function Header(props) {
         >
           <div className={classes.appResponsive}>
             {leftLinks}
-            <HeaderLinks
-              user={props.user}
-              loggedIn={props.loggedIn}
-              handleDrawerToggle={(e) => handleDrawerToggle()}
-            />
+            {rightLinks}
           </div>
         </Drawer>
       </Hidden>
