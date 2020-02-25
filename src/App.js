@@ -44,6 +44,7 @@ const App = (props) => {
       );
       if (response.data.logged_in) {
         handleLogin(response.data);
+        console.log(user);
       } else {
         handleLogout();
       }
@@ -58,7 +59,7 @@ const App = (props) => {
       const res = await axios.put(
         `${process.env.REACT_APP_COMMONS_API}/users/${user.id}`,
         {
-          user,
+          user
         }
       );
       if (res.data.status === 200) {
@@ -99,7 +100,7 @@ const App = (props) => {
           fixed
           changeColorOnScroll={{
             height: 200,
-            color: 'white',
+            color: 'white'
           }}
           user={user}
           loggedIn={loggedIn}
