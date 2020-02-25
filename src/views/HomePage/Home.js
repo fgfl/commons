@@ -29,17 +29,6 @@ export default function Home(props) {
 
   return (
     <div>
-      <Header
-        brand="Commons"
-        rightLinks={<HeaderLinks loggedIn={props.loggedInStatus} />}
-        fixed
-        color="transparent"
-        changeColorOnScroll={{
-          height: 400,
-          color: 'white'
-        }}
-        {...rest}
-      />
       <Parallax
         image={require('assets/img/erik-mclean-f7wX87Zs4fU-unsplash.jpg')}
       >

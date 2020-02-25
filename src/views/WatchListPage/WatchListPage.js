@@ -33,17 +33,14 @@ export default function WatchListPage(props) {
 
   return (
     <div>
-      <Header
-        brand="Commons"
-        rightLinks={<HeaderLinks loggedIn={props.loggedInStatus} />}
-        fixed
-        color="transparent"
-        changeColorOnScroll={{
-          height: 400,
-          color: 'white'
+      <div
+        className={classes.pageHeader}
+        style={{
+          backgroundImage: 'url(' + image + ')',
+          backgroundSize: 'cover',
+          backgroundPosition: 'top center',
         }}
-        {...rest}
-      />
+      ></div>
       <Parallax image={require('assets/img/bg2.jpg')}>
         <div className={classes.container}>
           <GridContainer>

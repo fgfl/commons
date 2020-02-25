@@ -7,7 +7,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import Grid from '@material-ui/core/Grid';
 
 import ProfileText from './ProfileText';
-import FindMyMp from '../../components/FindMyMp/FindMyMp';
+import FindMyMp from './FindMyMp';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -42,12 +42,10 @@ const Profile = ({ user, handleProfileUpdate }) => {
           </Avatar>
         </Grid>
         <Grid item>
-          {user && (
-            <ProfileText
-              user={user}
-              handleProfileUpdate={handleProfileUpdate}
-            ></ProfileText>
-          )}
+          <ProfileText
+            user={user}
+            handleProfileUpdate={handleProfileUpdate}
+          ></ProfileText>
         </Grid>
       </Grid>
       <FindMyMp user={user}></FindMyMp>
