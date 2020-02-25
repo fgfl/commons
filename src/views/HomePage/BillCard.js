@@ -43,29 +43,23 @@ export default function BillCard(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
   const [events, setEvents] = useState('No events currently loaded.');
-  const [clicked, setClicked] = useState(false);
   const [color, setColor] = useState('grey');
 
-  useEffect(() => {});
+  useEffect(() => {
+    findWatchedBills(props.user.id);
+  }, []);
 
-  const setThisOneClicked = () => {
-    if (clicked) {
-      setClicked(false);
-      setColor('grey');
-    } else {
-      setClicked(true);
-      setColor('red');
-    }
-  };
-
-  let watchedBills = [];
-
-  const findWatchedBills = async () => {
+  const findWatchedBills = async (user_id) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_COMMONS_API}/bill_users`
+        `${process.env.REACT_APP_COMMONS_API}/bills/${user_id}`
       );
-      console.log(response.data);
+      let watchedBills = response.data.user_bills;
+      console.log(props.bill.id);
+      console.log(watchedBills);
+      if (watchedBills.includes(props.bill.id)) {
+        setColor('red');
+      }
     } catch (error) {
       console.error(`Error occurred while fetching watch bills`);
     }
@@ -73,17 +67,20 @@ export default function BillCard(props) {
 
   const handleWatchSubmit = async () => {
     const watchlist_bill = {
-      watchlist_bill: { bill_id: props.bill.id, user_id: props.user.id }
+      id: { bill_id: props.bill.id, user_id: props.user.id }
     };
 
-    console.log(watchlist_bill);
-
     try {
-      await axios.post(
+      const response = await axios.post(
         `${process.env.REACT_APP_COMMONS_API}/bill_users`,
-
         watchlist_bill
       );
+      console.log(response.status);
+      if (color === 'red') {
+        setColor('grey');
+      } else {
+        setColor('red');
+      }
     } catch (error) {
       console.error(`Error occurred while setting watch list`);
     }
@@ -100,7 +97,7 @@ export default function BillCard(props) {
       setEvents(response.data.events);
     } catch (error) {
       console.error(
-        `Error occured while fetching events for bill ${props.bill.code}`
+        `Error occurred while fetching events for bill ${props.bill.code}`
       );
     }
   };
@@ -129,12 +126,12 @@ export default function BillCard(props) {
             <Avatar aria-label='bill' className={classes.avatar}>
               {props.bill.code}
             </Avatar>
-            <Typography
+            {/* <Typography
               color='textSecondary'
               style={{ fontSize: '0.75em', textAlign: 'center' }}
             >
               Second <br /> Reading
-            </Typography>
+            </Typography> */}
           </div>
         }
         action={
@@ -142,9 +139,8 @@ export default function BillCard(props) {
             <BookmarkIcon
               style={{ color: color }}
               onClick={() => {
-                setThisOneClicked();
                 console.log('I was clicked');
-                findWatchedBills();
+                handleWatchSubmit();
               }}
             />
           </IconButton>
