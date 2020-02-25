@@ -73,11 +73,11 @@ export default function BillCard(props) {
         `${process.env.REACT_APP_COMMONS_API}/bill_users`,
         watchlist_bill
       );
-      if (color === 'red') {
-        setColor('grey');
-      } else {
-        setColor('red');
-      }
+      props.setUser((prev) => ({
+        ...prev,
+        user_bills: props.user.user_bills.push(props.bill.id)
+      }));
+      color === 'red' ? setColor('grey') : setColor('red');
     } catch (error) {
       console.error(`Error occurred while setting watch list`);
     }
