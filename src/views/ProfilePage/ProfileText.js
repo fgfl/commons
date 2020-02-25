@@ -8,7 +8,6 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { ErrorSharp } from '@material-ui/icons';
 
 const ProfileText = ({ user, handleProfileUpdate }) => {
   const [editStatus, setEditStatus] = useState(false);
