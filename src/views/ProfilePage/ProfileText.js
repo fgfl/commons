@@ -78,7 +78,7 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
     },
     postal_code: (value) => {
       const postalCodeRegex = /^(?!.*[DFIOQU])[A-VXY][0-9][A-Z]?[0-9][A-Z][0-9]$/;
-      return (value && value.length === 0) || postalCodeRegex.test(value)
+      return value.length === 0 || postalCodeRegex.test(value)
         ? ''
         : 'Postal code must look like: A1A1A1.';
     },
@@ -90,7 +90,7 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
     },
   };
 
-  const validateForm = (form) => {
+  const validateForm = () => {
     const formValues = {
       id: user.id,
       name: name,
