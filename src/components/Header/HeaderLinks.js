@@ -21,8 +21,19 @@ import styles from 'assets/jss/material-kit-react/components/headerLinksStyle.js
 
 const useStyles = makeStyles(styles);
 
-export default function HeaderLinks({ user, loggedIn, handleDrawerToggle }) {
+export default function HeaderLinks({
+  user,
+  loggedIn,
+  handleDrawerToggle,
+  handleLogout,
+}) {
   const classes = useStyles();
+
+  const handleLogoutClick = (e) => {
+    handleLogout();
+    handleDrawerToggle();
+  };
+
   return (
     <List className={classes.list}>
       {loggedIn ? (
@@ -57,7 +68,7 @@ export default function HeaderLinks({ user, loggedIn, handleDrawerToggle }) {
               <Button
                 color="transparent"
                 className={classes.navLink}
-                onClick={handleDrawerToggle}
+                onClick={handleLogoutClick}
               >
                 LOG OUT
               </Button>
