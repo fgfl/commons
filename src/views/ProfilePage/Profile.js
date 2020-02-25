@@ -14,8 +14,7 @@ import profilePageStyle from 'assets/jss/material-kit-react/views/profilePage';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
-    padding: theme.spacing(2)
+    flexGrow: 1
   },
   paper: {
     padding: theme.spacing(2),
@@ -64,8 +63,10 @@ const Profile = ({ user, handleProfileUpdate }) => {
           </div>
         </Grid>
       </Grid>
-      <Grid container>
-        <FindMyMp user={user} />
+      <Grid container justify='center'>
+        <Grid item xs={12}>
+          <FindMyMp user={user} />
+        </Grid>
       </Grid>
     </div>
   );
