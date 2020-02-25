@@ -79,8 +79,14 @@ const App = (props) => {
   };
 
   const handleLogout = () => {
-    setUser({});
-    setLoggedIn(false);
+    axios
+      .delete(`${process.env.REACT_APP_COMMONS_API}/logout`)
+      .then((response) => {
+        setUser({});
+        setLoggedIn(false);
+        props.history.push('/');
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -97,6 +103,7 @@ const App = (props) => {
           }}
           user={user}
           loggedIn={loggedIn}
+          handleLogout={handleLogout}
           {...props}
         />
         <Switch>
