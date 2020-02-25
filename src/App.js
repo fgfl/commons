@@ -8,13 +8,14 @@ import ProfilePage from 'views/ProfilePage/ProfilePage.js';
 import LoginPage from 'views/LoginPage/LoginPage.js';
 import SignupPage from 'views/SignupPage/SignupPage.js';
 import WatchListPage from 'views/WatchListPage/WatchListPage.js';
+import Header from 'components/Header/Header';
+import HeaderLinks from 'components/Header/HeaderLinks';
 
 const App = (props) => {
   const [user, setUser] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
   const [bills, setBills] = useState([]);
   const [categories, setCategories] = useState([]);
-  // const [events, setEvents] = useState([]);
 
   // Loads initial page state and fetches bills/categories
   useEffect(() => {
@@ -42,6 +43,7 @@ const App = (props) => {
       );
       if (response.data.logged_in) {
         handleLogin(response.data);
+        console.log(user);
       } else {
         handleLogout();
       }
@@ -56,11 +58,11 @@ const App = (props) => {
       const res = await axios.put(
         `${process.env.REACT_APP_COMMONS_API}/users/${user.id}`,
         {
-          user,
+          user
         }
       );
       if (res.data.status === 200) {
-        console.log('res 200');
+
         setUser(user);
       } else {
         console.error(`Failed setting profile: ${res.data.errors}`);
@@ -70,6 +72,13 @@ const App = (props) => {
     }
   };
 
+  const updateWatchlist = (user_bills) => {
+    setUser((prev) => ({
+      ...prev,
+      user_bills
+    }));
+  };
+
   // Login/logout handlers
   const handleLogin = (data) => {
     setUser(data.user);
@@ -77,13 +86,33 @@ const App = (props) => {
   };
 
   const handleLogout = () => {
-    setUser({});
-    setLoggedIn(false);
+    axios
+      .delete(`${process.env.REACT_APP_COMMONS_API}/logout`)
+      .then(() => {
+        setUser({});
+        setLoggedIn(false);
+        props.history.push('/');
+      })
+      .catch((error) => console.error(error));
   };
 
   return (
     <div>
       <Router history={props.hist}>
+        <Header
+          color="transparent"
+          brand="Commons"
+          // rightLinks={<HeaderLinks user={user} loggedIn={loggedIn} />}
+          fixed
+          changeColorOnScroll={{
+            height: 200,
+            color: 'white'
+          }}
+          user={user}
+          loggedIn={loggedIn}
+          handleLogout={handleLogout}
+          {...props}
+        />
         <Switch>
           <Route
             exact
@@ -92,10 +121,11 @@ const App = (props) => {
               <Home
                 {...props}
                 bills={bills}
+                user={user}
                 categories={categories}
                 handleLogout={handleLogout}
                 loggedInStatus={loggedIn}
-                user={user}
+                updateWatchlist={updateWatchlist}
               />
             )}
           />
@@ -123,15 +153,19 @@ const App = (props) => {
           />
           <Route
             path="/watch-list"
-            render={(props) => (
-              <WatchListPage
-                {...props}
-                bills={bills}
-                categories={categories}
-                handleLogin={handleLogin}
-                loggedInStatus={loggedIn}
-              />
-            )}
+            render={(props) =>
+              user && (
+                <WatchListPage
+                  {...props}
+                  bills={bills}
+                  user={user}
+                  categories={categories}
+                  handleLogin={handleLogin}
+                  loggedInStatus={loggedIn}
+                  updateWatchlist={updateWatchlist}
+                />
+              )
+            }
           />
           <Route
             path="/user/:id"

@@ -21,9 +21,19 @@ import styles from 'assets/jss/material-kit-react/components/headerLinksStyle.js
 
 const useStyles = makeStyles(styles);
 
-export default function HeaderLinks({ user, loggedIn }) {
-  console.log(user);
+export default function HeaderLinks({
+  user,
+  loggedIn,
+  handleDrawerToggle,
+  handleLogout,
+}) {
   const classes = useStyles();
+
+  const handleLogoutClick = (e) => {
+    handleLogout();
+    handleDrawerToggle();
+  };
+
   return (
     <List className={classes.list}>
       {loggedIn ? (
@@ -31,7 +41,11 @@ export default function HeaderLinks({ user, loggedIn }) {
           <ListItem className={classes.listItem}>
             {user && (
               <Link to={`/user/${user.id}`}>
-                <Button color='transparent' className={classes.navLink}>
+                <Button
+                  color="transparent"
+                  className={classes.navLink}
+                  onClick={handleDrawerToggle}
+                >
                   PROFILE
                 </Button>
               </Link>
@@ -39,15 +53,23 @@ export default function HeaderLinks({ user, loggedIn }) {
           </ListItem>
 
           <ListItem className={classes.listItem}>
-            <Link to='/watch-list'>
-              <Button color='transparent' className={classes.navLink}>
+            <Link to="/watch-list">
+              <Button
+                color="transparent"
+                className={classes.navLink}
+                onClick={handleDrawerToggle}
+              >
                 MY WATCH LIST
               </Button>
             </Link>
           </ListItem>
           <ListItem className={classes.listItem}>
-            <Link to='/'>
-              <Button color='transparent' className={classes.navLink}>
+            <Link to="/">
+              <Button
+                color="transparent"
+                className={classes.navLink}
+                onClick={handleLogoutClick}
+              >
                 LOG OUT
               </Button>
             </Link>
@@ -56,16 +78,24 @@ export default function HeaderLinks({ user, loggedIn }) {
       ) : (
         <Fragment>
           <ListItem className={classes.listItem}>
-            <Link to='/login-page'>
-              <Button color='transparent' className={classes.navLink}>
+            <Link to="/login-page">
+              <Button
+                color="transparent"
+                className={classes.navLink}
+                onClick={handleDrawerToggle}
+              >
                 LOGIN
               </Button>
             </Link>
           </ListItem>
 
           <ListItem className={classes.listItem}>
-            <Link to='/signup-page'>
-              <Button color='transparent' className={classes.navLink}>
+            <Link to="/signup-page">
+              <Button
+                color="transparent"
+                className={classes.navLink}
+                onClick={handleDrawerToggle}
+              >
                 SIGNUP
               </Button>
             </Link>

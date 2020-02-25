@@ -22,19 +22,6 @@ export default function ProfilePage(props) {
   const { ...rest } = props;
   return (
     <div>
-      <Header
-        color="transparent"
-        brand="Commons"
-        rightLinks={
-          <HeaderLinks user={props.user} loggedIn={props.loggedInStatus} />
-        }
-        fixed
-        changeColorOnScroll={{
-          height: 200,
-          color: 'white',
-        }}
-        {...rest}
-      />
       <Parallax small filter image={require('assets/img/profile-bg.jpg')} />
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div>
