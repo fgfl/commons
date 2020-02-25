@@ -174,7 +174,6 @@ const Login = (props) => {
 
         {errors ? handleErrors() : null}
       </form>
-      <div className={classes.backDrop}></div>
     </div>
   );
 };
