@@ -27,8 +27,6 @@ export default function WatchListPage(props) {
 
   const [childCategory, setChildCategory] = useState(0);
 
-  console.log('INWATCHLIST', props.user);
-
   const bills = props.bills.filter((bill) => {
     return props.user.user_bills.includes(bill.id);
   });
@@ -70,6 +68,7 @@ export default function WatchListPage(props) {
             user={props.user}
             bills={bills}
             childCategory={childCategory}
+            updateWatchlist={props.updateWatchlist}
           />
         )}
       </div>

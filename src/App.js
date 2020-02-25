@@ -61,7 +61,6 @@ const App = (props) => {
         }
       );
       if (res.data.status === 200) {
-        console.log('res 200');
         setUser(user);
       } else {
         console.error(`Failed setting profile: ${res.data.errors}`);
@@ -71,11 +70,17 @@ const App = (props) => {
     }
   };
 
+  const updateWatchlist = (user_bills) => {
+    setUser((prev) => ({
+      ...prev,
+      user_bills
+    }));
+  };
+
   // Login/logout handlers
   const handleLogin = (data) => {
     setUser(data.user);
     setLoggedIn(true);
-    console.log(data.user);
   };
 
   const handleLogout = () => {
@@ -86,7 +91,7 @@ const App = (props) => {
         setLoggedIn(false);
         props.history.push('/');
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   };
 
   return (
@@ -118,7 +123,7 @@ const App = (props) => {
                 categories={categories}
                 handleLogout={handleLogout}
                 loggedInStatus={loggedIn}
-                setUser={setUser}
+                updateWatchlist={updateWatchlist}
               />
             )}
           />
@@ -155,6 +160,7 @@ const App = (props) => {
                   categories={categories}
                   handleLogin={handleLogin}
                   loggedInStatus={loggedIn}
+                  updateWatchlist={updateWatchlist}
                 />
               )
             }
