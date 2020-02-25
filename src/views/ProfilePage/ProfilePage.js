@@ -25,7 +25,9 @@ export default function ProfilePage(props) {
       <Header
         color="transparent"
         brand="Commons"
-        rightLinks={<HeaderLinks loggedIn={props.loggedInStatus} />}
+        rightLinks={
+          <HeaderLinks user={props.user} loggedIn={props.loggedInStatus} />
+        }
         fixed
         changeColorOnScroll={{
           height: 200,
@@ -38,10 +40,12 @@ export default function ProfilePage(props) {
         <div>
           <div className={classes.container}>
             <GridContainer justify="center">
-              <Profile
-                user={props.user}
-                handleProfileUpdate={props.handleProfileUpdate}
-              />
+              {props.user && (
+                <Profile
+                  user={props.user}
+                  handleProfileUpdate={props.handleProfileUpdate}
+                />
+              )}
             </GridContainer>
           </div>
         </div>

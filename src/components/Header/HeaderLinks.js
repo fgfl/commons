@@ -21,7 +21,7 @@ import styles from 'assets/jss/material-kit-react/components/headerLinksStyle.js
 
 const useStyles = makeStyles(styles);
 
-export default function HeaderLinks({ loggedIn }) {
+export default function HeaderLinks({ user, loggedIn }) {
   const classes = useStyles();
   return (
     <List className={classes.list}>
@@ -41,11 +41,13 @@ export default function HeaderLinks({ loggedIn }) {
             <DeleteIcon />
           </IconButton>
         </Tooltip>*/}
-            <Link to="/user/:id">
-              <Button color="transparent" className={classes.navLink}>
-                PROFILE
-              </Button>
-            </Link>
+            {user && (
+              <Link to={`/user/${user.id}`}>
+                <Button color="transparent" className={classes.navLink}>
+                  PROFILE
+                </Button>
+              </Link>
+            )}
           </ListItem>
 
           <ListItem className={classes.listItem}>
@@ -57,6 +59,18 @@ export default function HeaderLinks({ loggedIn }) {
             <Link to="/watch-list">
               <Button color="transparent" className={classes.navLink}>
                 MY WATCH LIST
+              </Button>
+            </Link>
+          </ListItem>
+          <ListItem className={classes.listItem}>
+            {/*<Tooltip title="Delete">
+          <IconButton aria-label="Delete">
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>*/}
+            <Link to="/">
+              <Button color="transparent" className={classes.navLink}>
+                LOG OUT
               </Button>
             </Link>
           </ListItem>
