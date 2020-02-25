@@ -16,7 +16,6 @@ const App = (props) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [bills, setBills] = useState([]);
   const [categories, setCategories] = useState([]);
-  // const [events, setEvents] = useState([]);
 
   // Loads initial page state and fetches bills/categories
   useEffect(() => {
@@ -58,11 +57,11 @@ const App = (props) => {
       const res = await axios.put(
         `${process.env.REACT_APP_COMMONS_API}/users/${user.id}`,
         {
-          user,
+          user
         }
       );
       if (res.data.status === 200) {
-        console.log('res 200');
+
         setUser(user);
       } else {
         console.error(`Failed setting profile: ${res.data.errors}`);
@@ -70,6 +69,13 @@ const App = (props) => {
     } catch (error) {
       console.error(`Failed setting profile: ${error}`);
     }
+  };
+
+  const updateWatchlist = (user_bills) => {
+    setUser((prev) => ({
+      ...prev,
+      user_bills
+    }));
   };
 
   // Login/logout handlers
@@ -81,12 +87,12 @@ const App = (props) => {
   const handleLogout = () => {
     axios
       .delete(`${process.env.REACT_APP_COMMONS_API}/logout`)
-      .then((response) => {
+      .then(() => {
         setUser({});
         setLoggedIn(false);
         props.history.push('/');
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   };
 
   return (
@@ -99,7 +105,7 @@ const App = (props) => {
           fixed
           changeColorOnScroll={{
             height: 200,
-            color: 'white',
+            color: 'white'
           }}
           user={user}
           loggedIn={loggedIn}
@@ -114,10 +120,11 @@ const App = (props) => {
               <Home
                 {...props}
                 bills={bills}
+                user={user}
                 categories={categories}
                 handleLogout={handleLogout}
                 loggedInStatus={loggedIn}
-                user={user}
+                updateWatchlist={updateWatchlist}
               />
             )}
           />
@@ -145,15 +152,19 @@ const App = (props) => {
           />
           <Route
             path="/watch-list"
-            render={(props) => (
-              <WatchListPage
-                {...props}
-                bills={bills}
-                categories={categories}
-                handleLogin={handleLogin}
-                loggedInStatus={loggedIn}
-              />
-            )}
+            render={(props) =>
+              user && (
+                <WatchListPage
+                  {...props}
+                  bills={bills}
+                  user={user}
+                  categories={categories}
+                  handleLogin={handleLogin}
+                  loggedInStatus={loggedIn}
+                  updateWatchlist={updateWatchlist}
+                />
+              )
+            }
           />
           <Route
             path="/user/:id"
