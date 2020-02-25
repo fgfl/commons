@@ -46,10 +46,10 @@ export default function BillCard(props) {
   const [color, setColor] = useState('');
 
   useEffect(() => {
-    // !props.user === {} && findWatchedBills(props.user.id);
-    // props.user.user_bills.includes(props.bill.id)
-    //   ? setColor('red')
-    //   : setColor('grey');
+    !props.user === {} && findWatchedBills(props.user.id);
+    !props.user === {} && props.user.user_bills.includes(props.bill.id)
+      ? setColor('red')
+      : setColor('grey');
   }, []);
 
   const findWatchedBills = async (user_id) => {
