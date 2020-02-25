@@ -62,7 +62,6 @@ const App = (props) => {
         }
       );
       if (res.data.status === 200) {
-
         setUser(user);
       } else {
         console.error(`Failed setting profile: ${res.data.errors}`);
@@ -89,7 +88,7 @@ const App = (props) => {
     axios
       .delete(`${process.env.REACT_APP_COMMONS_API}/logout`)
       .then(() => {
-        setUser({});
+        setUser(null);
         setLoggedIn(false);
         props.history.push('/');
       })
