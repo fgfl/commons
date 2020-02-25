@@ -18,6 +18,8 @@ import styles from 'assets/jss/material-kit-react/components/headerStyle.js';
 // react router
 import { Link } from 'react-router-dom';
 
+import HeaderLinks from './HeaderLinks';
+
 const useStyles = makeStyles(styles);
 
 export default function Header(props) {
@@ -33,9 +35,9 @@ export default function Header(props) {
       }
     };
   });
-  const handleDrawerToggle = () => {
+  function handleDrawerToggle() {
     setMobileOpen(!mobileOpen);
-  };
+  }
   const headerColorChange = () => {
     const { color, changeColorOnScroll } = props;
     const windowsScrollTop = window.pageYOffset;
@@ -81,7 +83,13 @@ export default function Header(props) {
           )}
         </div>
         <Hidden smDown implementation="css">
-          {rightLinks}
+          {
+            <HeaderLinks
+              user={props.user}
+              loggedIn={props.loggedIn}
+              handleDrawerToggle={(e) => handleDrawerToggle()}
+            />
+          }
         </Hidden>
         <Hidden mdUp>
           <IconButton
@@ -105,7 +113,11 @@ export default function Header(props) {
         >
           <div className={classes.appResponsive}>
             {leftLinks}
-            {rightLinks}
+            <HeaderLinks
+              user={props.user}
+              loggedIn={props.loggedIn}
+              handleDrawerToggle={(e) => handleDrawerToggle()}
+            />
           </div>
         </Drawer>
       </Hidden>
