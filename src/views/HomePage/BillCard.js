@@ -12,8 +12,9 @@ import Link from '@material-ui/core/Link';
 import { red } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
-import clsx from 'clsx';
+import Tooltip from '@material-ui/core/Tooltip';
 
+import clsx from 'clsx';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -46,10 +47,11 @@ export default function BillCard(props) {
   const [color, setColor] = useState('');
 
   useEffect(() => {
-    !props.user === {} && findWatchedBills(props.user.id);
-    !props.user === {} && props.user.user_bills.includes(props.bill.id)
+    props.user && findWatchedBills(props.user.id);
+    props.user && props.user.user_bills.includes(props.bill.id)
       ? setColor('red')
       : setColor('grey');
+    console.log(props.user);
   }, []);
 
   const findWatchedBills = async (user_id) => {
@@ -123,26 +125,37 @@ export default function BillCard(props) {
       <CardHeader
         avatar={
           <div>
-            <Avatar aria-label='bill' className={classes.avatar}>
+            <Avatar aria-label="bill" className={classes.avatar}>
               {props.bill.code}
             </Avatar>
           </div>
         }
         action={
-          <IconButton aria-label='settings'>
-            <BookmarkIcon
-              style={{ color: color }}
-              onClick={() => {
-                handleWatchSubmit();
-              }}
-            />
-          </IconButton>
+          props.user ? (
+            <IconButton aria-label="settings">
+              <BookmarkIcon
+                style={{ color: color }}
+                onClick={() => {
+                  handleWatchSubmit();
+                }}
+              />
+            </IconButton>
+          ) : (
+            <Tooltip
+              title="Sign in to add bills to watchlist."
+              placement="right"
+            >
+              <IconButton aria-label="settings">
+                <BookmarkIcon style={{ color: color }} />
+              </IconButton>
+            </Tooltip>
+          )
         }
         title={props.bill.title}
         subheader={'Introduced on ' + props.bill.introduced_date}
       />
       <CardContent>
-        <Typography variant='body2' color='textSecondary' component='p'>
+        <Typography variant="body2" color="textSecondary" component="p">
           {props.bill.description}
         </Typography>
         <Typography>
@@ -160,12 +173,12 @@ export default function BillCard(props) {
           })}
           onClick={handleExpandClick}
           aria-expanded={expanded}
-          aria-label='show more'
+          aria-label="show more"
         >
           <ExpandMoreIcon />
         </IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout='auto' unmountOnExit>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>{eventCards}</CardContent>
       </Collapse>
     </Card>
