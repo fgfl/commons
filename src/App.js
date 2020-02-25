@@ -8,6 +8,8 @@ import ProfilePage from 'views/ProfilePage/ProfilePage.js';
 import LoginPage from 'views/LoginPage/LoginPage.js';
 import SignupPage from 'views/SignupPage/SignupPage.js';
 import WatchListPage from 'views/WatchListPage/WatchListPage.js';
+import Header from 'components/Header/Header';
+import HeaderLinks from 'components/Header/HeaderLinks';
 
 const App = (props) => {
   const [user, setUser] = useState();
@@ -84,6 +86,19 @@ const App = (props) => {
   return (
     <div>
       <Router history={props.hist}>
+        <Header
+          color="transparent"
+          brand="Commons"
+          // rightLinks={<HeaderLinks user={user} loggedIn={loggedIn} />}
+          fixed
+          changeColorOnScroll={{
+            height: 200,
+            color: 'white',
+          }}
+          user={user}
+          loggedIn={loggedIn}
+          {...props}
+        />
         <Switch>
           <Route
             exact
