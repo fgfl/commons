@@ -1,10 +1,11 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import PersonIcon from '@material-ui/icons/Person';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 import idToCategoryName from './helpers/idToCategoryName';
 
@@ -29,6 +30,7 @@ const Confirmation = (props) => {
     paper: {
       zIndex: 1000,
       marginTop: theme.spacing(4),
+      marginBottom: theme.spacing(4),
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -59,6 +61,13 @@ const Confirmation = (props) => {
       bottom: 0,
       left: 0,
       zIndex: 0
+    },
+    left: {
+      textAlign: 'left',
+      padding: theme.spacing(2)
+    },
+    buttons: {
+      margin: '0 auto'
     }
   }));
   const classes = useStyles();
@@ -66,24 +75,36 @@ const Confirmation = (props) => {
   return (
     <div className={classes.paper}>
       <Avatar className={classes.avatar}>
-        <PersonIcon className={classes.accountCircle} />
+        <CheckCircleIcon className={classes.accountCircle} />
       </Avatar>
+      <Typography variant='h4'>Confirm your details</Typography>
       <Grid xs={12} className={classes.left}>
-        <Typography variant='h4'>Confirm your details</Typography>
-        <Typography>Name: {props.details.name}</Typography>
-        <Typography>Username: {props.details.username}</Typography>
-        <Typography>Email: {props.details.email}</Typography>
-        <Typography>Selected Categories:</Typography>
+        <Typography>
+          <strong>Name: </strong>
+          {props.details.name}
+        </Typography>
+        <Typography>
+          <strong>Username: </strong>
+          {props.details.username}
+        </Typography>
+        <Typography>
+          <strong>Email: </strong>
+          {props.details.email}
+        </Typography>
+        <Typography>
+          <strong>Selected Categories: </strong>
+        </Typography>
         {categories}
       </Grid>
+      <Container className={classes.buttons}>
+        <Button color='secondary' variant='contained' onClick={back}>
+          Back
+        </Button>
 
-      <Button color='secondary' variant='contained' onClick={back}>
-        Back
-      </Button>
-
-      <Button color='primary' variant='contained' onClick={proceed}>
-        Submit
-      </Button>
+        <Button color='primary' variant='contained' onClick={proceed}>
+          Submit
+        </Button>
+      </Container>
       <div>{props.errors ? props.handleErrors() : null}</div>
     </div>
   );

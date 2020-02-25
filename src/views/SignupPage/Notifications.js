@@ -9,8 +9,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import PersonIcon from '@material-ui/icons/Person';
 import Container from '@material-ui/core/Container';
+import AnnouncementIcon from '@material-ui/icons/Announcement';
 
 const Notifications = (props) => {
   const [state, setState] = useState({
@@ -102,8 +102,8 @@ const Notifications = (props) => {
       backgroundColor: '#29c0a8'
     },
     accountCircle: {
-      width: '100px',
-      height: '100px',
+      width: '90px',
+      height: '90px',
       color: 'white'
     }
   }));
@@ -113,7 +113,7 @@ const Notifications = (props) => {
     <div>
       <Container maxWidth='xs' className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <PersonIcon className={classes.accountCircle} />
+          <AnnouncementIcon className={classes.accountCircle} />
         </Avatar>
         <Typography variant='h4'>Get updates!</Typography>
         <FormControl component='fieldset' className={classes.formControl}>
