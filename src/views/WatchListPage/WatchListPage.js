@@ -21,16 +21,16 @@ import Bills from '../HomePage/Bills';
 
 const useStyles = makeStyles(styles);
 
-export default function Home(props) {
+export default function WatchListPage(props) {
   const classes = useStyles();
   const { ...rest } = props;
 
   const [childCategory, setChildCategory] = useState(0);
 
-  console.log(props.bills);
+  console.log('INWATCHLIST', props.user);
 
   const bills = props.bills.filter((bill) => {
-    return props.user.bill.includes(bill.id);
+    return props.user.user_bills.includes(bill.id);
   });
 
   return (

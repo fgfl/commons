@@ -11,7 +11,14 @@ export default function Bills(props) {
   });
 
   const billCards = bills.map((bill) => {
-    return <BillCard user={props.user} key={bill.id} bill={bill} />;
+    return (
+      <BillCard
+        user={props.user}
+        key={bill.id}
+        bill={bill}
+        setUser={props.setUser}
+      />
+    );
   });
 
   return billCards;

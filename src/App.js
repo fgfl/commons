@@ -16,7 +16,6 @@ const App = (props) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [bills, setBills] = useState([]);
   const [categories, setCategories] = useState([]);
-  // const [events, setEvents] = useState([]);
 
   // Loads initial page state and fetches bills/categories
   useEffect(() => {
@@ -115,10 +114,11 @@ const App = (props) => {
               <Home
                 {...props}
                 bills={bills}
+                user={user}
                 categories={categories}
                 handleLogout={handleLogout}
                 loggedInStatus={loggedIn}
-                user={user}
+                setUser={setUser}
               />
             )}
           />
@@ -146,15 +146,18 @@ const App = (props) => {
           />
           <Route
             path="/watch-list"
-            render={(props) => (
-              <WatchListPage
-                {...props}
-                bills={bills}
-                categories={categories}
-                handleLogin={handleLogin}
-                loggedInStatus={loggedIn}
-              />
-            )}
+            render={(props) =>
+              user && (
+                <WatchListPage
+                  {...props}
+                  bills={bills}
+                  user={user}
+                  categories={categories}
+                  handleLogin={handleLogin}
+                  loggedInStatus={loggedIn}
+                />
+              )
+            }
           />
           <Route
             path="/user/:id"
