@@ -50,6 +50,7 @@ const App = (props) => {
       );
       if (response.data.logged_in) {
         handleLogin(response.data);
+        console.log(user);
       } else {
         handleLogout();
       }
@@ -64,11 +65,10 @@ const App = (props) => {
       const res = await axios.put(
         `${process.env.REACT_APP_COMMONS_API}/users/${user.id}`,
         {
-          user,
+          user
         }
       );
       if (res.data.status === 200) {
-        console.log('res 200');
         setUser(user);
       } else {
         console.error(`Failed setting profile: ${res.data.errors}`);
@@ -76,6 +76,13 @@ const App = (props) => {
     } catch (error) {
       console.error(`Failed setting profile: ${error}`);
     }
+  };
+
+  const updateWatchlist = (user_bills) => {
+    setUser((prev) => ({
+      ...prev,
+      user_bills
+    }));
   };
 
   // Login/logout handlers
@@ -87,12 +94,12 @@ const App = (props) => {
   const handleLogout = () => {
     axios
       .delete(`${process.env.REACT_APP_COMMONS_API}/logout`)
-      .then((response) => {
-        setUser({});
+      .then(() => {
+        setUser(null);
         setLoggedIn(false);
         props.history.push('/');
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   };
 
   /**

@@ -4,7 +4,6 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
@@ -28,7 +27,7 @@ const Login = (props) => {
     event.preventDefault();
     let user = {
       email: email,
-      password: password,
+      password: password
     };
 
     axios
@@ -55,7 +54,7 @@ const Login = (props) => {
           {errors.map((error) => {
             return (
               <li key={error}>
-                <Typography variant="body1">{error}</Typography>
+                <Typography variant='body1'>{error}</Typography>
               </li>
             );
           })}
@@ -67,123 +66,115 @@ const Login = (props) => {
   const useStyles = makeStyles((theme) => ({
     paper: {
       zIndex: 1000,
-      marginTop: theme.spacing(8),
-      marginBottom: theme.spacing(8),
-      display: 'flex',
-      flexDirection: 'column',
+      marginTop: theme.spacing(4),
+      marginBottom: theme.spacing(4),
       alignItems: 'center',
       border: 5,
       padding: theme.spacing(2),
+      textAlign: 'center'
     },
     avatar: {
       zIndex: 1000,
-      margin: theme.spacing(1),
-      width: '10em',
-      height: '10em',
-      backgroundColor: '#29c0a8',
+      margin: '0 auto',
+      marginBottom: theme.spacing(2),
+      width: '120px',
+      height: '120px',
+      backgroundColor: '#29c0a8'
     },
     form: {
       zIndex: 1000,
       width: '100%', // Fix IE 11 issue.
       marginTop: theme.spacing(1),
-      textAlign: 'center',
+      textAlign: 'center'
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
-      backgroundColor: '#29c0a8',
+      backgroundColor: '#29c0a8'
     },
-    accountCirle: {
-      fontSize: '9.5em',
-      color: 'white',
+    accountCircle: {
+      width: '100px',
+      height: '100px',
+      color: 'white'
     },
-    backDrop: {
-      backgroundColor: 'grey',
-      position: 'absolute',
-      height: '75%',
-      width: '100%',
-      bottom: 0,
-      left: 0,
-      zIndex: 0,
-    },
+    button: {
+      margin: '1em'
+    }
   }));
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <PersonIcon className={classes.accountCirle} />
-        </Avatar>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+    <div className={classes.paper}>
+      <Avatar className={classes.avatar}>
+        <PersonIcon className={classes.accountCircle} />
+      </Avatar>
+      <Typography variant='h4'>Login</Typography>
+      <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        <TextField
+          variant='outlined'
+          margin='normal'
+          required
+          fullWidth
+          id='email'
+          label='Email Address'
+          name='email'
+          autoComplete='email'
+          autoFocus
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        {errors ? (
           <TextField
-            variant="outlined"
-            margin="normal"
+            error
+            variant='outlined'
+            margin='normal'
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            name='password'
+            label='Password'
+            type='password'
+            id='password'
+            autoComplete='current-password'
+            onChange={(e) => setPassword(e.target.value)}
           />
-          {errors ? (
-            <TextField
-              error
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          ) : (
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          )}
-          <Button
-            type="submit"
+        ) : (
+          <TextField
+            variant='outlined'
+            margin='normal'
+            required
             fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            LOGIN
-          </Button>
-          <Grid container justify="center">
-            <Grid item>
-              <Link
-                href="#"
-                variant="body2"
-                component={RouterLink}
-                to="/signup-page"
-              >
-                {'Not a member? Sign up'}
-              </Link>
-            </Grid>
+            name='password'
+            label='Password'
+            type='password'
+            id='password'
+            autoComplete='current-password'
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        )}
+        <Button
+          type='submit'
+          fullWidth
+          variant='contained'
+          color='primary'
+          className={classes.submit}
+        >
+          LOGIN
+        </Button>
+        <Grid container justify='center'>
+          <Grid item>
+            <Link
+              href='#'
+              variant='body2'
+              component={RouterLink}
+              to='/signup-page'
+            >
+              {'Not a member? Sign up'}
+            </Link>
           </Grid>
+        </Grid>
 
-          {errors ? handleErrors() : null}
-        </form>
-      </div>
-      <div className={classes.backDrop}></div>
-    </Container>
+        {errors ? handleErrors() : null}
+      </form>
+    </div>
   );
 };
 
