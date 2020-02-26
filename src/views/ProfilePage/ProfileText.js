@@ -24,7 +24,12 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
   );
   const [smsNotification, setSmsNotification] = useState(user.sms_notification);
   const [formErrors, setFormErrors] = useState({});
-  const [clicked, setClicked] = useState({});
+
+  const initialClicked = {};
+  for (const item of user.user_categories) {
+    initialClicked[item] = true;
+  }
+  const [clicked, setClicked] = useState(initialClicked);
 
   useEffect(() => {
     validateForm();
@@ -52,6 +57,8 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
     }
   }));
   const classes = useStyles();
+
+  console.log(user.user_categories);
 
   const setThisOneClicked = (key) => {
     setClicked((prev) => {
@@ -108,6 +115,9 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
     },
     sms_notification: () => {
       return '';
+    },
+    categories: () => {
+      return '';
     }
   };
 
@@ -122,7 +132,8 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
       phone_number: phoneNumber,
       postal_code: postalCode,
       email_notification: emailNotification,
-      sms_notification: smsNotification
+      sms_notification: smsNotification,
+      categories: Object.keys(clicked)
     };
     const newValidity = {};
     let isValid = true;
@@ -150,7 +161,8 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
       phone_number: phoneNumber,
       postal_code: postalCode,
       email_notification: emailNotification,
-      sms_notification: smsNotification
+      sms_notification: smsNotification,
+      categories: Object.keys(clicked)
     };
 
     if (validateForm()) {
@@ -309,9 +321,10 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
       />
 
       <ChipsArray
+        user={user}
         categories={categories}
         clicked={clicked}
-        setThisOneClicked={setThisOneClicked}
+        setThisOneClicked={editStatus ? setThisOneClicked : () => {}}
         editStatus={editStatus}
       />
 
