@@ -22,27 +22,11 @@ const ChipsArray = (props) => {
   const classes = useStyles();
   const [chipData, setChipData] = useState(categories);
 
-  // useEffect(() => {
-  //   setInitialClick(props.user.user_categories);
-  // }, []);
-
-  // const setInitialClick = (arr) => {
-  //   for (const item of arr) {
-  //     props.setThisOneClicked(item);
-  //   }
-  // };
-
-  // for (const item of props.user.user_categories) {
-  //   props.setThisOneClicked(item);
-  // }
-
-  console.log(props);
   return (
     <div>
       {chipData.map((data) => {
         let backgroundColor = props.clicked[data.id] ? '#3f51b5' : '#CCC';
         let color = props.clicked[data.id] ? '#FFF' : '#000';
-        console.log(data.id);
         return (
           <Chip
             key={data.id}

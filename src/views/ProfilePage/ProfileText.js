@@ -58,8 +58,6 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
   }));
   const classes = useStyles();
 
-  console.log(user.user_categories);
-
   const setThisOneClicked = (key) => {
     setClicked((prev) => {
       let state = { ...prev };
@@ -133,7 +131,7 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
       postal_code: postalCode,
       email_notification: emailNotification,
       sms_notification: smsNotification,
-      categories: Object.keys(clicked)
+      categories: Object.keys(clicked).map((n) => Number(n))
     };
     const newValidity = {};
     let isValid = true;
@@ -162,7 +160,7 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
       postal_code: postalCode,
       email_notification: emailNotification,
       sms_notification: smsNotification,
-      categories: Object.keys(clicked)
+      categories: Object.keys(clicked).map((n) => Number(n))
     };
 
     if (validateForm()) {
@@ -178,13 +176,13 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
   return (
     <form onSubmit={(e) => e.preventDefault()}>
       <TextField
-        variant='outlined'
-        margin='normal'
+        variant="outlined"
+        margin="normal"
         error={formErrors.name && formErrors.name.length > 0}
         helperText={formErrors.name}
         required
         fullWidth
-        id='name'
+        id="name"
         label={mapUserFieldToLabel('name')}
         name={mapUserFieldToLabel('name')}
         InputProps={{
@@ -196,13 +194,13 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
         }}
       />
       <TextField
-        variant='outlined'
-        margin='normal'
+        variant="outlined"
+        margin="normal"
         error={formErrors.username && formErrors.username.length > 0}
         helperText={formErrors.username}
         required
         fullWidth
-        id='username'
+        id="username"
         label={mapUserFieldToLabel('username')}
         name={mapUserFieldToLabel('username')}
         InputProps={{
@@ -212,13 +210,13 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
         onChange={(e) => setUsername(e.target.value)}
       />
       <TextField
-        variant='outlined'
-        margin='normal'
+        variant="outlined"
+        margin="normal"
         error={formErrors.email && formErrors.email.length > 0}
         helperText={formErrors.email}
         required
         fullWidth
-        id='email'
+        id="email"
         label={mapUserFieldToLabel('email')}
         name={mapUserFieldToLabel('email')}
         InputProps={{
@@ -230,49 +228,49 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
       {editStatus && (
         <Fragment>
           <TextField
-            variant='outlined'
-            type='password'
-            margin='normal'
+            variant="outlined"
+            type="password"
+            margin="normal"
             error={formErrors.password && formErrors.password.length > 0}
             helperText={formErrors.password}
             fullWidth
-            id='password'
+            id="password"
             label={mapUserFieldToLabel('password_digest')}
             name={mapUserFieldToLabel('password_digest')}
             InputProps={{
               readOnly: !editStatus
             }}
-            defaultValue=''
+            defaultValue=""
             onChange={(e) => setPassword(e.target.value)}
           />
           <TextField
-            variant='outlined'
-            type='password'
-            margin='normal'
+            variant="outlined"
+            type="password"
+            margin="normal"
             error={
               formErrors.password_confirmation &&
               formErrors.password_confirmation.length > 0
             }
             helperText={formErrors.password_confirmation}
             fullWidth
-            id='password_confirmation'
-            label='Confirm password'
-            name='Confirm password'
+            id="password_confirmation"
+            label="Confirm password"
+            name="Confirm password"
             InputProps={{
               readOnly: !editStatus
             }}
-            defaultValue=''
+            defaultValue=""
             onChange={(e) => setPasswordConfirmation(e.target.value)}
           />
         </Fragment>
       )}
       <TextField
-        variant='outlined'
-        margin='normal'
+        variant="outlined"
+        margin="normal"
         error={formErrors.phone_number && formErrors.phone_number.length > 0}
         helperText={formErrors.phone_number}
         fullWidth
-        id='phone_number'
+        id="phone_number"
         label={mapUserFieldToLabel('phone_number')}
         name={mapUserFieldToLabel('phone_number')}
         InputProps={{
@@ -282,12 +280,12 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
         onChange={(e) => setPhoneNumber(e.target.value)}
       />
       <TextField
-        variant='outlined'
-        margin='normal'
+        variant="outlined"
+        margin="normal"
         error={formErrors.postal_code && formErrors.postal_code.length > 0}
         helperText={formErrors.postal_code}
         fullWidth
-        id='postal_code'
+        id="postal_code"
         label={mapUserFieldToLabel('postal_code')}
         name={mapUserFieldToLabel('postal_code')}
         InputProps={{
@@ -332,19 +330,19 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
         {editStatus ? (
           <Fragment>
             <Button
-              type='submit'
-              variant='contained'
+              type="submit"
+              variant="contained"
               onClick={(e) => saveForm()}
               className={classes.button}
             >
               Save
             </Button>
-            <Button variant='contained' onClick={(e) => setEditStatus(false)}>
+            <Button variant="contained" onClick={(e) => setEditStatus(false)}>
               Cancel
             </Button>
           </Fragment>
         ) : (
-          <Button variant='contained' onClick={(e) => setEditStatus(true)}>
+          <Button variant="contained" onClick={(e) => setEditStatus(true)}>
             Edit
           </Button>
         )}
