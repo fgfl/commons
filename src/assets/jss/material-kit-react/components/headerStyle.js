@@ -61,8 +61,8 @@ const headerStyle = {
     color: '#FFF',
     padding: '8px 16px',
     letterSpacing: 'unset',
-    '&:hover,&:focus': {
-      color: '#3f51b5',
+    '&:hover': {
+      color: '#1a237e',
       background: 'transparent'
     }
   },
