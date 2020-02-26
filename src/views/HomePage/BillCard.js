@@ -15,6 +15,8 @@ import BookmarkIcon from '@material-ui/icons/Bookmark';
 import Tooltip from '@material-ui/core/Tooltip';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import CloseIcon from '@material-ui/icons/Close';
 
 import clsx from 'clsx';
 import axios from 'axios';
@@ -40,11 +42,23 @@ const useStyles = makeStyles((theme) => ({
     height: '9vw',
     width: '9vw',
     color: '#FFF',
+    fontSize: '1.5vw',
     fontWeight: 900,
     boxShadow: '10px 17px 24px -13px rgba(0,0,0,0.5)',
     margin: '0 auto',
     marginTop: '5%',
     marginBottom: '5%'
+  },
+  title: {
+    paddingTop: '2%',
+    fontSize: '1.5vw'
+  },
+  description: {
+    paddingTop: '2%',
+    fontSize: '1.25vw'
+  },
+  eventDate: {
+    paddingLeft: '0px !important'
   }
 }));
 
@@ -71,6 +85,7 @@ export default function BillCard(props) {
   const [expanded, setExpanded] = useState(false);
   const [events, setEvents] = useState('No events currently loaded.');
   const [color, setColor] = useState('');
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     props.user && findWatchedBills(props.user.id);
@@ -110,11 +125,24 @@ export default function BillCard(props) {
       response.data.watchlist.includes(props.bill.id)
         ? setColor('red')
         : setColor('grey');
+      setOpen(true);
     } catch (error) {
       console.error(`Error occurred on handleWatchSubmit: ${error}`);
     }
   };
 
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+    getEventsForBill(props.bill.id);
+  };
   const getEventsForBill = async (bill_id) => {
     try {
       const response = await axios.get(
@@ -129,18 +157,20 @@ export default function BillCard(props) {
     }
   };
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-    getEventsForBill(props.bill.id);
-  };
-
   const eventCards =
     Array.isArray(events) &&
     events.map((event) => {
       return (
         <CardContent key={event.id}>
-          <Grid container spacing={3}>
-            <Grid item xs={3} style={{ textAlign: 'center' }}>
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            alignItems="center"
+            textAlign="left"
+            pl={0}
+          >
+            <Grid item xs={3} className={classes.eventDate}>
               <Typography body>
                 <strong>{event.publication_date}</strong>
               </Typography>
@@ -157,6 +187,7 @@ export default function BillCard(props) {
     <Card className={classes.root} variant="outlined">
       <Grid
         container
+        xs={12}
         spacing={2}
         direction="row"
         justify="space-around"
@@ -165,7 +196,6 @@ export default function BillCard(props) {
         <Grid
           item
           xs={2}
-          spacing={4}
           justify="center"
           alignItems="flex-end"
           style={{ textAlign: 'center' }}
@@ -190,17 +220,23 @@ export default function BillCard(props) {
             Full Text
           </Button>
         </Grid>
-        <Grid container direction="column" xs={10}>
-          <Grid container direction="row" justify="space-between" xs={14}>
-            <Grid item xs={9}>
-              <Typography>
+        <Grid container direction="column" xs>
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            align-items="center"
+            xs={14}
+          >
+            <Grid item xs={11}>
+              <Typography className={classes.title}>
                 <strong>{props.bill.title}</strong>
               </Typography>
               <Typography>
                 {'Introduced on ' + props.bill.introduced_date}
               </Typography>
             </Grid>
-            <Grid item xs={1} style={{ float: 'right' }}>
+            <Grid item xs style={{ float: 'right' }}>
               {props.user ? (
                 <IconButton
                   aria-label="settings"
@@ -209,6 +245,44 @@ export default function BillCard(props) {
                   }}
                 >
                   <BookmarkIcon style={{ color: color }} />
+                  <Snackbar
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'center'
+                    }}
+                    open={open}
+                    autoHideDuration={2000}
+                    onClose={handleClose}
+                    action={
+                      <React.Fragment>
+                        {color === 'grey' ? (
+                          <Button
+                            color="primary"
+                            size="small"
+                            onClick={handleClose}
+                          >
+                            Bill {props.bill.code} removed from watchlist
+                          </Button>
+                        ) : (
+                          <Button
+                            color="primary"
+                            size="small"
+                            onClick={handleClose}
+                          >
+                            Bill {props.bill.code} added to watchlist
+                          </Button>
+                        )}
+                        <IconButton
+                          size="small"
+                          aria-label="close"
+                          color="inherit"
+                          onClick={handleClose}
+                        >
+                          <CloseIcon fontSize="small" />
+                        </IconButton>
+                      </React.Fragment>
+                    }
+                  />
                 </IconButton>
               ) : (
                 <Tooltip
@@ -222,9 +296,9 @@ export default function BillCard(props) {
               )}
             </Grid>
             <Grid item direction="row">
-              <Grid item xs={10}></Grid>
               <Grid item xs={10}>
                 <Typography
+                  className={classes.description}
                   variant="body2"
                   color="textSecondary"
                   component="p"
@@ -253,16 +327,18 @@ export default function BillCard(props) {
         </Tooltip>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Grid container spacing={3}>
-            <Grid item xs={3}></Grid>
-            <Grid item xs={9}>
-              <Typography variant="h4">Bill Events</Typography>
-            </Grid>
+        <Grid
+          container
+          direction="row"
+          justify="space-around"
+          alignItems="center"
+        >
+          <Grid item xs={2}></Grid>
+          <Grid item xs={10}>
+            <Typography variant="h5">Bill Events</Typography>
+            {eventCards}
           </Grid>
-        </CardContent>
-
-        {eventCards}
+        </Grid>
       </Collapse>
     </Card>
   );
