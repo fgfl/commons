@@ -64,8 +64,8 @@ const useStyles = makeStyles((theme) => ({
     width: '128px',
     marginTop: '10px'
   },
-  eventDate: {
-    paddingLeft: '0px !important'
+  event: {
+    fontSize: '1.25vw'
   }
 }));
 
@@ -164,9 +164,14 @@ export default function BillCard(props) {
     }
   };
 
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const introduced_date = new Date(props.bill.introduced_date);
+
   const eventCards =
     Array.isArray(events) &&
     events.map((event) => {
+      const publication_date = new Date(event.publication_date);
+
       return (
         <CardContent key={event.id}>
           <Grid
@@ -177,13 +182,17 @@ export default function BillCard(props) {
             textAlign="left"
             pl={0}
           >
-            <Grid item xs={3} className={classes.eventDate}>
-              <Typography body>
-                <strong>{event.publication_date}</strong>
+            <Grid item xs={3}>
+              <Typography body className={classes.event}>
+                <strong>
+                  {publication_date.toLocaleDateString('en-US', options)}
+                </strong>
               </Typography>
             </Grid>
             <Grid item xs={9}>
-              <Typography body>{event.title}</Typography>
+              <Typography body className={classes.event}>
+                {event.title}
+              </Typography>
             </Grid>
           </Grid>
         </CardContent>
@@ -263,7 +272,8 @@ export default function BillCard(props) {
                 <strong>{props.bill.title}</strong>
               </Typography>
               <Typography className={classes.introduced}>
-                {'Introduced on ' + props.bill.introduced_date}
+                {'Introduced on ' +
+                  introduced_date.toLocaleDateString('en-US', options)}
               </Typography>
             </Grid>
             <Grid item xs style={{ float: 'right' }}>
@@ -327,15 +337,28 @@ export default function BillCard(props) {
             </Grid>
             <Grid item direction="row">
               <Grid item xs={10}>
-                <Typography
-                  className={classes.description}
-                  variant="body2"
-                  color="textSecondary"
-                  component="p"
-                  style={{ marginBottom: '24px' }}
-                >
-                  {props.bill.description}
-                </Typography>
+                {props.bill.description ? (
+                  <Typography
+                    className={classes.description}
+                    variant="body2"
+                    color="textPrimary"
+                    component="p"
+                    style={{ marginBottom: '24px' }}
+                  >
+                    {props.bill.description}
+                  </Typography>
+                ) : (
+                  <Typography
+                    className={classes.description}
+                    variant="body2"
+                    color="textDisabled"
+                    component="p"
+                    style={{ marginBottom: '24px' }}
+                    width="100%"
+                  >
+                    <em>No description is available for this bill.</em>
+                  </Typography>
+                )}
               </Grid>
             </Grid>
           </Grid>
