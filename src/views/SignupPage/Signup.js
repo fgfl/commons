@@ -107,7 +107,7 @@ const Signup = (props) => {
           [`${field}Taken`]: `${fieldUp} ${param} is already associated with a user account.`
         }
       }));
-      console.error(error);
+      console.error(`Error occurred on checkAvailability: ${error}`);
       return false;
     }
   };

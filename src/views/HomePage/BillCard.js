@@ -20,24 +20,24 @@ import axios from 'axios';
 const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: 'left',
-    marginBottom: '16px',
+    marginBottom: '16px'
   },
   expand: {
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
     transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
+      duration: theme.transitions.duration.shortest
+    })
   },
   expandOpen: {
-    transform: 'rotate(180deg)',
+    transform: 'rotate(180deg)'
   },
   avatar: {
     backgroundColor: red[500],
     width: '60px',
     height: '60px',
-    fontWeight: 900,
-  },
+    fontWeight: 900
+  }
 }));
 
 /**
@@ -75,7 +75,7 @@ export default function BillCard(props) {
         setColor('red');
       }
     } catch (error) {
-      console.error(`Error occurred while fetching watch bills`);
+      console.error(`Error occurred on findWatchedBills: ${error}`);
     }
   };
 
@@ -90,12 +90,12 @@ export default function BillCard(props) {
         `${process.env.REACT_APP_COMMONS_API}/bill_users`,
         watchlist_bill
       );
-      props.updateWatchlist(response.data.watchlist);
+      props.updateWatchList(response.data.watchlist);
       response.data.watchlist.includes(props.bill.id)
         ? setColor('red')
         : setColor('grey');
     } catch (error) {
-      console.error(`Error occurred while setting watch list: ${error}`);
+      console.error(`Error occurred on handleWatchSubmit: ${error}`);
     }
   };
 
@@ -104,14 +104,12 @@ export default function BillCard(props) {
       const response = await axios.get(
         `${process.env.REACT_APP_COMMONS_API}/events/${bill_id}`,
         {
-          bill_id,
+          bill_id
         }
       );
       setEvents(response.data.events);
     } catch (error) {
-      console.error(
-        `Error occurred while fetching events for bill ${props.bill.code}`
-      );
+      console.error(`Error occurred on getEventsForBill: ${props.bill.code}`);
     }
   };
 
@@ -180,7 +178,7 @@ export default function BillCard(props) {
         <Typography>View Events for this Bill</Typography>
         <IconButton
           className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
+            [classes.expandOpen]: expanded
           })}
           onClick={handleExpandClick}
           aria-expanded={expanded}
