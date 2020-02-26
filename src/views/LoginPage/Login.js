@@ -8,7 +8,6 @@ import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import PersonIcon from '@material-ui/icons/Person';
 import { Typography } from '@material-ui/core';
 
@@ -145,58 +144,58 @@ const Login = (props) => {
       <Avatar className={classes.avatar}>
         <PersonIcon className={classes.accountCircle} />
       </Avatar>
-      <Typography variant="h4">Login</Typography>
+      <Typography variant='h4'>Login</Typography>
       <form className={classes.form} noValidate onSubmit={handleSubmit}>
         <TextField
-          variant="outlined"
-          margin="normal"
+          variant='outlined'
+          margin='normal'
           required
           fullWidth
-          id="email"
-          label="Email Address"
-          name="email"
-          autoComplete="email"
+          id='email'
+          label='Email Address'
+          name='email'
+          autoComplete='email'
           autoFocus
           value={state.email}
           onChange={(e) => handleChange(e.target)}
         />
         {submitted && errors.email.length > 0 && (
-          <span className="error">{errors.email}</span>
+          <span className='error'>{errors.email}</span>
         )}
         <TextField
-          variant="outlined"
-          margin="normal"
+          variant='outlined'
+          margin='normal'
           required
           fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-          autoComplete="current-password"
+          name='password'
+          label='Password'
+          type='password'
+          id='password'
+          autoComplete='current-password'
           onChange={(e) => handleChange(e.target)}
         />
         {submitted && errors.password.length > 0 && (
-          <span className="error">{errors.password}</span>
+          <span className='error'>{errors.password}</span>
         )}
         {submitted && invalid.length > 0 && (
-          <span className="error">{invalid}</span>
+          <span className='error'>{invalid}</span>
         )}
         <Button
-          type="submit"
+          type='submit'
           fullWidth
-          variant="contained"
-          color="primary"
+          variant='contained'
+          color='primary'
           className={classes.submit}
         >
           LOGIN
         </Button>
-        <Grid container justify="center">
+        <Grid container justify='center'>
           <Grid item>
             <Link
-              href="#"
-              variant="body2"
+              href='#'
+              variant='body2'
               component={RouterLink}
-              to="/signup-page"
+              to='/signup-page'
             >
               {'Not a member? Sign up'}
             </Link>

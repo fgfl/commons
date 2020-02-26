@@ -8,16 +8,6 @@ import Avatar from '@material-ui/core/Avatar';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 
 const Confirmation = (props) => {
-  const back = (e) => {
-    e.preventDefault();
-    props.prevStep();
-  };
-
-  const proceed = (event) => {
-    event.preventDefault();
-    props.nextStep(4);
-  };
-
   const useStyles = makeStyles((theme) => ({
     paper: {
       zIndex: 1000,
