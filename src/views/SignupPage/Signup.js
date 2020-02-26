@@ -170,120 +170,123 @@ const Signup = (props) => {
     },
     button: {
       margin: '1em'
+    },
+    error: {
+      color: 'red'
     }
   }));
   const classes = useStyles();
 
   return (
-    <Container maxWidth="xs" className={classes.paper}>
+    <Container maxWidth='xs' className={classes.paper}>
       <Avatar className={classes.avatar}>
         <PersonAddIcon className={classes.accountCircle} />
       </Avatar>
-      <Typography variant="h4">
+      <Typography variant='h4'>
         Not a Member Yet?
         <br /> Sign Up!
       </Typography>
       <form className={classes.form} noValidate onSubmit={props.handleSubmit}>
         <TextField
-          variant="outlined"
-          margin="normal"
+          variant='outlined'
+          margin='normal'
           required
           fullWidth
-          id="name"
-          label="Name"
-          name="name"
-          autoComplete="name"
+          id='name'
+          label='Name'
+          name='name'
+          autoComplete='name'
           autoFocus
           value={props.name}
           onChange={(e) => handleChange(e.target)}
         />
         {submitted && errors.name.length > 0 && (
-          <span className="error">{errors.name}</span>
+          <span className={classes.error}>{errors.name}</span>
         )}
         <TextField
-          variant="outlined"
-          margin="normal"
+          variant='outlined'
+          margin='normal'
           required
           fullWidth
-          id="username"
-          label="Username"
-          name="username"
-          autoComplete="username"
+          id='username'
+          label='Username'
+          name='username'
+          autoComplete='username'
           autoFocus
           value={props.username}
           onChange={(e) => handleChange(e.target)}
         />
         {submitted && errors.username.length > 0 && (
-          <span className="error">{errors.username}</span>
+          <span className={classes.error}>{errors.username}</span>
         )}
         {submitted && available.usernameTaken.length > 0 && (
-          <span className="error">{available.usernameTaken}</span>
+          <span className={classes.error}>{available.usernameTaken}</span>
         )}
         <TextField
-          variant="outlined"
-          margin="normal"
+          variant='outlined'
+          margin='normal'
           required
           fullWidth
-          id="email"
-          label="Email Address"
-          name="email"
-          autoComplete="email"
+          id='email'
+          label='Email Address'
+          name='email'
+          autoComplete='email'
           autoFocus
           value={props.email}
           onChange={(e) => handleChange(e.target)}
         />
         {submitted && errors.email.length > 0 && (
-          <span className="error">{errors.email}</span>
+          <span className={classes.error}>{errors.email}</span>
         )}
         {submitted && available.emailTaken.length > 0 && (
-          <span className="error">{available.emailTaken}</span>
+          <span className={classes.error}>{available.emailTaken}</span>
         )}
         <TextField
-          variant="outlined"
-          margin="normal"
+          variant='outlined'
+          margin='normal'
           required
           fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-          autoComplete="current-password"
+          name='password'
+          label='Password'
+          type='password'
+          id='password'
+          autoComplete='current-password'
           onChange={(e) => handleChange(e.target)}
         />
         {submitted && errors.password.length > 0 && (
-          <span className="error">{errors.password}</span>
+          <span className={classes.error}>{errors.password}</span>
         )}
         <TextField
-          variant="outlined"
-          margin="normal"
+          variant='outlined'
+          margin='normal'
           required
           fullWidth
-          name="passwordConfirmation"
-          label="Confirm Password"
-          type="password"
-          id="password-confirmation"
-          autoComplete="current-password"
+          name='passwordConfirmation'
+          label='Confirm Password'
+          type='password'
+          id='password-confirmation'
+          autoComplete='current-password'
           onChange={(e) => handleChange(e.target)}
         />
         {submitted && errors.passwordConfirmation.length > 0 && (
-          <span className="error">{errors.passwordConfirmation}</span>
+          <span className={classes.error}>{errors.passwordConfirmation}</span>
         )}
         <TextField
-          variant="outlined"
-          margin="normal"
+          variant='outlined'
+          margin='normal'
           fullWidth
-          name="postal_code"
-          label="Postal Code"
-          type="postal"
-          id="postal-code"
-          autoComplete="postal-code"
+          name='postal_code'
+          label='Postal Code'
+          type='postal'
+          id='postal-code'
+          autoComplete='postal-code'
           onChange={(e) => handleChange(e.target)}
         />
       </form>
       <Button
         classNames={classes.button}
-        color="primary"
-        variant="contained"
+        color='primary'
+        variant='contained'
         onClick={proceed}
       >
         Continue
