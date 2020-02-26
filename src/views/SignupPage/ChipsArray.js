@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
-import Paper from '@material-ui/core/Paper';
 import DoneItem from '@material-ui/icons/Done';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,7 +19,7 @@ const ChipsArray = (props) => {
   const categories = props.categories;
 
   const classes = useStyles();
-  const [chipData, setChipData] = useState(categories);
+  const chipData = useState(categories);
 
   return (
     <div>
