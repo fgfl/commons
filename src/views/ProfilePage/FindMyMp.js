@@ -72,7 +72,7 @@ export default function FindMyMp({ user }) {
       <Container xs={12} className={classes.root}>
         <Grid container>
           <Grid item xs={12} sm={9} className={classes.myMp}>
-            <Typography variant='h4'>
+            <Typography variant="h4">
               <strong>Your Representative</strong>
             </Typography>
             <Typography>
@@ -88,7 +88,7 @@ export default function FindMyMp({ user }) {
             </Typography>
             <Typography>
               <strong>Website: </strong>
-              <a href={mpWebsite} target='_blank'>
+              <a href={mpWebsite} target="_blank">
                 {mpWebsite}
               </a>
             </Typography>
@@ -96,7 +96,7 @@ export default function FindMyMp({ user }) {
               <strong>Email: </strong>
               {mpEmail}
             </Typography>
-            <Typography variant='h5'>
+            <Typography variant="h5">
               <strong>Federal Office: </strong>
               <Typography>
                 <strong>Address: </strong>
@@ -107,7 +107,7 @@ export default function FindMyMp({ user }) {
                 {mpOfficeLocal.tel}
               </Typography>
             </Typography>
-            <Typography variant='h5'>
+            <Typography variant="h5">
               <strong>Local Office: </strong>
               <Typography>
                 <strong>Address: </strong>
@@ -120,13 +120,13 @@ export default function FindMyMp({ user }) {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={3}>
-            <img alt='Your MP' src={mpPhoto} />
+            <img alt="Your MP" src={mpPhoto} />
           </Grid>
           <Grid container>
-            <Button variant='contained' className={classes.button}>
+            <Button variant="contained" className={classes.button}>
               <Link href={`mailto:${mpEmail.toLowerCase()}`}>Email My MP</Link>
             </Button>
-            <Button variant='contained' className={classes.button}>
+            <Button variant="contained" className={classes.button}>
               <Link href={`tel:+${mpOfficeOttawa.tel}`}>Call My MP</Link>
             </Button>
           </Grid>
@@ -160,40 +160,41 @@ export default function FindMyMp({ user }) {
             setMpOfficeOttawa(
               response.data.representatives_centroid[0].offices[1]
             );
-            console.log(response.data);
           } else {
             setErrors(response.data.errors);
           }
         })
         .then(setLoading(false))
-        .catch((error) => console.log('api errors:', error));
+        .catch((error) =>
+          console.error(`Error occurred on handleMpSubmit: ${error}`)
+        );
     }
   };
 
   const findForm = () => {
     return (
       <div className={classes.root}>
-        <Typography className={classes.title} variant='h4'>
+        <Typography className={classes.title} variant="h4">
           Find Your Member of Parliament
         </Typography>
-        <Typography variant='h5'>
+        <Typography variant="h5">
           Look up your representative in the House of Commons
         </Typography>
         <Divider className={classes.divider}></Divider>
         <form>
           <TextField
-            id='outlined-basic'
-            name='postalCode'
-            label='Postal Code'
-            variant='outlined'
+            id="outlined-basic"
+            name="postalCode"
+            label="Postal Code"
+            variant="outlined"
             error={errors && errors.length > 0}
             helperText={errors}
             value={postalCode}
             onChange={(e) => setPostalCode(e.target.value)}
           />
           <Button
-            variant='contained'
-            color='primary'
+            variant="contained"
+            color="primary"
             className={classes.submit}
             onClick={handleMpSubmit}
           >

@@ -63,7 +63,7 @@ const UserForm = (props) => {
         setErrors(response.data.errors);
       }
     } catch (error) {
-      console.error('Error occured on Sign Up:', error);
+      console.error(`Error occurred on Sign Up: ${error}`);
     }
   };
 

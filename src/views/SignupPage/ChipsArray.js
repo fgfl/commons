@@ -19,15 +19,12 @@ const useStyles = makeStyles((theme) => ({
 const ChipsArray = (props) => {
   const categories = props.categories;
 
-  console.log(categories);
-
   const classes = useStyles();
   const [chipData, setChipData] = useState(categories);
 
   return (
     <div>
       {chipData.map((data) => {
-        console.log(props);
         let backgroundColor = props.clicked[data.id] ? '#3f51b5' : '#CCC';
         let color = props.clicked[data.id] ? '#FFF' : '#000';
 

@@ -67,10 +67,11 @@ const NavBar = (props) => {
       .delete(`${process.env.REACT_APP_COMMONS_API}/logout`)
       .then((response) => {
         props.handleLogout();
-        console.log('logged out');
         props.history.push('/');
       })
-      .catch((error) => console.log(error));
+      .catch((error) =>
+        console.error(`Error occurred on navBar handleClick: ${error}`)
+      );
   };
   const classes = useStyles();
   const [state, setState] = React.useState({
