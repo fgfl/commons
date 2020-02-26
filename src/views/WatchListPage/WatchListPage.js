@@ -18,7 +18,7 @@ import HeaderLinks from 'components/Header/HeaderLinks.js';
 import styles from 'assets/jss/material-kit-react/views/components.js';
 import CategoryDropdown from '../HomePage/CategoryDropdown';
 import Bills from '../HomePage/Bills';
-import image from 'assets/img/bg2.jpg';
+import image from 'assets/img/bg8.jpg';
 
 const useStyles = makeStyles(styles);
 
@@ -42,7 +42,7 @@ export default function WatchListPage(props) {
           backgroundPosition: 'top center'
         }}
       ></div>
-      <Parallax image={require('assets/img/bg2.jpg')}>
+      <Parallax image={require('assets/img/bg8.jpg')}>
         <div className={classes.container}>
           <GridContainer>
             <GridItem>
