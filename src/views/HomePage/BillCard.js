@@ -13,13 +13,15 @@ import { red } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import Tooltip from '@material-ui/core/Tooltip';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 
 import clsx from 'clsx';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    textAlign: 'left',
+    flexGrow: 1,
     marginBottom: '16px'
   },
   expand: {
@@ -34,9 +36,13 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     backgroundColor: red[500],
-    width: '60px',
-    height: '60px',
-    fontWeight: 900
+    borderRadius: '100%',
+    width: '75px',
+    height: '75px',
+    color: '#FFF',
+    fontWeight: 900,
+    boxShadow: '10px 17px 24px -13px rgba(0,0,0,0.5)',
+    margin: '0 auto'
   }
 }));
 
@@ -123,72 +129,116 @@ export default function BillCard(props) {
     events.map((event) => {
       return (
         <CardContent key={event.id}>
-          <Typography paragraph>{event.title}</Typography>
-          <Typography paragraph>{event.publication_date}</Typography>
+          <Grid container spacing={3}>
+            <Grid item xs={3} style={{ textAlign: 'center' }}>
+              <Typography body>
+                <strong>{event.publication_date}</strong>
+              </Typography>
+            </Grid>
+            <Grid item xs={9}>
+              <Typography body>{event.title}</Typography>
+            </Grid>
+          </Grid>
         </CardContent>
       );
     });
 
   return (
     <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <div>
-            <Avatar aria-label="bill" className={classes.avatar}>
-              {props.bill.code}
-            </Avatar>
-          </div>
-        }
-        action={
-          props.user ? (
-            <IconButton aria-label="settings">
-              <BookmarkIcon
-                style={{ color: color }}
-                onClick={() => {
-                  handleWatchSubmit();
-                }}
-              />
-            </IconButton>
-          ) : (
-            <Tooltip
-              title="Sign in to add bills to watchlist."
-              placement="right"
-            >
-              <IconButton aria-label="settings">
-                <BookmarkIcon style={{ color: color }} />
-              </IconButton>
-            </Tooltip>
-          )
-        }
-        title={props.bill.title}
-        subheader={'Introduced on ' + props.bill.introduced_date}
-      />
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {props.bill.description}
-        </Typography>
-        <Typography>
-          <Link href={props.bill.page_url}>Bill Page</Link>
-        </Typography>
-        <Typography>
-          <Link href={props.bill.full_text_url}>Full Text</Link>
-        </Typography>
+        <Grid container justify='center'>
+          <Grid item xs={3} style={{ textAlign: 'center' }}>
+            <div>
+              <Tooltip title='View Bill Page' placement='bottom'>
+                <Button
+                  href={props.bill.page_url}
+                  variant='contained'
+                  className={classes.avatar}
+                  target='_blank'
+                >
+                  {props.bill.code}
+                </Button>
+              </Tooltip>
+            </div>
+          </Grid>
+          <Grid item xs={7}>
+            <Typography>
+              <strong>{props.bill.title}</strong>
+            </Typography>
+            <Typography>
+              {'Introduced on ' + props.bill.introduced_date}
+            </Typography>
+          </Grid>
+          <Grid item xs={2} style={{ textAlign: 'right' }}>
+            {props.user ? (
+              <IconButton aria-label='settings'>
+                <BookmarkIcon
+                  style={{ color: color }}
+                  onClick={() => {
+                    handleWatchSubmit();
+                  }}
+                />
+              </IconButton>
+            ) : (
+              <Tooltip
+                title='Sign in to add bills to watchlist.'
+                placement='right'
+              >
+                <IconButton aria-label='settings'>
+                  <BookmarkIcon style={{ color: color }} />
+                </IconButton>
+              </Tooltip>
+            )}
+          </Grid>
+        </Grid>
+      </CardContent>
+      <CardContent>
+        <Grid container direction='row'>
+          <Grid item xs={3}></Grid>
+          <Grid item xs={9}>
+            <Typography
+              variant='body2'
+              color='textSecondary'
+              component='p'
+              style={{ marginBottom: '24px' }}
+            >
+              {props.bill.description}
+            </Typography>
+            <Button
+              href={props.bill.full_text_url}
+              target='_blank'
+              variant='contained'
+            >
+              Full Text
+            </Button>
+          </Grid>
+        </Grid>
       </CardContent>
       <CardActions disableSpacing>
-        <Typography>View Events for this Bill</Typography>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
+        {/* <Typography>View Events for this Bill</Typography> */}
+        <Tooltip title='View Events for this Bill' placement='right'>
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label='show more'
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        </Tooltip>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>{eventCards}</CardContent>
+      <Collapse in={expanded} timeout='auto' unmountOnExit>
+        <CardContent>
+          <Grid container spacing={3}>
+            <Grid item xs={3}></Grid>
+            <Grid item xs={9}>
+              <Typography variant='h4'>Bill Events</Typography>
+            </Grid>
+          </Grid>
+        </CardContent>
+        {eventCards}
       </Collapse>
     </Card>
   );
