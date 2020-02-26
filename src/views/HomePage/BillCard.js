@@ -171,13 +171,13 @@ export default function BillCard(props) {
           </Grid>
           <Grid item xs={2} style={{ textAlign: 'right' }}>
             {props.user ? (
-              <IconButton aria-label='settings'>
-                <BookmarkIcon
-                  style={{ color: color }}
-                  onClick={() => {
-                    handleWatchSubmit();
-                  }}
-                />
+              <IconButton
+                aria-label='settings'
+                onClick={() => {
+                  handleWatchSubmit();
+                }}
+              >
+                <BookmarkIcon style={{ color: color }} />
               </IconButton>
             ) : (
               <Tooltip
