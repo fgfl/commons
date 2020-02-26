@@ -118,12 +118,12 @@ const App = (props) => {
         {!loading && (
           <Fragment>
             <Header
-              color="transparent"
-              brand="Commons"
+              color='transparent'
+              brand='Commons'
               fixed
               changeColorOnScroll={{
                 height: 200,
-                color: 'white',
+                color: 'white'
               }}
               user={user}
               loggedIn={loggedIn}
@@ -133,7 +133,7 @@ const App = (props) => {
             <Switch>
               <Route
                 exact
-                path="/"
+                path='/'
                 render={(props) => (
                   <Home
                     {...props}
@@ -146,7 +146,7 @@ const App = (props) => {
                 )}
               />
               <Route
-                path="/login-page"
+                path='/login-page'
                 render={(props) => (
                   <LoginPage
                     {...props}
@@ -157,7 +157,7 @@ const App = (props) => {
                 )}
               />
               <Route
-                path="/signup-page"
+                path='/signup-page'
                 render={(props) => (
                   <SignupPage
                     {...props}
@@ -168,7 +168,7 @@ const App = (props) => {
                 )}
               />
               <Route
-                path="/watch-list"
+                path='/watch-list'
                 render={(props) => (
                   <WatchListPage
                     {...props}
@@ -180,11 +180,12 @@ const App = (props) => {
                 )}
               />
               <Route
-                path="/user/:id"
+                path='/user/:id'
                 render={() => (
                   <ProfilePage
                     user={user}
                     handleProfileUpdate={handleProfileUpdate}
+                    categories={categories}
                     loggedInStatus={loggedIn}
                   />
                 )}

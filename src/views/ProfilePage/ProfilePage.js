@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 // nodejs library that concatenates classes
 import classNames from 'classnames';
 // @material-ui/core components
@@ -21,6 +22,7 @@ const useStyles = makeStyles(styles);
 export default function ProfilePage(props) {
   const classes = useStyles();
   const { ...rest } = props;
+
   return (
     <div>
       <Parallax small filter image={require('assets/img/profile-bg.jpg')}>
@@ -46,6 +48,7 @@ export default function ProfilePage(props) {
         {props.user && (
           <Profile
             user={props.user}
+            categories={props.categories}
             handleProfileUpdate={props.handleProfileUpdate}
           />
         )}
