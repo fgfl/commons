@@ -3,7 +3,6 @@ import React from 'react';
 import classNames from 'classnames';
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 // @material-ui/icons
 
 // core components
@@ -13,6 +12,7 @@ import GridContainer from 'components/Grid/GridContainer.js';
 import HeaderLinks from 'components/Header/HeaderLinks.js';
 import Parallax from 'components/Parallax/Parallax.js';
 import Profile from './Profile';
+import GridItem from 'components/Grid/GridItem.js';
 
 import styles from 'assets/jss/material-kit-react/views/profilePage.js';
 
@@ -23,7 +23,25 @@ export default function ProfilePage(props) {
   const { ...rest } = props;
   return (
     <div>
-      <Parallax small filter image={require('assets/img/profile-bg.jpg')} />
+      <Parallax small filter image={require('assets/img/profile-bg.jpg')}>
+        <div className={classes.container}>
+          <GridContainer>
+            <GridItem>
+              <div className={classes.brand}>
+                <h1
+                  style={{
+                    textAlign: 'center',
+                    fontWeight: 900,
+                    color: '#FFF'
+                  }}
+                >
+                  My Profile
+                </h1>
+              </div>
+            </GridItem>
+          </GridContainer>
+        </div>
+      </Parallax>
       <div className={classNames(classes.main, classes.mainRaised)}>
         {props.user && (
           <Profile

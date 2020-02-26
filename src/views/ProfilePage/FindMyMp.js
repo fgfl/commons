@@ -5,9 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
-import { Divider } from '@material-ui/core';
 
 export default function FindMyMp({ user }) {
   const [postalCode, setPostalCode] = useState(user.postal_code || '');
@@ -30,13 +28,16 @@ export default function FindMyMp({ user }) {
       textAlign: 'center'
     },
     title: {
-      padding: '24px'
+      marginBottom: theme.spacing(2)
     },
     myMp: {
       textAlign: 'left'
     },
     divider: {
       margin: '1em'
+    },
+    section: {
+      marginBottom: theme.spacing(2)
     },
     submit: {
       margin: '0.75em'
@@ -72,32 +73,38 @@ export default function FindMyMp({ user }) {
       <Container xs={12} className={classes.root}>
         <Grid container>
           <Grid item xs={12} sm={9} className={classes.myMp}>
-            <Typography variant='h4'>
+            <Typography variant='h4' className={classes.title}>
               <strong>Your Representative</strong>
             </Typography>
-            <Typography>
-              <strong>Name:</strong> {mpName}
-            </Typography>
-            <Typography>
-              <strong>Party: </strong>
-              {mpParty}
-            </Typography>
-            <Typography>
-              <strong>Riding: </strong>
-              {mpRiding}
-            </Typography>
-            <Typography>
-              <strong>Website: </strong>
-              <a href={mpWebsite} target='_blank'>
-                {mpWebsite}
-              </a>
-            </Typography>
-            <Typography>
-              <strong>Email: </strong>
-              {mpEmail}
-            </Typography>
-            <Typography variant='h5'>
-              <strong>Federal Office: </strong>
+            <div className={classes.section}>
+              <Typography>
+                <strong>Name:</strong> {mpName}
+              </Typography>
+              <Typography>
+                <strong>Party: </strong>
+                {mpParty}
+              </Typography>
+              <Typography>
+                <strong>Riding: </strong>
+                {mpRiding}
+              </Typography>
+              <Typography>
+                <strong>Email: </strong>
+                {mpEmail}
+              </Typography>
+              <Button
+                className={classes.button}
+                variant='contained'
+                href={mpWebsite}
+                target='_blank'
+              >
+                WEBSITE
+              </Button>
+            </div>
+            <div className={classes.section}>
+              <Typography variant='h5'>
+                <strong>Federal Office: </strong>
+              </Typography>
               <Typography>
                 <strong>Address: </strong>
                 {mpOfficeLocal.postal}
@@ -106,9 +113,11 @@ export default function FindMyMp({ user }) {
                 <strong>Telephone: </strong>
                 {mpOfficeLocal.tel}
               </Typography>
-            </Typography>
-            <Typography variant='h5'>
-              <strong>Local Office: </strong>
+            </div>
+            <div className={classes.section}>
+              <Typography variant='h5'>
+                <strong>Local Office: </strong>
+              </Typography>
               <Typography>
                 <strong>Address: </strong>
                 {mpOfficeOttawa.postal}
@@ -117,17 +126,25 @@ export default function FindMyMp({ user }) {
                 <strong>Telephone: </strong>
                 {mpOfficeOttawa.tel}
               </Typography>
-            </Typography>
+            </div>
           </Grid>
           <Grid item xs={12} sm={3}>
             <img alt='Your MP' src={mpPhoto} />
           </Grid>
-          <Grid container>
-            <Button variant='contained' className={classes.button}>
-              <Link href={`mailto:${mpEmail.toLowerCase()}`}>Email My MP</Link>
+          <Grid container className={classes.myMp}>
+            <Button
+              href={`mailto:${mpEmail.toLowerCase()}`}
+              variant='contained'
+              className={classes.button}
+            >
+              Email My MP
             </Button>
-            <Button variant='contained' className={classes.button}>
-              <Link href={`tel:+${mpOfficeOttawa.tel}`}>Call My MP</Link>
+            <Button
+              href={`tel:+${mpOfficeOttawa.tel}`}
+              variant='contained'
+              className={classes.button}
+            >
+              Call My MP
             </Button>
           </Grid>
         </Grid>
@@ -176,10 +193,9 @@ export default function FindMyMp({ user }) {
         <Typography className={classes.title} variant='h4'>
           Find Your Member of Parliament
         </Typography>
-        <Typography variant='h5'>
+        <Typography variant='h5' style={{ marginBottom: '1em' }}>
           Look up your representative in the House of Commons
         </Typography>
-        <Divider className={classes.divider}></Divider>
         <form>
           <TextField
             id='outlined-basic'
