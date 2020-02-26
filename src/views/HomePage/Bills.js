@@ -1,6 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { red } from '@material-ui/core/colors';
 import BillCard from './BillCard';
 
 export default function Bills(props) {
