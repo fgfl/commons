@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
@@ -19,25 +19,36 @@ const useStyles = makeStyles((theme) => ({
 const ChipsArray = (props) => {
   const categories = props.categories;
 
-  console.log(categories);
-
   const classes = useStyles();
   const [chipData, setChipData] = useState(categories);
 
+  // useEffect(() => {
+  //   setInitialClick(props.user.user_categories);
+  // }, []);
+
+  // const setInitialClick = (arr) => {
+  //   for (const item of arr) {
+  //     props.setThisOneClicked(item);
+  //   }
+  // };
+
+  // for (const item of props.user.user_categories) {
+  //   props.setThisOneClicked(item);
+  // }
+
+  console.log(props);
   return (
     <div>
       {chipData.map((data) => {
-        console.log(props);
         let backgroundColor = props.clicked[data.id] ? '#3f51b5' : '#CCC';
         let color = props.clicked[data.id] ? '#FFF' : '#000';
-
+        console.log(data.id);
         return (
           <Chip
             key={data.id}
             icon={<DoneItem />}
             label={data.name}
             className={classes.chip}
-            clickable
             onClick={() => {
               props.setThisOneClicked(data.id);
             }}
