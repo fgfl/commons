@@ -11,11 +11,12 @@ import ProfileText from './ProfileText';
 import FindMyMp from './FindMyMp';
 import { Typography } from '@material-ui/core';
 import profilePageStyle from 'assets/jss/material-kit-react/views/profilePage';
+import { Divider } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    padding: theme.spacing(2)
+    padding: theme.spacing(4)
   },
   avatar: {
     margin: '0 auto',
@@ -32,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     padding: theme.spacing(2)
+  },
+  divider: {
+    margin: theme.spacing(4)
   }
 }));
 
@@ -59,6 +63,7 @@ const Profile = ({ user, handleProfileUpdate }) => {
           </div>
         </Grid>
       </Grid>
+      <Divider className={classes.divider}></Divider>
       <Grid container justify='center'>
         <Grid item xs={12}>
           <FindMyMp user={user} />

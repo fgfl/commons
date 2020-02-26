@@ -40,6 +40,13 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
     profileTable: {
       display: 'flex',
       flexDirection: 'row'
+    },
+    buttons: {
+      margin: '1em',
+      textAlign: 'center'
+    },
+    button: {
+      marginRight: theme.spacing(2)
     }
   }));
   const classes = useStyles();
@@ -287,36 +294,26 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
         label={mapUserFieldToLabel('sms_notification')}
       />
 
-      <div>
-        <Grid container>
-          {editStatus ? (
-            <Fragment>
-              <Grid item='true'>
-                <Button
-                  type='submit'
-                  variant='contained'
-                  onClick={(e) => saveForm()}
-                >
-                  Save
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  variant='contained'
-                  onClick={(e) => setEditStatus(false)}
-                >
-                  Cancel
-                </Button>
-              </Grid>
-            </Fragment>
-          ) : (
-            <Grid item>
-              <Button variant='contained' onClick={(e) => setEditStatus(true)}>
-                Edit
-              </Button>
-            </Grid>
-          )}
-        </Grid>
+      <div className={classes.buttons}>
+        {editStatus ? (
+          <Fragment>
+            <Button
+              type='submit'
+              variant='contained'
+              onClick={(e) => saveForm()}
+              className={classes.button}
+            >
+              Save
+            </Button>
+            <Button variant='contained' onClick={(e) => setEditStatus(false)}>
+              Cancel
+            </Button>
+          </Fragment>
+        ) : (
+          <Button variant='contained' onClick={(e) => setEditStatus(true)}>
+            Edit
+          </Button>
+        )}
       </div>
     </form>
   );
