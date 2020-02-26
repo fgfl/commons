@@ -23,7 +23,7 @@ const ChipsArray = (props) => {
 
   return (
     <div>
-      {chipData.map((data) => {
+      {chipData[0].map((data) => {
         let backgroundColor = props.clicked[data.id] ? '#3f51b5' : '#CCC';
         let color = props.clicked[data.id] ? '#FFF' : '#000';
         return (
