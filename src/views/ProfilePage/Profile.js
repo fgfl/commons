@@ -39,7 +39,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Profile = ({ user, handleProfileUpdate }) => {
+const Profile = ({
+  categories,
+  user,
+  handleProfileUpdate,
+  setThisOneClicked,
+  clicked
+}) => {
   const classes = useStyles();
 
   return (
@@ -57,7 +63,10 @@ const Profile = ({ user, handleProfileUpdate }) => {
         <Grid item xs={12} sm={6}>
           <div className={classes.form}>
             <ProfileText
+              clicked={clicked}
+              setThisOneClicked={setThisOneClicked}
               user={user}
+              categories={categories}
               handleProfileUpdate={handleProfileUpdate}
             ></ProfileText>
           </div>

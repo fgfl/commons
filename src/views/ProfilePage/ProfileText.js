@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 
 import Grid from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
+import ChipsArray from '../SignupPage/ChipsArray';
 
 import mapUserFieldToLabel from '../../helpers/mapUserFieldToLabel';
 import TextField from '@material-ui/core/TextField';
@@ -9,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-const ProfileText = ({ user, handleProfileUpdate }) => {
+const ProfileText = ({ user, handleProfileUpdate, categories }) => {
   const [editStatus, setEditStatus] = useState(false);
   const [name, setName] = useState(user.name);
   const [username, setUsername] = useState(user.username);
@@ -23,6 +24,7 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
   );
   const [smsNotification, setSmsNotification] = useState(user.sms_notification);
   const [formErrors, setFormErrors] = useState({});
+  const [clicked, setClicked] = useState({});
 
   useEffect(() => {
     validateForm();
@@ -50,6 +52,18 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
     }
   }));
   const classes = useStyles();
+
+  const setThisOneClicked = (key) => {
+    setClicked((prev) => {
+      let state = { ...prev };
+      if (state[key]) {
+        delete state[key];
+      } else {
+        state[key] = true;
+      }
+      return state;
+    });
+  };
 
   const validationFunctions = {
     id: () => {
@@ -292,6 +306,13 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
           />
         }
         label={mapUserFieldToLabel('sms_notification')}
+      />
+
+      <ChipsArray
+        categories={categories}
+        clicked={clicked}
+        setThisOneClicked={setThisOneClicked}
+        editStatus={editStatus}
       />
 
       <div className={classes.buttons}>
