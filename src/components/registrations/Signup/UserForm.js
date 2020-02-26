@@ -47,7 +47,6 @@ const UserForm = (props) => {
       phone_number: phoneNumber,
       categories: Object.keys(clicked)
     };
-    console.log(user);
 
     axios
       .post(`${process.env.REACT_APP_COMMONS_API}/users`, { user })
@@ -59,7 +58,7 @@ const UserForm = (props) => {
           setErrors(response.data.errors);
         }
       })
-      .catch((error) => console.log('api errors:', error));
+      .catch((error) => console.error(`Invalid Form: ${error}`));
   };
 
   const handleErrors = () => {

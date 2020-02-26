@@ -52,7 +52,7 @@ const Notifications = (props) => {
     setSubmitted(true);
     validateForm(state.errors)
       ? props.nextStep(2, state)
-      : console.error('Invalid Form');
+      : console.error(`Invalid Form.`);
   };
 
   const { errors } = state;
@@ -111,47 +111,47 @@ const Notifications = (props) => {
 
   return (
     <div>
-      <Container maxWidth='xs' className={classes.paper}>
+      <Container maxWidth="xs" className={classes.paper}>
         <Avatar className={classes.avatar}>
           <AnnouncementIcon className={classes.accountCircle} />
         </Avatar>
-        <Typography variant='h4'>Get updates!</Typography>
-        <FormControl component='fieldset' className={classes.formControl}>
-          <FormLabel component='legend'>
+        <Typography variant="h4">Get updates!</Typography>
+        <FormControl component="fieldset" className={classes.formControl}>
+          <FormLabel component="legend">
             How would you like to receive notifications?
           </FormLabel>
           <FormGroup>
             <FormControlLabel
               control={<Checkbox />}
-              label='Receive notifications by email'
+              label="Receive notifications by email"
               onChange={handleEmailCheck}
             />
             <FormControlLabel
               control={<Checkbox />}
-              label='Receive notifications by SMS message'
+              label="Receive notifications by SMS message"
               onChange={handleSmsCheck}
             />
             <TextField
-              variant='outlined'
-              margin='normal'
+              variant="outlined"
+              margin="normal"
               fullWidth
-              id='phoneNumber'
-              label='Phone Number'
-              name='phoneNumber'
-              autoComplete='phoneNumber'
+              id="phoneNumber"
+              label="Phone Number"
+              name="phoneNumber"
+              autoComplete="phoneNumber"
               autoFocus
               value={props.phoneNumber}
               onChange={(e) => handleChange(e.target)}
             />
             {submitted && errors.phoneNumber.length > 0 && (
-              <span className='error'>{errors.phoneNumber}</span>
+              <span className="error">{errors.phoneNumber}</span>
             )}
           </FormGroup>
         </FormControl>
         <Button
           className={classes.button}
-          color='secondary'
-          variant='contained'
+          color="secondary"
+          variant="contained"
           onClick={back}
         >
           Back
@@ -159,8 +159,8 @@ const Notifications = (props) => {
 
         <Button
           className={classes.button}
-          color='primary'
-          variant='contained'
+          color="primary"
+          variant="contained"
           onClick={proceed}
         >
           Continue
