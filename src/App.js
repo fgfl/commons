@@ -139,6 +139,7 @@ const App = (props) => {
                     handleLogout={handleLogout}
                     loggedInStatus={loggedIn}
                     user={user}
+                    updateWatchList={updateWatchList}
                   />
                 )}
               />
