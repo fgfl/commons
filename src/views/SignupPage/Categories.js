@@ -4,7 +4,6 @@ import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import PersonIcon from '@material-ui/icons/Person';
 import ChipsArray from './ChipsArray';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 
@@ -29,27 +28,27 @@ const Categories = (props) => {
       flexDirection: 'column',
       alignItems: 'center',
       border: 5,
-      textAlign: 'center'
+      textAlign: 'center',
     },
     avatar: {
       zIndex: 1000,
       marginBottom: theme.spacing(2),
       width: '120px',
       height: '120px',
-      backgroundColor: '#29c0a8'
+      backgroundColor: '#29c0a8',
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
-      backgroundColor: '#29c0a8'
+      backgroundColor: '#29c0a8',
     },
     accountCirle: {
       width: '100px',
       height: '100px',
-      color: 'white'
+      color: 'white',
     },
     buttons: {
-      margin: '0 auto'
-    }
+      margin: '0 auto',
+    },
   }));
   const classes = useStyles();
 
@@ -58,7 +57,7 @@ const Categories = (props) => {
       <Avatar className={classes.avatar}>
         <BookmarkIcon className={classes.accountCirle} />
       </Avatar>
-      <Typography variant='h4'>
+      <Typography variant="h4">
         Pick the topics you are interested in
       </Typography>
       <ChipsArray
@@ -67,11 +66,11 @@ const Categories = (props) => {
         setThisOneClicked={props.setThisOneClicked}
       />
       <Container className={classes.buttons}>
-        <Button color='secondary' variant='contained' onClick={back}>
+        <Button color="secondary" variant="contained" onClick={back}>
           Back
         </Button>
 
-        <Button color='primary' variant='contained' onClick={proceed}>
+        <Button color="primary" variant="contained" onClick={proceed}>
           Continue
         </Button>
       </Container>

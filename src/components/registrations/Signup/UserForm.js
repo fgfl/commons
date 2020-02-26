@@ -45,7 +45,7 @@ const UserForm = (props) => {
       email_notification: emailNotification,
       sms_notification: smsNotification,
       phone_number: phoneNumber,
-      categories: Object.keys(clicked)
+      categories: Object.keys(clicked),
     };
 
     axios
@@ -158,7 +158,7 @@ const UserForm = (props) => {
               email_notification: emailNotification,
               sms_notification: smsNotification,
               phone_number: phoneNumber,
-              categories: Object.keys(clicked)
+              categories: Object.keys(clicked),
             }}
           />
         );

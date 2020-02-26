@@ -7,6 +7,9 @@ import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+import useLoading from '../../hooks/useLoading';
+
 export default function FindMyMp({ user }) {
   const [postalCode, setPostalCode] = useState(user.postal_code || '');
   const [mpName, setMpName] = useState('');
@@ -19,33 +22,33 @@ export default function FindMyMp({ user }) {
   const [mpOfficeLocal, setMpOfficeLocal] = useState('');
 
   const [errors, setErrors] = useState('');
-  const [loading, setLoading] = useState(false);
+  const { loading, updateLoadingState } = useLoading(false);
 
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
       width: '100%',
-      textAlign: 'center'
+      textAlign: 'center',
     },
     title: {
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(2),
     },
     myMp: {
-      textAlign: 'left'
+      textAlign: 'left',
     },
     divider: {
-      margin: '1em'
+      margin: '1em',
     },
     section: {
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(2),
     },
     submit: {
-      margin: '0.75em'
+      margin: '0.75em',
     },
     button: {
       marginTop: theme.spacing(2),
-      marginRight: theme.spacing(2)
-    }
+      marginRight: theme.spacing(2),
+    },
   }));
 
   const classes = useStyles();
@@ -73,7 +76,7 @@ export default function FindMyMp({ user }) {
       <Container xs={12} className={classes.root}>
         <Grid container>
           <Grid item xs={12} sm={9} className={classes.myMp}>
-            <Typography variant='h4' className={classes.title}>
+            <Typography variant="h4" className={classes.title}>
               <strong>Your Representative</strong>
             </Typography>
             <div className={classes.section}>
@@ -94,15 +97,15 @@ export default function FindMyMp({ user }) {
               </Typography>
               <Button
                 className={classes.button}
-                variant='contained'
+                variant="contained"
                 href={mpWebsite}
-                target='_blank'
+                target="_blank"
               >
                 WEBSITE
               </Button>
             </div>
             <div className={classes.section}>
-              <Typography variant='h5'>
+              <Typography variant="h5">
                 <strong>Federal Office: </strong>
               </Typography>
               <Typography>
@@ -115,7 +118,7 @@ export default function FindMyMp({ user }) {
               </Typography>
             </div>
             <div className={classes.section}>
-              <Typography variant='h5'>
+              <Typography variant="h5">
                 <strong>Local Office: </strong>
               </Typography>
               <Typography>
@@ -129,19 +132,19 @@ export default function FindMyMp({ user }) {
             </div>
           </Grid>
           <Grid item xs={12} sm={3}>
-            <img alt='Your MP' src={mpPhoto} />
+            <img alt="Your MP" src={mpPhoto} />
           </Grid>
           <Grid container className={classes.myMp}>
             <Button
               href={`mailto:${mpEmail.toLowerCase()}`}
-              variant='contained'
+              variant="contained"
               className={classes.button}
             >
               Email My MP
             </Button>
             <Button
               href={`tel:+${mpOfficeOttawa.tel}`}
-              variant='contained'
+              variant="contained"
               className={classes.button}
             >
               Call My MP
@@ -154,7 +157,7 @@ export default function FindMyMp({ user }) {
 
   const handleMpSubmit = (event) => {
     event.preventDefault();
-    setLoading(true);
+    updateLoadingState(true);
     if (validate()) {
       axios
         .get(
@@ -180,37 +183,39 @@ export default function FindMyMp({ user }) {
           } else {
             setErrors(response.data.errors);
           }
+          updateLoadingState(false);
         })
-        .then(setLoading(false))
-        .catch((error) =>
-          console.error(`Error occurred on handleMpSubmit: ${error}`)
-        );
+        .catch((error) => {
+          updateLoadingState(false);
+          console.error(`Error occurred on handleMpSubmit: ${error}`);
+        });
     }
   };
 
   const findForm = () => {
     return (
       <div className={classes.root}>
-        <Typography className={classes.title} variant='h4'>
+        {loading && <LoadingSpinner></LoadingSpinner>}
+        <Typography className={classes.title} variant="h4">
           Find Your Member of Parliament
         </Typography>
-        <Typography variant='h5' style={{ marginBottom: '1em' }}>
+        <Typography variant="h5" style={{ marginBottom: '1em' }}>
           Look up your representative in the House of Commons
         </Typography>
         <form>
           <TextField
-            id='outlined-basic'
-            name='postalCode'
-            label='Postal Code'
-            variant='outlined'
+            id="outlined-basic"
+            name="postalCode"
+            label="Postal Code"
+            variant="outlined"
             error={errors && errors.length > 0}
             helperText={errors}
             value={postalCode}
             onChange={(e) => setPostalCode(e.target.value)}
           />
           <Button
-            variant='contained'
-            color='primary'
+            variant="contained"
+            color="primary"
             className={classes.submit}
             onClick={handleMpSubmit}
           >
