@@ -45,17 +45,24 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1.5vw',
     fontWeight: 900,
     boxShadow: '10px 17px 24px -13px rgba(0,0,0,0.5)',
-    margin: '0 auto',
+    marginRight: '5%',
     marginTop: '5%',
     marginBottom: '5%'
   },
   title: {
-    paddingTop: '2%',
+    paddingTop: '3%',
     fontSize: '1.5vw'
+  },
+  introduced: {
+    fontSize: '1.25vw'
   },
   description: {
     paddingTop: '2%',
     fontSize: '1.25vw'
+  },
+  billButtons: {
+    width: '128px',
+    marginTop: '10px'
   },
   eventDate: {
     paddingLeft: '0px !important'
@@ -213,26 +220,49 @@ export default function BillCard(props) {
             </Button>
           </Tooltip>
           <Button
+            className={classes.billButtons}
             href={props.bill.full_text_url}
             target="_blank"
             variant="contained"
           >
             Full Text
           </Button>
+          <br></br>
+          {props.bill.passed === true ? (
+            <Button
+              className={classes.billButtons}
+              variant="contained"
+              color="primary"
+            >
+              Passed
+            </Button>
+          ) : props.bill.passed === false ? (
+            <Button
+              className={classes.billButtons}
+              variant="contained"
+              color="secondary"
+            >
+              Defeated
+            </Button>
+          ) : (
+            <Button className={classes.billButtons} variant="outlined" disabled>
+              In Progress
+            </Button>
+          )}
         </Grid>
         <Grid container direction="column" xs>
           <Grid
             container
             direction="row"
             justify="space-between"
-            align-items="center"
+            align-items="flex-start"
             xs={14}
           >
             <Grid item xs={11}>
               <Typography className={classes.title}>
                 <strong>{props.bill.title}</strong>
               </Typography>
-              <Typography>
+              <Typography className={classes.introduced}>
                 {'Introduced on ' + props.bill.introduced_date}
               </Typography>
             </Grid>
@@ -312,7 +342,6 @@ export default function BillCard(props) {
         </Grid>
       </Grid>
       <CardActions disableSpacing>
-        {/* <Typography>View Events for this Bill</Typography> */}
         <Tooltip title="View Events for this Bill" placement="right">
           <IconButton
             className={clsx(classes.expand, {
