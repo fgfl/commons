@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from "react";
-import CategoryDropdown from "./CategoryDropdown";
-import BillCard from "./Bill";
-import Container from "@material-ui/core/Container";
+import React, { useState, useEffect } from 'react';
+import CategoryDropdown from './CategoryDropdown';
+import BillCard from './Bill';
+import Container from '@material-ui/core/Container';
 
 // import { getBillsForCategory } from 'helpers/selectors';
 
-const Home = props => {
+const Home = (props) => {
   const [childCategory, setChildCategory] = useState(0);
 
-  useEffect(() => console.log("Category ID: ", childCategory), [childCategory]);
-
-  const bills = props.bills.filter(bill => {
+  const bills = props.bills.filter((bill) => {
     return childCategory === 0 ? bill : bill.categories.includes(childCategory);
   });
 
-  const billCards = bills.map(bill => {
+  const billCards = bills.map((bill) => {
     return <BillCard key={bill.id} bill={bill} />;
   });
 

@@ -24,7 +24,7 @@ const useStyles = makeStyles(styles);
 
 export default function WatchListPage(props) {
   const classes = useStyles();
-  const { ...rest } = props;
+  // const { ...rest } = props;
 
   const [childCategory, setChildCategory] = useState(0);
 
@@ -66,7 +66,7 @@ export default function WatchListPage(props) {
             user={props.user}
             bills={bills}
             childCategory={childCategory}
-            updateWatchlist={props.updateWatchlist}
+            updateWatchList={props.updateWatchList}
           />
         )}
       </div>

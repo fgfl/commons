@@ -104,7 +104,7 @@ export default function FindMyMp({ user }) {
             <div className={classes.section}>
               <Typography variant='h5'>
                 <strong>Federal Office: </strong>
-              </Typography>
+              </Typography> 
               <Typography>
                 <strong>Address: </strong>
                 {mpOfficeLocal.postal}
@@ -129,7 +129,7 @@ export default function FindMyMp({ user }) {
             </div>
           </Grid>
           <Grid item xs={12} sm={3}>
-            <img alt='Your MP' src={mpPhoto} />
+            <img alt="Your MP" src={mpPhoto} />
           </Grid>
           <Grid container className={classes.myMp}>
             <Button
@@ -177,20 +177,21 @@ export default function FindMyMp({ user }) {
             setMpOfficeOttawa(
               response.data.representatives_centroid[0].offices[1]
             );
-            console.log(response.data);
           } else {
             setErrors(response.data.errors);
           }
         })
         .then(setLoading(false))
-        .catch((error) => console.log('api errors:', error));
+        .catch((error) =>
+          console.error(`Error occurred on handleMpSubmit: ${error}`)
+        );
     }
   };
 
   const findForm = () => {
     return (
       <div className={classes.root}>
-        <Typography className={classes.title} variant='h4'>
+        <Typography className={classes.title} variant="h4">
           Find Your Member of Parliament
         </Typography>
         <Typography variant='h5' style={{ marginBottom: '1em' }}>
@@ -198,18 +199,18 @@ export default function FindMyMp({ user }) {
         </Typography>
         <form>
           <TextField
-            id='outlined-basic'
-            name='postalCode'
-            label='Postal Code'
-            variant='outlined'
+            id="outlined-basic"
+            name="postalCode"
+            label="Postal Code"
+            variant="outlined"
             error={errors && errors.length > 0}
             helperText={errors}
             value={postalCode}
             onChange={(e) => setPostalCode(e.target.value)}
           />
           <Button
-            variant='contained'
-            color='primary'
+            variant="contained"
+            color="primary"
             className={classes.submit}
             onClick={handleMpSubmit}
           >

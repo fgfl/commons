@@ -92,7 +92,7 @@ const Login = (props) => {
           ...prevState,
           invalid: `Email or password is not valid.`
         }));
-        console.error(error);
+        console.error(`Error occurred on handleSubmit: ${error}`);
       }
     }
   };

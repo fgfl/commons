@@ -18,7 +18,6 @@ const App = (props) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [bills, setBills] = useState([]);
   const [categories, setCategories] = useState([]);
-  // const [events, setEvents] = useState([]);
   const { loading, updateLoadingState } = useLoading(
     bills.length === 0 ? true : false
   );
@@ -39,7 +38,7 @@ const App = (props) => {
       setCategories(response.data.categories);
       doneLoading();
     } catch (error) {
-      console.error('Error occured on fetchBills:', error);
+      console.error('Error occurred on fetchBills:', error);
     }
   };
 
@@ -50,17 +49,15 @@ const App = (props) => {
       );
       if (response.data.logged_in) {
         handleLogin(response.data);
-        console.log(user);
       } else {
         handleLogout();
       }
     } catch (error) {
-      console.error('Error occured on loginStatus:', error);
+      console.error('Error occurred on loginStatus:', error);
     }
   };
 
   const handleProfileUpdate = async (user) => {
-    console.log(user);
     try {
       const res = await axios.put(
         `${process.env.REACT_APP_COMMONS_API}/users/${user.id}`,
@@ -71,14 +68,16 @@ const App = (props) => {
       if (res.data.status === 200) {
         setUser(user);
       } else {
-        console.error(`Failed setting profile: ${res.data.errors}`);
+        console.error(
+          `Error occurred on handleProfileUpdate: ${res.data.errors}`
+        );
       }
     } catch (error) {
-      console.error(`Failed setting profile: ${error}`);
+      console.error(`Error occurred on handleProfileUpdate: ${error}`);
     }
   };
 
-  const updateWatchlist = (user_bills) => {
+  const updateWatchList = (user_bills) => {
     setUser((prev) => ({
       ...prev,
       user_bills
@@ -99,16 +98,14 @@ const App = (props) => {
         setLoggedIn(false);
         props.history.push('/');
       })
-      .catch((error) => console.error(error));
+      .catch((error) =>
+        console.error(`Error occurred on handleProfileUpdate: ${error}`)
+      );
   };
 
-  /**
-   * For components to call when they render to remove loading spinner
-   */
+  // For components to call when they render to remove loading spinner
   const doneLoading = () => {
-    console.log(`in APP: update loading state: ${loading}`);
     updateLoadingState(false);
-    console.log(`in APP: after update loading state: ${loading}`);
   };
 
   return (
@@ -173,9 +170,11 @@ const App = (props) => {
                   <WatchListPage
                     {...props}
                     bills={bills}
+                    user={user}
                     categories={categories}
                     handleLogin={handleLogin}
                     loggedInStatus={loggedIn}
+                    updateWatchList={updateWatchList}
                   />
                 )}
               />
