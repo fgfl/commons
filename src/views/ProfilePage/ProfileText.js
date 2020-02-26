@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 
 import Grid from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
+import ChipsArray from '../SignupPage/ChipsArray';
 
 import mapUserFieldToLabel from '../../helpers/mapUserFieldToLabel';
 import TextField from '@material-ui/core/TextField';
@@ -9,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-const ProfileText = ({ user, handleProfileUpdate }) => {
+const ProfileText = ({ user, handleProfileUpdate, categories }) => {
   const [editStatus, setEditStatus] = useState(false);
   const [name, setName] = useState(user.name);
   const [username, setUsername] = useState(user.username);
@@ -23,6 +24,12 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
   );
   const [smsNotification, setSmsNotification] = useState(user.sms_notification);
   const [formErrors, setFormErrors] = useState({});
+
+  const initialClicked = {};
+  for (const item of user.user_categories) {
+    initialClicked[item] = true;
+  }
+  const [clicked, setClicked] = useState(initialClicked);
 
   useEffect(() => {
     validateForm();
@@ -40,9 +47,30 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
     profileTable: {
       display: 'flex',
       flexDirection: 'row'
+    },
+    buttons: {
+      margin: '1em',
+      textAlign: 'center'
+    },
+    button: {
+      marginRight: theme.spacing(2)
     }
   }));
   const classes = useStyles();
+
+  console.log(user.user_categories);
+
+  const setThisOneClicked = (key) => {
+    setClicked((prev) => {
+      let state = { ...prev };
+      if (state[key]) {
+        delete state[key];
+      } else {
+        state[key] = true;
+      }
+      return state;
+    });
+  };
 
   const validationFunctions = {
     id: () => {
@@ -87,6 +115,9 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
     },
     sms_notification: () => {
       return '';
+    },
+    categories: () => {
+      return '';
     }
   };
 
@@ -101,7 +132,8 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
       phone_number: phoneNumber,
       postal_code: postalCode,
       email_notification: emailNotification,
-      sms_notification: smsNotification
+      sms_notification: smsNotification,
+      categories: Object.keys(clicked)
     };
     const newValidity = {};
     let isValid = true;
@@ -129,7 +161,8 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
       phone_number: phoneNumber,
       postal_code: postalCode,
       email_notification: emailNotification,
-      sms_notification: smsNotification
+      sms_notification: smsNotification,
+      categories: Object.keys(clicked)
     };
 
     if (validateForm()) {
@@ -287,36 +320,34 @@ const ProfileText = ({ user, handleProfileUpdate }) => {
         label={mapUserFieldToLabel('sms_notification')}
       />
 
-      <div>
-        <Grid container>
-          {editStatus ? (
-            <Fragment>
-              <Grid item='true'>
-                <Button
-                  type='submit'
-                  variant='contained'
-                  onClick={(e) => saveForm()}
-                >
-                  Save
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  variant='contained'
-                  onClick={(e) => setEditStatus(false)}
-                >
-                  Cancel
-                </Button>
-              </Grid>
-            </Fragment>
-          ) : (
-            <Grid item>
-              <Button variant='contained' onClick={(e) => setEditStatus(true)}>
-                Edit
-              </Button>
-            </Grid>
-          )}
-        </Grid>
+      <ChipsArray
+        user={user}
+        categories={categories}
+        clicked={clicked}
+        setThisOneClicked={editStatus ? setThisOneClicked : () => {}}
+        editStatus={editStatus}
+      />
+
+      <div className={classes.buttons}>
+        {editStatus ? (
+          <Fragment>
+            <Button
+              type='submit'
+              variant='contained'
+              onClick={(e) => saveForm()}
+              className={classes.button}
+            >
+              Save
+            </Button>
+            <Button variant='contained' onClick={(e) => setEditStatus(false)}>
+              Cancel
+            </Button>
+          </Fragment>
+        ) : (
+          <Button variant='contained' onClick={(e) => setEditStatus(true)}>
+            Edit
+          </Button>
+        )}
       </div>
     </form>
   );
