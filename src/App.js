@@ -35,9 +35,14 @@ const App = (props) => {
       const response = await axios.get(
         `${process.env.REACT_APP_COMMONS_API}/bills`
       );
-      setBills(response.data.bills);
+
+      const sortedBills = response.data.bills.sort(
+        (a, b) => new Date(b.introduced_date) - new Date(a.introduced_date)
+      );
+
+      setBills(sortedBills);
       setCategories(response.data.categories);
-      doneLoading();
+      updateLoadingState(false);
     } catch (error) {
       console.error('Error occurred on fetchBills:', error);
     }
@@ -67,7 +72,10 @@ const App = (props) => {
         }
       );
       if (res.data.status === 200) {
-        setUser(res.data.user);
+        // back end is only returning the user data and their categories, keep the old
+        // user_bills (aka watchlist)
+        // Other option is to have the API server return the user's bill
+        setUser((prev) => ({ ...res.data.user, user_bills: prev.user_bills }));
       } else {
         console.error(
           `Error occurred on handleProfileUpdate: ${res.data.errors}`
@@ -92,21 +100,19 @@ const App = (props) => {
   };
 
   const handleLogout = () => {
+    updateLoadingState(true);
     axios
       .delete(`${process.env.REACT_APP_COMMONS_API}/logout`)
       .then(() => {
         setUser(null);
         setLoggedIn(false);
         props.history.push('/');
+        updateLoadingState(false);
       })
-      .catch((error) =>
-        console.error(`Error occurred on handleProfileUpdate: ${error}`)
-      );
-  };
-
-  // For components to call when they render to remove loading spinner
-  const doneLoading = () => {
-    updateLoadingState(false);
+      .catch((error) => {
+        updateLoadingState(false);
+        console.error(`Error occurred on handleProfileUpdate: ${error}`);
+      });
   };
 
   return (
