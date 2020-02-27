@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
   expand: {
     transform: 'rotate(0deg)',
-    marginLeft: 'auto',
+    marginLeft: 'none',
     transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest
     })
@@ -48,6 +48,10 @@ const useStyles = makeStyles((theme) => ({
   status: {
     textAlign: 'center',
     marginBottom: theme.spacing(2)
+  },
+  pullRight: {
+    justifyContent: 'flex-end',
+    fontSize: '0.8em'
   }
 }));
 
@@ -262,19 +266,19 @@ export default function BillCard(props) {
           </Grid>
         </Grid>
       </CardContent>
-      <CardActions disableSpacing>
-        <Tooltip title='View Events for this Bill' placement='right'>
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label='show more'
-          >
-            <ExpandMoreIcon />
-          </IconButton>
-        </Tooltip>
+      <CardActions disableSpacing className={classes.pullRight}>
+        <Typography variant='body'>View events for this bill</Typography>
+
+        <IconButton
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: expanded
+          })}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label='show more'
+        >
+          <ExpandMoreIcon />
+        </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout='auto' unmountOnExit>
         <CardContent>
