@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
 import { red } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
@@ -44,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#FFF',
     fontWeight: 900,
     boxShadow: '10px 17px 24px -13px rgba(0,0,0,0.5)',
-    margin: '0 auto',
+    // margin: '0 auto',
     margin: theme.spacing(2)
   },
   status: {
@@ -81,7 +78,7 @@ export default function BillCard(props) {
     props.user.user_bills.includes(props.bill.id)
       ? setColor('red')
       : setColor('grey');
-  }, []);
+  }, [props.user, props.bill.id]);
 
   const handleWatchSubmit = async () => {
     const watchlist_bill = {
@@ -140,7 +137,7 @@ export default function BillCard(props) {
       const publication_date = new Date(event.publication_date);
       return (
         <CardContent>
-          <Grid container justify='center'>
+          <Grid container justify="center">
             <Grid
               item
               xs={0}
@@ -169,7 +166,7 @@ export default function BillCard(props) {
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Grid container justify='center'>
+        <Grid container justify="center">
           <Grid
             item
             xs={6}
@@ -180,12 +177,12 @@ export default function BillCard(props) {
             spacing={3}
             className={classes.status}
           >
-            <Tooltip title='View Bill Page' placement='right'>
+            <Tooltip title="View Bill Page" placement="right">
               <Button
                 href={props.bill.page_url}
-                variant='contained'
+                variant="contained"
                 className={classes.avatar}
-                target='_blank'
+                target="_blank"
               >
                 Bill<br></br>
                 {props.bill.code}
@@ -194,23 +191,23 @@ export default function BillCard(props) {
             {props.bill.passed === true ? (
               <Button
                 className={classes.billButtons}
-                variant='contained'
-                color='primary'
+                variant="contained"
+                color="primary"
               >
                 Passed
               </Button>
             ) : props.bill.passed === false ? (
               <Button
                 className={classes.billButtons}
-                variant='contained'
-                color='secondary'
+                variant="contained"
+                color="secondary"
               >
                 Defeated
               </Button>
             ) : (
               <Button
                 className={classes.billButtons}
-                variant='outlined'
+                variant="outlined"
                 disabled
               >
                 In Progress
@@ -225,20 +222,20 @@ export default function BillCard(props) {
               {'Introduced on ' +
                 introduced_date.toLocaleDateString('en-US', options)}
             </Typography>
-            <Grid container direction='row'>
+            <Grid container direction="row">
               <Grid item xs={12}>
                 <Typography
-                  variant='body2'
-                  color='textSecondary'
-                  component='p'
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
                   style={{ marginBottom: '24px' }}
                 >
                   {props.bill.description}
                 </Typography>
                 <Button
                   href={props.bill.full_text_url}
-                  target='_blank'
-                  variant='contained'
+                  target="_blank"
+                  variant="contained"
                 >
                   Full Text
                 </Button>
@@ -256,7 +253,7 @@ export default function BillCard(props) {
           >
             {props.user ? (
               <IconButton
-                aria-label='settings'
+                aria-label="settings"
                 onClick={() => {
                   handleWatchSubmit();
                 }}
@@ -274,28 +271,28 @@ export default function BillCard(props) {
                     <React.Fragment>
                       {color === 'grey' ? (
                         <Button
-                          color='primary'
-                          size='small'
+                          color="primary"
+                          size="small"
                           onClick={handleClose}
                         >
                           Bill {props.bill.code} removed from watchlist
                         </Button>
                       ) : (
                         <Button
-                          color='primary'
-                          size='small'
+                          color="primary"
+                          size="small"
                           onClick={handleClose}
                         >
                           Bill {props.bill.code} added to watchlist
                         </Button>
                       )}
                       <IconButton
-                        size='small'
-                        aria-label='close'
-                        color='inherit'
+                        size="small"
+                        aria-label="close"
+                        color="inherit"
                         onClick={handleClose}
                       >
-                        <CloseIcon fontSize='small' />
+                        <CloseIcon fontSize="small" />
                       </IconButton>
                     </React.Fragment>
                   }
@@ -303,10 +300,10 @@ export default function BillCard(props) {
               </IconButton>
             ) : (
               <Tooltip
-                title='Sign in to add bills to watchlist.'
-                placement='right'
+                title="Sign in to add bills to watchlist."
+                placement="right"
               >
-                <IconButton aria-label='settings'>
+                <IconButton aria-label="settings">
                   <BookmarkIcon style={{ color: color }} />
                 </IconButton>
               </Tooltip>
@@ -315,7 +312,7 @@ export default function BillCard(props) {
         </Grid>
       </CardContent>
       <CardActions disableSpacing className={classes.pullRight}>
-        <Typography variant='body' style={{ marginRight: '16px' }}>
+        <Typography variant="body" style={{ marginRight: '16px' }}>
           View events for this bill
         </Typography>
 
@@ -325,12 +322,12 @@ export default function BillCard(props) {
           })}
           onClick={handleExpandClick}
           aria-expanded={expanded}
-          aria-label='show more'
+          aria-label="show more"
         >
           <ExpandMoreIcon />
         </IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout='auto' unmountOnExit>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Grid container>
             <Grid
@@ -340,7 +337,7 @@ export default function BillCard(props) {
               md={2}
               lg={2}
               xl={2}
-              justify='flex-end'
+              justify="flex-end"
             ></Grid>
             <Grid
               item
@@ -349,10 +346,10 @@ export default function BillCard(props) {
               md={10}
               lg={10}
               xl={10}
-              justify='flex-end'
+              justify="flex-end"
               style={{ paddingRight: 'none' }}
             >
-              <Typography variant='h4'>Bill Events</Typography>
+              <Typography variant="h4">Bill Events</Typography>
             </Grid>
           </Grid>
         </CardContent>

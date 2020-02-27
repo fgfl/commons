@@ -55,7 +55,7 @@ export default function FindMyMp({ user }) {
 
   useEffect(() => {
     validate(postalCode);
-  }, [postalCode]);
+  }, [postalCode, validate]);
 
   const validate = (value) => {
     const postalCodeRegex = /^(?!.*[DFIOQU])[A-VXY][0-9][A-Z] ?[0-9][A-Z][0-9]$/;
@@ -76,10 +76,10 @@ export default function FindMyMp({ user }) {
       <Container xs={12} className={classes.root}>
         <Grid container>
           <Grid item xs={12} sm={4} md={4} style={{ marginBottom: '24px' }}>
-            <img alt='Your MP' src={mpPhoto} />
+            <img alt="Your MP" src={mpPhoto} />
           </Grid>
           <Grid item xs={12} sm={8} md={8} className={classes.myMp}>
-            <Typography variant='h4' className={classes.title}>
+            <Typography variant="h4" className={classes.title}>
               <strong>Your Representative</strong>
             </Typography>
             <div className={classes.section}>
@@ -100,15 +100,15 @@ export default function FindMyMp({ user }) {
               </Typography>
               <Button
                 className={classes.button}
-                variant='contained'
+                variant="contained"
                 href={mpWebsite}
-                target='_blank'
+                target="_blank"
               >
                 WEBSITE
               </Button>
             </div>
             <div className={classes.section}>
-              <Typography variant='h5'>
+              <Typography variant="h5">
                 <strong>Federal Office: </strong>
               </Typography>
               <Typography>
@@ -121,7 +121,7 @@ export default function FindMyMp({ user }) {
               </Typography>
             </div>
             <div className={classes.section}>
-              <Typography variant='h5'>
+              <Typography variant="h5">
                 <strong>Local Office: </strong>
               </Typography>
               <Typography>
@@ -134,14 +134,14 @@ export default function FindMyMp({ user }) {
               </Typography>
               <Button
                 href={`mailto:${mpEmail.toLowerCase()}`}
-                variant='contained'
+                variant="contained"
                 className={classes.button}
               >
                 Email My MP
               </Button>
               <Button
                 href={`tel:+${mpOfficeOttawa.tel}`}
-                variant='contained'
+                variant="contained"
                 className={classes.button}
               >
                 Call My MP
@@ -199,26 +199,26 @@ export default function FindMyMp({ user }) {
         {loading && <LoadingSpinner></LoadingSpinner>}
         {!loading && (
           <Fragment>
-            <Typography className={classes.title} variant='h4'>
+            <Typography className={classes.title} variant="h4">
               Find Your Member of Parliament
             </Typography>
-            <Typography variant='h5' style={{ marginBottom: '1em' }}>
+            <Typography variant="h5" style={{ marginBottom: '1em' }}>
               Look up your representative in the House of Commons
             </Typography>
             <form>
               <TextField
-                id='outlined-basic'
-                name='postalCode'
-                label='Postal Code'
-                variant='outlined'
+                id="outlined-basic"
+                name="postalCode"
+                label="Postal Code"
+                variant="outlined"
                 error={errors && errors.length > 0}
                 helperText={errors}
                 value={postalCode}
                 onChange={(e) => setPostalCode(e.target.value)}
               />
               <Button
-                variant='contained'
-                color='primary'
+                variant="contained"
+                color="primary"
                 className={classes.submit}
                 onClick={handleMpSubmit}
               >
