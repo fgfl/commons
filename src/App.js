@@ -1,6 +1,7 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
+import Paper from '@material-ui/core/Paper';
 
 import Home from 'views/HomePage/Home.js';
 // import LandingPage from "views/LandingPage/LandingPage.js";
