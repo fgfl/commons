@@ -148,7 +148,6 @@ const Signup = (props) => {
         ...prev.available,
       },
     }));
-    console.log(state);
     validated ? props.nextStep(1, state) : console.error('Invalid Form');
   };
 
