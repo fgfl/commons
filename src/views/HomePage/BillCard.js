@@ -15,6 +15,8 @@ import BookmarkIcon from '@material-ui/icons/Bookmark';
 import Tooltip from '@material-ui/core/Tooltip';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import CloseIcon from '@material-ui/icons/Close';
+import Snackbar from '@material-ui/core/Snackbar';
 
 import clsx from 'clsx';
 import axios from 'axios';
@@ -70,6 +72,7 @@ export default function BillCard(props) {
   const [expanded, setExpanded] = useState(false);
   const [events, setEvents] = useState('No events currently loaded.');
   const [color, setColor] = useState('');
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     props.user &&
@@ -111,6 +114,14 @@ export default function BillCard(props) {
     } catch (error) {
       console.error(`Error occurred on getEventsForBill: ${props.bill.code}`);
     }
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
   };
 
   const handleExpandClick = () => {
@@ -248,7 +259,7 @@ export default function BillCard(props) {
                   <Snackbar
                     anchorOrigin={{
                       vertical: 'bottom',
-                      horizontal: 'center',
+                      horizontal: 'center'
                     }}
                     open={open}
                     autoHideDuration={2000}
@@ -257,28 +268,28 @@ export default function BillCard(props) {
                       <React.Fragment>
                         {color === 'grey' ? (
                           <Button
-                            color="primary"
-                            size="small"
+                            color='primary'
+                            size='small'
                             onClick={handleClose}
                           >
                             Bill {props.bill.code} removed from watchlist
                           </Button>
                         ) : (
                           <Button
-                            color="primary"
-                            size="small"
+                            color='primary'
+                            size='small'
                             onClick={handleClose}
                           >
                             Bill {props.bill.code} added to watchlist
                           </Button>
                         )}
                         <IconButton
-                          size="small"
-                          aria-label="close"
-                          color="inherit"
+                          size='small'
+                          aria-label='close'
+                          color='inherit'
                           onClick={handleClose}
                         >
-                          <CloseIcon fontSize="small" />
+                          <CloseIcon fontSize='small' />
                         </IconButton>
                       </React.Fragment>
                     }
