@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 900,
     boxShadow: '10px 17px 24px -13px rgba(0,0,0,0.5)',
     margin: '0 auto',
-    marginBottom: theme.spacing(2)
+    margin: theme.spacing(2)
   },
   status: {
     textAlign: 'center',
@@ -172,6 +172,8 @@ export default function BillCard(props) {
             xs={6}
             sm={3}
             md={2}
+            lg={1}
+            xl={1}
             spacing={3}
             className={classes.status}
           >
@@ -212,7 +214,7 @@ export default function BillCard(props) {
               </Button>
             )}
           </Grid>
-          <Grid item xs={10} sm={7} md={8}>
+          <Grid item xs={10} sm={7} md={8} lg={9} xl={10}>
             <Typography>
               <strong>{props.bill.title}</strong>
             </Typography>
@@ -240,7 +242,15 @@ export default function BillCard(props) {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={2} sm={2} md={2} style={{ textAlign: 'right' }}>
+          <Grid
+            item
+            xs={2}
+            sm={2}
+            md={2}
+            lg={2}
+            xl={1}
+            style={{ textAlign: 'right' }}
+          >
             {props.user ? (
               <IconButton
                 aria-label='settings'
