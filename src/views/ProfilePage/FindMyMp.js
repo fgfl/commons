@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -196,32 +196,36 @@ export default function FindMyMp({ user }) {
     return (
       <div className={classes.root}>
         {loading && <LoadingSpinner></LoadingSpinner>}
-        <Typography className={classes.title} variant="h4">
-          Find Your Member of Parliament
-        </Typography>
-        <Typography variant="h5" style={{ marginBottom: '1em' }}>
-          Look up your representative in the House of Commons
-        </Typography>
-        <form>
-          <TextField
-            id="outlined-basic"
-            name="postalCode"
-            label="Postal Code"
-            variant="outlined"
-            error={errors && errors.length > 0}
-            helperText={errors}
-            value={postalCode}
-            onChange={(e) => setPostalCode(e.target.value)}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={handleMpSubmit}
-          >
-            Submit
-          </Button>
-        </form>
+        {!loading && (
+          <Fragment>
+            <Typography className={classes.title} variant="h4">
+              Find Your Member of Parliament
+            </Typography>
+            <Typography variant="h5" style={{ marginBottom: '1em' }}>
+              Look up your representative in the House of Commons
+            </Typography>
+            <form>
+              <TextField
+                id="outlined-basic"
+                name="postalCode"
+                label="Postal Code"
+                variant="outlined"
+                error={errors && errors.length > 0}
+                helperText={errors}
+                value={postalCode}
+                onChange={(e) => setPostalCode(e.target.value)}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={handleMpSubmit}
+              >
+                Submit
+              </Button>
+            </form>
+          </Fragment>
+        )}
       </div>
     );
   };
