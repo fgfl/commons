@@ -49,7 +49,8 @@ const useStyles = makeStyles((theme) => ({
   },
   status: {
     textAlign: 'center',
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
+    maxWidth: '200px'
   },
   pullRight: {
     justifyContent: 'flex-end',
@@ -145,17 +146,19 @@ export default function BillCard(props) {
               xs={0}
               sm={3}
               md={2}
+              lg={2}
+              xl={1}
               spacing={3}
               className={classes.status}
             ></Grid>
-            <Grid item xs={4} sm={3} md={3}>
+            <Grid item xs={4} sm={3} md={3} lg={3} xl={3}>
               <Typography body>
                 <strong>
                   {publication_date.toLocaleDateString('en-US', options)}
                 </strong>
               </Typography>
             </Grid>
-            <Grid item xs={8} sm={6} md={7}>
+            <Grid item xs={8} sm={6} md={7} lg={7} xl={7}>
               <Typography body>{event.title}</Typography>
             </Grid>
           </Grid>
@@ -172,7 +175,7 @@ export default function BillCard(props) {
             xs={6}
             sm={3}
             md={2}
-            lg={1}
+            lg={2}
             xl={1}
             spacing={3}
             className={classes.status}
@@ -214,7 +217,7 @@ export default function BillCard(props) {
               </Button>
             )}
           </Grid>
-          <Grid item xs={10} sm={7} md={8} lg={9} xl={10}>
+          <Grid item xs={10} sm={7} md={8} lg={8} xl={10}>
             <Typography>
               <strong>{props.bill.title}</strong>
             </Typography>
@@ -312,7 +315,9 @@ export default function BillCard(props) {
         </Grid>
       </CardContent>
       <CardActions disableSpacing className={classes.pullRight}>
-        <Typography variant='body'>View events for this bill</Typography>
+        <Typography variant='body' style={{ marginRight: '16px' }}>
+          View events for this bill
+        </Typography>
 
         <IconButton
           className={clsx(classes.expand, {
@@ -327,13 +332,23 @@ export default function BillCard(props) {
       </CardActions>
       <Collapse in={expanded} timeout='auto' unmountOnExit>
         <CardContent>
-          <Grid container spacing={3}>
-            <Grid item xs={0} sm={3} md={2} justify='flex-end'></Grid>
+          <Grid container>
+            <Grid
+              item
+              xs={0}
+              sm={3}
+              md={2}
+              lg={2}
+              xl={2}
+              justify='flex-end'
+            ></Grid>
             <Grid
               item
               xs={12}
               sm={9}
               md={10}
+              lg={10}
+              xl={10}
               justify='flex-end'
               style={{ paddingRight: 'none' }}
             >
