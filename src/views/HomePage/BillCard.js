@@ -12,6 +12,8 @@ import BookmarkIcon from '@material-ui/icons/Bookmark';
 import Tooltip from '@material-ui/core/Tooltip';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import CloseIcon from '@material-ui/icons/Close';
 
 import clsx from 'clsx';
 import axios from 'axios';
@@ -34,14 +36,43 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: red[500],
     borderRadius: '100%',
-    width: '75px',
-    height: '75px',
+    height: '9vw',
+    width: '9vw',
     color: '#FFF',
+    fontSize: '1.5vw',
     fontWeight: 900,
     boxShadow: '10px 17px 24px -13px rgba(0,0,0,0.5)',
-    margin: '0 auto',
+    marginRight: '5%',
+    marginTop: '5%',
+    marginBottom: '5%'
   },
+  title: {
+    paddingTop: '3%',
+    fontSize: '1.5vw'
+  },
+  introduced: {
+    fontSize: '1.25vw'
+  },
+  description: {
+    paddingTop: '2%',
+    fontSize: '1.25vw'
+  },
+  billButtons: {
+    width: '128px',
+    marginTop: '10px'
+  },
+  event: {
+    fontSize: '1.25vw'
+  }
 }));
+
+const button = {
+  boxShadow: 'inset 0 0 15px rgba(55, 84, 170,0)',
+  boxShadow: 'inset 0 0 20px rgba(255, 255, 255,0)',
+  boxShadow: '7px 7px 15px rgba(55, 84, 170,.15)',
+  boxShadow: '-7px -7px 20px rgba(255, 255, 255,1)',
+  boxShadow: 'inset 0px 0px 4px rgba(255, 255, 255,.2)'
+};
 
 /**
  *
@@ -58,6 +89,7 @@ export default function BillCard(props) {
   const [expanded, setExpanded] = useState(false);
   const [events, setEvents] = useState('No events currently loaded.');
   const [color, setColor] = useState('');
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     props.user && findWatchedBills(props.user.id);
@@ -97,11 +129,24 @@ export default function BillCard(props) {
       response.data.watchlist.includes(props.bill.id)
         ? setColor('red')
         : setColor('grey');
+      setOpen(true);
     } catch (error) {
       console.error(`Error occurred on handleWatchSubmit: ${error}`);
     }
   };
 
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+    getEventsForBill(props.bill.id);
+  };
   const getEventsForBill = async (bill_id) => {
     try {
       const response = await axios.get(
@@ -116,24 +161,35 @@ export default function BillCard(props) {
     }
   };
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-    getEventsForBill(props.bill.id);
-  };
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const introduced_date = new Date(props.bill.introduced_date);
 
   const eventCards =
     Array.isArray(events) &&
     events.map((event) => {
+      const publication_date = new Date(event.publication_date);
+
       return (
         <CardContent key={event.id}>
-          <Grid container spacing={3}>
-            <Grid item xs={3} style={{ textAlign: 'center' }}>
-              <Typography body>
-                <strong>{event.publication_date}</strong>
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            alignItems="center"
+            textAlign="left"
+            pl={0}
+          >
+            <Grid item xs={3}>
+              <Typography body className={classes.event}>
+                <strong>
+                  {publication_date.toLocaleDateString('en-US', options)}
+                </strong>
               </Typography>
             </Grid>
             <Grid item xs={9}>
-              <Typography body>{event.title}</Typography>
+              <Typography body className={classes.event}>
+                {event.title}
+              </Typography>
             </Grid>
           </Grid>
         </CardContent>
@@ -141,78 +197,171 @@ export default function BillCard(props) {
     });
 
   return (
-    <Card className={classes.root}>
-      <CardContent>
-        <Grid container justify="center">
-          <Grid item xs={3} style={{ textAlign: 'center' }}>
-            <div>
-              <Tooltip title="View Bill Page" placement="bottom">
-                <Button
-                  href={props.bill.page_url}
-                  variant="contained"
-                  className={classes.avatar}
-                  target="_blank"
-                >
-                  {props.bill.code}
-                </Button>
-              </Tooltip>
-            </div>
-          </Grid>
-          <Grid item xs={7}>
-            <Typography>
-              <strong>{props.bill.title}</strong>
-            </Typography>
-            <Typography>
-              {'Introduced on ' + props.bill.introduced_date}
-            </Typography>
-          </Grid>
-          <Grid item xs={2} style={{ textAlign: 'right' }}>
-            {props.user ? (
-              <IconButton
-                aria-label="settings"
-                onClick={() => {
-                  handleWatchSubmit();
-                }}
-              >
-                <BookmarkIcon style={{ color: color }} />
-              </IconButton>
-            ) : (
-              <Tooltip
-                title="Sign in to add bills to watchlist."
-                placement="right"
-              >
-                <IconButton aria-label="settings">
-                  <BookmarkIcon style={{ color: color }} />
-                </IconButton>
-              </Tooltip>
-            )}
-          </Grid>
-        </Grid>
-      </CardContent>
-      <CardContent>
-        <Grid container direction="row">
-          <Grid item xs={3}></Grid>
-          <Grid item xs={9}>
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              component="p"
-              style={{ marginBottom: '24px' }}
-            >
-              {props.bill.description}
-            </Typography>
+    <Card className={classes.root} variant="outlined">
+      <Grid
+        container
+        xs={12}
+        spacing={2}
+        direction="row"
+        justify="space-around"
+        alignItems="center"
+      >
+        <Grid
+          item
+          xs={2}
+          justify="center"
+          alignItems="flex-end"
+          style={{ textAlign: 'center' }}
+        >
+          <Tooltip title="View Bill Page" placement="bottom">
             <Button
-              href={props.bill.full_text_url}
-              target="_blank"
+              style={button}
+              href={props.bill.page_url}
               variant="contained"
+              className={classes.avatar}
+              target="_blank"
             >
-              Full Text
+              Bill<br></br>
+              {props.bill.code}
             </Button>
+          </Tooltip>
+          <Button
+            className={classes.billButtons}
+            href={props.bill.full_text_url}
+            target="_blank"
+            variant="contained"
+          >
+            Full Text
+          </Button>
+          <br></br>
+          {props.bill.passed === true ? (
+            <Button
+              className={classes.billButtons}
+              variant="contained"
+              color="primary"
+            >
+              Passed
+            </Button>
+          ) : props.bill.passed === false ? (
+            <Button
+              className={classes.billButtons}
+              variant="contained"
+              color="secondary"
+            >
+              Defeated
+            </Button>
+          ) : (
+            <Button className={classes.billButtons} variant="outlined" disabled>
+              In Progress
+            </Button>
+          )}
+        </Grid>
+        <Grid container direction="column" xs>
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            align-items="flex-start"
+            xs={14}
+          >
+            <Grid item xs={11}>
+              <Typography className={classes.title}>
+                <strong>{props.bill.title}</strong>
+              </Typography>
+              <Typography className={classes.introduced}>
+                {'Introduced on ' +
+                  introduced_date.toLocaleDateString('en-US', options)}
+              </Typography>
+            </Grid>
+            <Grid item xs style={{ float: 'right' }}>
+              {props.user ? (
+                <IconButton
+                  aria-label="settings"
+                  onClick={() => {
+                    handleWatchSubmit();
+                  }}
+                >
+                  <BookmarkIcon style={{ color: color }} />
+                  <Snackbar
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'center'
+                    }}
+                    open={open}
+                    autoHideDuration={2000}
+                    onClose={handleClose}
+                    action={
+                      <React.Fragment>
+                        {color === 'grey' ? (
+                          <Button
+                            color="primary"
+                            size="small"
+                            onClick={handleClose}
+                          >
+                            Bill {props.bill.code} removed from watchlist
+                          </Button>
+                        ) : (
+                          <Button
+                            color="primary"
+                            size="small"
+                            onClick={handleClose}
+                          >
+                            Bill {props.bill.code} added to watchlist
+                          </Button>
+                        )}
+                        <IconButton
+                          size="small"
+                          aria-label="close"
+                          color="inherit"
+                          onClick={handleClose}
+                        >
+                          <CloseIcon fontSize="small" />
+                        </IconButton>
+                      </React.Fragment>
+                    }
+                  />
+                </IconButton>
+              ) : (
+                <Tooltip
+                  title="Sign in to add bills to watchlist."
+                  placement="right"
+                >
+                  <IconButton aria-label="settings">
+                    <BookmarkIcon style={{ color: color }} />
+                  </IconButton>
+                </Tooltip>
+              )}
+            </Grid>
+            <Grid item direction="row">
+              <Grid item xs={10}>
+                {props.bill.description ? (
+                  <Typography
+                    className={classes.description}
+                    variant="body2"
+                    color="textPrimary"
+                    component="p"
+                    style={{ marginBottom: '24px' }}
+                  >
+                    {props.bill.description}
+                  </Typography>
+                ) : (
+                  <Typography
+                    className={classes.description}
+                    variant="body2"
+                    color="textDisabled"
+                    component="p"
+                    style={{ marginBottom: '24px' }}
+                    width="100%"
+                  >
+                    <em>No description is available for this bill.</em>
+                  </Typography>
+                )}
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
-      </CardContent>
+      </Grid>
       <CardActions disableSpacing>
-        {/* <Typography>View Events for this Bill</Typography> */}
         <Tooltip title="View Events for this Bill" placement="right">
           <IconButton
             className={clsx(classes.expand, {
@@ -227,15 +376,18 @@ export default function BillCard(props) {
         </Tooltip>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Grid container spacing={3}>
-            <Grid item xs={3}></Grid>
-            <Grid item xs={9}>
-              <Typography variant="h4">Bill Events</Typography>
-            </Grid>
+        <Grid
+          container
+          direction="row"
+          justify="space-around"
+          alignItems="center"
+        >
+          <Grid item xs={2}></Grid>
+          <Grid item xs={10}>
+            <Typography variant="h5">Bill Events</Typography>
+            {eventCards}
           </Grid>
-        </CardContent>
-        {eventCards}
+        </Grid>
       </Collapse>
     </Card>
   );

@@ -21,7 +21,7 @@ export default function ProfilePage(props) {
 
   return (
     <div>
-      <Parallax small filter image={require('assets/img/profile-bg.jpg')}>
+      <Parallax small filter image={require('assets/img/bg10.jpg')}>
         <div className={classes.container}>
           <GridContainer>
             <GridItem>
@@ -30,7 +30,7 @@ export default function ProfilePage(props) {
                   style={{
                     textAlign: 'center',
                     fontWeight: 900,
-                    color: '#FFF'
+                    color: '#FFFF'
                   }}
                 >
                   My Profile
