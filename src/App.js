@@ -67,7 +67,10 @@ const App = (props) => {
         }
       );
       if (res.data.status === 200) {
-        setUser(res.data.user);
+        // back end is only returning the user data and their categories, keep the old
+        // user_bills (aka watchlist)
+        // Other option is to have the API server return the user's bill
+        setUser((prev) => ({ ...res.data.user, user_bills: prev.user_bills }));
       } else {
         console.error(
           `Error occurred on handleProfileUpdate: ${res.data.errors}`
