@@ -78,7 +78,7 @@ export default function BillCard(props) {
     props.user.user_bills.includes(props.bill.id)
       ? setColor('red')
       : setColor('grey');
-  }, [props.user, props.bill.id]);
+  }, []);
 
   const handleWatchSubmit = async () => {
     const watchlist_bill = {
