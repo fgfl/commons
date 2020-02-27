@@ -1,11 +1,12 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+
+import { Link } from 'react-router-dom';
 
 const Confirmation = (props) => {
   const useStyles = makeStyles((theme) => ({
