@@ -62,7 +62,7 @@ const App = (props) => {
       const res = await axios.put(
         `${process.env.REACT_APP_COMMONS_API}/users/${user.id}`,
         {
-          user
+          user,
         }
       );
       if (res.data.status === 200) {
@@ -80,7 +80,7 @@ const App = (props) => {
   const updateWatchList = (user_bills) => {
     setUser((prev) => ({
       ...prev,
-      user_bills
+      user_bills,
     }));
   };
 
@@ -111,7 +111,19 @@ const App = (props) => {
   return (
     <div>
       <Router history={props.hist}>
-        {loading && <LoadingSpinner></LoadingSpinner>}
+        {loading && (
+          <div
+            style={{
+              minHeight: '100vh',
+              minWidth: '100vw',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+            }}
+          >
+            <LoadingSpinner></LoadingSpinner>
+          </div>
+        )}
         {!loading && (
           <Fragment>
             <Header
@@ -120,7 +132,7 @@ const App = (props) => {
               fixed
               changeColorOnScroll={{
                 height: 200,
-                color: 'white'
+                color: 'white',
               }}
               user={user}
               loggedIn={loggedIn}
