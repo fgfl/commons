@@ -22,7 +22,7 @@ const Signup = (props) => {
       email: 'Email is not valid.',
       password: 'Password must be 5 characters long!',
       passwordConfirmation: 'Password and password confirmation must match!',
-      postalCode: 'Postal code must look like A1A1A1 or A1A 1A1'
+      postalCode: '',
     },
     available: {
       usernameTaken: '',
