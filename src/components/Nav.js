@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     background:
-      "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.35) 59%, rgba(0, 0, 0, 0.65) 100%), url('https://upload.wikimedia.org/wikipedia/commons/d/d7/House_of_Commons_Chamber_1.png') no-repeat",
+      'linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.35) 59%, rgba(0, 0, 0, 0.65) 100%)',
     backgroundSize: 'cover',
     width: '100%',
     height: '200px',
