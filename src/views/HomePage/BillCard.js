@@ -44,26 +44,26 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '10px 17px 24px -13px rgba(0,0,0,0.5)',
     marginRight: '5%',
     marginTop: '5%',
-    marginBottom: '5%'
+    marginBottom: '5%',
   },
   title: {
     paddingTop: '3%',
-    fontSize: '1.5vw'
+    fontSize: '1.5vw',
   },
   introduced: {
-    fontSize: '1.25vw'
+    fontSize: '1.25vw',
   },
   description: {
     paddingTop: '2%',
-    fontSize: '1.25vw'
+    fontSize: '1.25vw',
   },
   billButtons: {
     width: '128px',
-    marginTop: '10px'
+    marginTop: '10px',
   },
   event: {
-    fontSize: '1.25vw'
-  }
+    fontSize: '1.25vw',
+  },
 }));
 
 const button = {
@@ -71,7 +71,7 @@ const button = {
   boxShadow: 'inset 0 0 20px rgba(255, 255, 255,0)',
   boxShadow: '7px 7px 15px rgba(55, 84, 170,.15)',
   boxShadow: '-7px -7px 20px rgba(255, 255, 255,1)',
-  boxShadow: 'inset 0px 0px 4px rgba(255, 255, 255,.2)'
+  boxShadow: 'inset 0px 0px 4px rgba(255, 255, 255,.2)',
 };
 
 /**
@@ -92,27 +92,12 @@ export default function BillCard(props) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    props.user && findWatchedBills(props.user.id);
     props.user &&
     props.user.user_bills &&
     props.user.user_bills.includes(props.bill.id)
       ? setColor('red')
       : setColor('grey');
   }, []);
-
-  const findWatchedBills = async (user_id) => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_COMMONS_API}/bills/${user_id}`
-      );
-      let watchedBills = response.data.user_bills;
-      if (watchedBills.includes(props.bill.id)) {
-        setColor('red');
-      }
-    } catch (error) {
-      console.error(`Error occurred on findWatchedBills: ${error}`);
-    }
-  };
 
   const handleWatchSubmit = async () => {
     const watchlist_bill = {
@@ -285,7 +270,7 @@ export default function BillCard(props) {
                   <Snackbar
                     anchorOrigin={{
                       vertical: 'bottom',
-                      horizontal: 'center'
+                      horizontal: 'center',
                     }}
                     open={open}
                     autoHideDuration={2000}
