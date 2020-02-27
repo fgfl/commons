@@ -6,9 +6,9 @@
 
 Commons aims to provide an easy to access source of information on current bills in session in Canada's federal parliament. The application sources data from various sources and serves it up to users in one easy to use location.
 
-The goal is to provide Canadians with an easy way to keep up to date with the goings on in parliament and engage with their government representatives.
+The goal is to provide Canadians with an easy way to keep up to date with the goings on in parliament and engage with their government representatives. The information aggregated by the app is not available in any other single location.
 
-Bills are updated daily and sorted by category on the server. Users can select between email and SMS notifications for any new bills they wish to follow, as well as receive notifications about specific categories of bill.
+Bills are updated daily and sorted by category on the server. Users can select between email and SMS notifications for any bills they wish to follow and will receive daily updates on any new events for those bills.
 
 The application also provides an easy way to look up Members of Parliament and retrieve their contact information.
 
