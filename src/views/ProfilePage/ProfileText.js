@@ -39,8 +39,7 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
     password,
     passwordConfirmation,
     phoneNumber,
-    postalCode,
-    validateForm
+    postalCode
   ]);
 
   const useStyles = makeStyles((theme) => ({

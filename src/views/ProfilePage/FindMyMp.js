@@ -55,7 +55,7 @@ export default function FindMyMp({ user }) {
 
   useEffect(() => {
     validate(postalCode);
-  }, [postalCode, validate]);
+  }, [postalCode]);
 
   const validate = (value) => {
     const postalCodeRegex = /^(?!.*[DFIOQU])[A-VXY][0-9][A-Z] ?[0-9][A-Z][0-9]$/;
