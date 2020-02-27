@@ -35,7 +35,12 @@ const App = (props) => {
       const response = await axios.get(
         `${process.env.REACT_APP_COMMONS_API}/bills`
       );
-      setBills(response.data.bills);
+
+      const sortedBills = response.data.bills.sort(
+        (a, b) => new Date(b.introduced_date) - new Date(a.introduced_date)
+      );
+
+      setBills(sortedBills);
       setCategories(response.data.categories);
       doneLoading();
     } catch (error) {
@@ -95,16 +100,19 @@ const App = (props) => {
   };
 
   const handleLogout = () => {
+    updateLoadingState(true);
     axios
       .delete(`${process.env.REACT_APP_COMMONS_API}/logout`)
       .then(() => {
         setUser(null);
         setLoggedIn(false);
         props.history.push('/');
+        updateLoadingState(false);
       })
-      .catch((error) =>
-        console.error(`Error occurred on handleProfileUpdate: ${error}`)
-      );
+      .catch((error) => {
+        updateLoadingState(false);
+        console.error(`Error occurred on handleProfileUpdate: ${error}`);
+      });
   };
 
   // For components to call when they render to remove loading spinner
