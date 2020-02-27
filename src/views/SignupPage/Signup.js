@@ -22,6 +22,7 @@ const Signup = (props) => {
       email: 'Email is not valid.',
       password: 'Password must be 5 characters long!',
       passwordConfirmation: 'Password and password confirmation must match!',
+      postalCode: 'Postal code must look like A1A1A1 or A1A 1A1',
     },
     available: {
       usernameTaken: '',
@@ -67,6 +68,12 @@ const Signup = (props) => {
             ? 'Password and password confirmation must match!'
             : '';
         break;
+      case 'postalCode':
+        errors.postalCode =
+          value.length === 0 || postalCodeRegex.test(value)
+            ? ''
+            : 'Postal code must look like: A1A1A1 or A1A 1A1.';
+        break;
       default:
         break;
     }
@@ -88,6 +95,8 @@ const Signup = (props) => {
   const validEmailRegex = RegExp(
     /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
   );
+
+  const postalCodeRegex = /^(?!.*[DFIOQU])[A-VXY][0-9][A-Z] ?[0-9][A-Z][0-9]$/;
 
   const checkAvailability = async (param, field) => {
     const user = { [field]: param };
@@ -129,10 +138,18 @@ const Signup = (props) => {
     event.preventDefault();
     setSubmitted(true);
     const validated = await checkValidations();
+    setState((prev) => ({
+      ...prev,
+      postalCode: prev.postalCode.replace(/ /g, ''),
+      errors: {
+        ...prev.errors,
+      },
+      available: {
+        ...prev.available,
+      },
+    }));
     validated ? props.nextStep(1, state) : console.error('Invalid Form');
   };
-
-  const { errors, available } = state;
 
   const useStyles = makeStyles((theme) => ({
     paper: {
@@ -177,6 +194,28 @@ const Signup = (props) => {
   }));
   const classes = useStyles();
 
+  const generateUsernameErrorString = () => {
+    let errorString = '';
+    if (state.errors.username.length > 0) {
+      errorString += `${state.errors.username}\n`;
+    }
+    if (state.available.usernameTaken.length > 0) {
+      errorString += `${state.available.usernameTaken}`;
+    }
+    return errorString;
+  };
+
+  const generateEmailErrorString = () => {
+    let errorString = '';
+    if (state.errors.email.length > 0) {
+      errorString += `${state.errors.email}\n`;
+    }
+    if (state.available.emailTaken.length > 0) {
+      errorString += `${state.available.emailTaken}`;
+    }
+    return errorString;
+  };
+
   return (
     <Container maxWidth="xs" className={classes.paper}>
       <Avatar className={classes.avatar}>
@@ -186,66 +225,68 @@ const Signup = (props) => {
         Not a Member Yet?
         <br /> Sign Up!
       </Typography>
-      <form className={classes.form} noValidate onSubmit={props.handleSubmit}>
+      <form className={classes.form} noValidate>
         <TextField
           variant="outlined"
           margin="normal"
           required
           fullWidth
+          error={submitted && state.errors.name.length > 0}
+          helperText={submitted ? state.errors.name : ''}
           id="name"
           label="Name"
           name="name"
           autoComplete="name"
           autoFocus
-          value={props.name}
+          defaultValue={state.name}
+          value={state.name}
           onChange={(e) => handleChange(e.target)}
         />
-        {submitted && errors.name.length > 0 && (
-          <span className={classes.error}>{errors.name}</span>
-        )}
         <TextField
           variant="outlined"
           margin="normal"
           required
           fullWidth
+          error={
+            (submitted && state.errors.username.length > 0) ||
+            state.available.usernameTaken.length > 0
+          }
+          helperText={submitted && generateUsernameErrorString()}
           id="username"
           label="Username"
           name="username"
           autoComplete="username"
           autoFocus
-          value={props.username}
+          defaultValue={state.username}
+          value={state.username}
           onChange={(e) => handleChange(e.target)}
         />
-        {submitted && errors.username.length > 0 && (
-          <span className={classes.error}>{errors.username}</span>
-        )}
-        {submitted && available.usernameTaken.length > 0 && (
-          <span className={classes.error}>{available.usernameTaken}</span>
-        )}
         <TextField
           variant="outlined"
           margin="normal"
           required
           fullWidth
+          error={
+            (submitted && state.errors.email.length > 0) ||
+            state.available.emailTaken.length > 0
+          }
+          helperText={submitted && generateEmailErrorString()}
           id="email"
           label="Email Address"
           name="email"
           autoComplete="email"
           autoFocus
-          value={props.email}
+          defaultValue={state.email}
+          value={state.email}
           onChange={(e) => handleChange(e.target)}
         />
-        {submitted && errors.email.length > 0 && (
-          <span className={classes.error}>{errors.email}</span>
-        )}
-        {submitted && available.emailTaken.length > 0 && (
-          <span className={classes.error}>{available.emailTaken}</span>
-        )}
         <TextField
           variant="outlined"
           margin="normal"
           required
           fullWidth
+          error={submitted && state.errors.password.length > 0}
+          helperText={submitted && state.errors.password}
           name="password"
           label="Password"
           type="password"
@@ -253,14 +294,13 @@ const Signup = (props) => {
           autoComplete="current-password"
           onChange={(e) => handleChange(e.target)}
         />
-        {submitted && errors.password.length > 0 && (
-          <span className={classes.error}>{errors.password}</span>
-        )}
         <TextField
           variant="outlined"
           margin="normal"
           required
           fullWidth
+          error={submitted && state.errors.passwordConfirmation.length > 0}
+          helperText={submitted && state.errors.passwordConfirmation}
           name="passwordConfirmation"
           label="Confirm Password"
           type="password"
@@ -268,17 +308,18 @@ const Signup = (props) => {
           autoComplete="current-password"
           onChange={(e) => handleChange(e.target)}
         />
-        {submitted && errors.passwordConfirmation.length > 0 && (
-          <span className={classes.error}>{errors.passwordConfirmation}</span>
-        )}
         <TextField
           variant="outlined"
           margin="normal"
           fullWidth
-          name="postal_code"
+          error={submitted && state.errors.postalCode.length > 0}
+          helperText={submitted && state.errors.postalCode}
+          name="postalCode"
           label="Postal Code"
           type="postal"
           id="postal-code"
+          defaultValue={state.postalCode}
+          value={state.postalCode}
           autoComplete="postal-code"
           onChange={(e) => handleChange(e.target)}
         />

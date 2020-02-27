@@ -102,10 +102,10 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
         : 'Phone number must be exactly 10 digits long.';
     },
     postal_code: (value) => {
-      const postalCodeRegex = /^(?!.*[DFIOQU])[A-VXY][0-9][A-Z]?[0-9][A-Z][0-9]$/;
+      const postalCodeRegex = /^(?!.*[DFIOQU])[A-VXY][0-9][A-Z] ?[0-9][A-Z][0-9]$/;
       return value.length === 0 || postalCodeRegex.test(value)
         ? ''
-        : 'Postal code must look like: A1A1A1.';
+        : 'Postal code must look like: A1A1A1 or A1A 1A1.';
     },
     email_notification: () => {
       return '';
@@ -164,6 +164,7 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
 
     if (validateForm()) {
       setEditStatus(false);
+      formValues.postal_code = formValues.postal_code.replace(/ /g, '');
       handleProfileUpdate(formValues);
     }
   };
