@@ -97,6 +97,7 @@ export default function BillCard(props) {
       response.data.watchlist.includes(props.bill.id)
         ? setColor('red')
         : setColor('grey');
+      setOpen(true);
     } catch (error) {
       console.error(`Error occurred on handleWatchSubmit: ${error}`);
     }
@@ -241,12 +242,50 @@ export default function BillCard(props) {
           </Grid>
           <Grid item xs={2} sm={2} md={2} style={{ textAlign: 'right' }}>
             {props.user ? (
-              <IconButton aria-label='settings'>
-                <BookmarkIcon
-                  style={{ color: color }}
-                  onClick={() => {
-                    handleWatchSubmit();
+              <IconButton
+                aria-label='settings'
+                onClick={() => {
+                  handleWatchSubmit();
+                }}
+              >
+                <BookmarkIcon style={{ color: color }} />
+                <Snackbar
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center'
                   }}
+                  open={open}
+                  autoHideDuration={2000}
+                  onClose={handleClose}
+                  action={
+                    <React.Fragment>
+                      {color === 'grey' ? (
+                        <Button
+                          color='primary'
+                          size='small'
+                          onClick={handleClose}
+                        >
+                          Bill {props.bill.code} removed from watchlist
+                        </Button>
+                      ) : (
+                        <Button
+                          color='primary'
+                          size='small'
+                          onClick={handleClose}
+                        >
+                          Bill {props.bill.code} added to watchlist
+                        </Button>
+                      )}
+                      <IconButton
+                        size='small'
+                        aria-label='close'
+                        color='inherit'
+                        onClick={handleClose}
+                      >
+                        <CloseIcon fontSize='small' />
+                      </IconButton>
+                    </React.Fragment>
+                  }
                 />
               </IconButton>
             ) : (
@@ -256,44 +295,6 @@ export default function BillCard(props) {
               >
                 <IconButton aria-label='settings'>
                   <BookmarkIcon style={{ color: color }} />
-                  <Snackbar
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'center'
-                    }}
-                    open={open}
-                    autoHideDuration={2000}
-                    onClose={handleClose}
-                    action={
-                      <React.Fragment>
-                        {color === 'grey' ? (
-                          <Button
-                            color='primary'
-                            size='small'
-                            onClick={handleClose}
-                          >
-                            Bill {props.bill.code} removed from watchlist
-                          </Button>
-                        ) : (
-                          <Button
-                            color='primary'
-                            size='small'
-                            onClick={handleClose}
-                          >
-                            Bill {props.bill.code} added to watchlist
-                          </Button>
-                        )}
-                        <IconButton
-                          size='small'
-                          aria-label='close'
-                          color='inherit'
-                          onClick={handleClose}
-                        >
-                          <CloseIcon fontSize='small' />
-                        </IconButton>
-                      </React.Fragment>
-                    }
-                  />
                 </IconButton>
               </Tooltip>
             )}
