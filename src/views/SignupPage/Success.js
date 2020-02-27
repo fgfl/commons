@@ -17,27 +17,27 @@ const Confirmation = (props) => {
       alignItems: 'center',
       border: 5,
       padding: theme.spacing(2),
-      textAlign: 'center'
+      textAlign: 'center',
     },
     avatar: {
       zIndex: 1000,
       marginBottom: theme.spacing(2),
       width: '120px',
       height: '120px',
-      backgroundColor: '#29c0a8'
+      backgroundColor: '#29c0a8',
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
-      backgroundColor: '#29c0a8'
+      backgroundColor: '#29c0a8',
     },
     accountCircle: {
       width: '100px',
       height: '100px',
-      color: 'white'
+      color: 'white',
     },
     message: {
-      padding: theme.spacing(2)
-    }
+      padding: theme.spacing(2),
+    },
   }));
   const classes = useStyles();
 
@@ -47,11 +47,11 @@ const Confirmation = (props) => {
         <ThumbUpIcon className={classes.accountCircle} />
       </Avatar>
       <Grid xs={12} className={classes.message}>
-        <Typography variant='h4'>Thank you for signing up!</Typography>
+        <Typography variant="h4">Thank you for signing up!</Typography>
       </Grid>
 
-      <Link href='/'>
-        <Button color='primary' variant='contained'>
+      <Link to="/">
+        <Button color="primary" variant="contained">
           Back to Home
         </Button>
       </Link>
