@@ -58,7 +58,7 @@ export default function FindMyMp({ user }) {
   }, [postalCode]);
 
   const validate = (value) => {
-    const postalCodeRegex = /^(?!.*[DFIOQU])[A-VXY][0-9][A-Z]?[0-9][A-Z][0-9]$/;
+    const postalCodeRegex = /^(?!.*[DFIOQU])[A-VXY][0-9][A-Z] ?[0-9][A-Z][0-9]$/;
     let errorStr = '';
     let isValid = true;
 
@@ -157,11 +157,14 @@ export default function FindMyMp({ user }) {
 
   const handleMpSubmit = (event) => {
     event.preventDefault();
+    const strippedPostalCode = postalCode.replace(/ /g, '');
+    setPostalCode((prev) => prev.replace(/ /g, ''));
     updateLoadingState(true);
+
     if (validate()) {
       axios
         .get(
-          `https://cors-anywhere.herokuapp.com/https://represent.opennorth.ca/postcodes/${postalCode}?sets=federal-electoral-districts`,
+          `https://cors-anywhere.herokuapp.com/https://represent.opennorth.ca/postcodes/${strippedPostalCode}?sets=federal-electoral-districts`,
           { withCredentials: false }
         )
         .then((response) => {

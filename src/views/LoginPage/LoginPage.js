@@ -10,7 +10,7 @@ import Login from './Login.js';
 
 import styles from 'assets/jss/material-kit-react/views/loginPage.js';
 
-import image from 'assets/img/house_of_commons.jpg';
+import image from 'assets/img/bg5.jpg';
 
 const useStyles = makeStyles(styles);
 
@@ -29,7 +29,7 @@ export default function LoginPage(props) {
       style={{
         backgroundImage: 'url(' + image + ')',
         backgroundSize: 'cover',
-        backgroundPosition: 'top center',
+        backgroundPosition: 'top center'
       }}
     >
       <div className={classes.container}>

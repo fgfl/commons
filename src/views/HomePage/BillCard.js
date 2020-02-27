@@ -72,27 +72,12 @@ export default function BillCard(props) {
   const [color, setColor] = useState('');
 
   useEffect(() => {
-    props.user && findWatchedBills(props.user.id);
     props.user &&
     props.user.user_bills &&
     props.user.user_bills.includes(props.bill.id)
       ? setColor('red')
       : setColor('grey');
   }, []);
-
-  const findWatchedBills = async (user_id) => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_COMMONS_API}/bills/${user_id}`
-      );
-      let watchedBills = response.data.user_bills;
-      if (watchedBills.includes(props.bill.id)) {
-        setColor('red');
-      }
-    } catch (error) {
-      console.error(`Error occurred on findWatchedBills: ${error}`);
-    }
-  };
 
   const handleWatchSubmit = async () => {
     const watchlist_bill = {
@@ -260,6 +245,44 @@ export default function BillCard(props) {
               >
                 <IconButton aria-label='settings'>
                   <BookmarkIcon style={{ color: color }} />
+                  <Snackbar
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'center',
+                    }}
+                    open={open}
+                    autoHideDuration={2000}
+                    onClose={handleClose}
+                    action={
+                      <React.Fragment>
+                        {color === 'grey' ? (
+                          <Button
+                            color="primary"
+                            size="small"
+                            onClick={handleClose}
+                          >
+                            Bill {props.bill.code} removed from watchlist
+                          </Button>
+                        ) : (
+                          <Button
+                            color="primary"
+                            size="small"
+                            onClick={handleClose}
+                          >
+                            Bill {props.bill.code} added to watchlist
+                          </Button>
+                        )}
+                        <IconButton
+                          size="small"
+                          aria-label="close"
+                          color="inherit"
+                          onClick={handleClose}
+                        >
+                          <CloseIcon fontSize="small" />
+                        </IconButton>
+                      </React.Fragment>
+                    }
+                  />
                 </IconButton>
               </Tooltip>
             )}

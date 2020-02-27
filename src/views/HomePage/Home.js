@@ -23,9 +23,7 @@ export default function Home(props) {
 
   return (
     <div>
-      <Parallax
-        image={require('assets/img/erik-mclean-f7wX87Zs4fU-unsplash.jpg')}
-      >
+      <Parallax image={require('assets/img/bg7.jpg')}>
         <div className={classes.container}>
           <GridContainer>
             <GridItem>
