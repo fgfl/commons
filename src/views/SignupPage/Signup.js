@@ -21,12 +21,12 @@ const Signup = (props) => {
         'Username must be 4 characters long and only contain alphanumeric characters and underscores.',
       email: 'Email is not valid.',
       password: 'Password must be 5 characters long!',
-      passwordConfirmation: 'Password and password confirmation must match!'
+      passwordConfirmation: 'Password and password confirmation must match!',
     },
     available: {
       usernameTaken: '',
-      emailTaken: ''
-    }
+      emailTaken: '',
+    },
   });
   const [submitted, setSubmitted] = useState(false);
 
@@ -63,7 +63,7 @@ const Signup = (props) => {
         break;
       case 'passwordConfirmation':
         errors.passwordConfirmation =
-          value != state.password
+          value !== state.password
             ? 'Password and password confirmation must match!'
             : '';
         break;
@@ -76,8 +76,8 @@ const Signup = (props) => {
       errors,
       available: {
         usernameTaken: '',
-        emailTaken: ''
-      }
+        emailTaken: '',
+      },
     }));
   };
 
@@ -104,8 +104,8 @@ const Signup = (props) => {
         ...prevState,
         available: {
           ...prevState.available,
-          [`${field}Taken`]: `${fieldUp} ${param} is already associated with a user account.`
-        }
+          [`${field}Taken`]: `${fieldUp} ${param} is already associated with a user account.`,
+        },
       }));
       console.error(`Error occurred on checkAvailability: ${error}`);
       return false;
@@ -142,7 +142,7 @@ const Signup = (props) => {
       alignItems: 'center',
       border: 5,
       padding: theme.spacing(2),
-      textAlign: 'center'
+      textAlign: 'center',
     },
     avatar: {
       zIndex: 1000,
@@ -150,52 +150,52 @@ const Signup = (props) => {
       marginBottom: theme.spacing(2),
       width: '120px',
       height: '120px',
-      backgroundColor: '#29c0a8'
+      backgroundColor: '#29c0a8',
     },
     form: {
       zIndex: 1000,
       width: '100%', // Fix IE 11 issue.
       marginTop: theme.spacing(1),
       marginBottom: theme.spacing(1),
-      textAlign: 'center'
+      textAlign: 'center',
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
-      backgroundColor: '#29c0a8'
+      backgroundColor: '#29c0a8',
     },
     accountCircle: {
       width: '90px',
       height: '90px',
-      color: 'white'
+      color: 'white',
     },
     button: {
-      margin: '1em'
+      margin: '1em',
     },
     error: {
-      color: 'red'
-    }
+      color: 'red',
+    },
   }));
   const classes = useStyles();
 
   return (
-    <Container maxWidth='xs' className={classes.paper}>
+    <Container maxWidth="xs" className={classes.paper}>
       <Avatar className={classes.avatar}>
         <PersonAddIcon className={classes.accountCircle} />
       </Avatar>
-      <Typography variant='h4'>
+      <Typography variant="h4">
         Not a Member Yet?
         <br /> Sign Up!
       </Typography>
       <form className={classes.form} noValidate onSubmit={props.handleSubmit}>
         <TextField
-          variant='outlined'
-          margin='normal'
+          variant="outlined"
+          margin="normal"
           required
           fullWidth
-          id='name'
-          label='Name'
-          name='name'
-          autoComplete='name'
+          id="name"
+          label="Name"
+          name="name"
+          autoComplete="name"
           autoFocus
           value={props.name}
           onChange={(e) => handleChange(e.target)}
@@ -204,14 +204,14 @@ const Signup = (props) => {
           <span className={classes.error}>{errors.name}</span>
         )}
         <TextField
-          variant='outlined'
-          margin='normal'
+          variant="outlined"
+          margin="normal"
           required
           fullWidth
-          id='username'
-          label='Username'
-          name='username'
-          autoComplete='username'
+          id="username"
+          label="Username"
+          name="username"
+          autoComplete="username"
           autoFocus
           value={props.username}
           onChange={(e) => handleChange(e.target)}
@@ -223,14 +223,14 @@ const Signup = (props) => {
           <span className={classes.error}>{available.usernameTaken}</span>
         )}
         <TextField
-          variant='outlined'
-          margin='normal'
+          variant="outlined"
+          margin="normal"
           required
           fullWidth
-          id='email'
-          label='Email Address'
-          name='email'
-          autoComplete='email'
+          id="email"
+          label="Email Address"
+          name="email"
+          autoComplete="email"
           autoFocus
           value={props.email}
           onChange={(e) => handleChange(e.target)}
@@ -242,51 +242,51 @@ const Signup = (props) => {
           <span className={classes.error}>{available.emailTaken}</span>
         )}
         <TextField
-          variant='outlined'
-          margin='normal'
+          variant="outlined"
+          margin="normal"
           required
           fullWidth
-          name='password'
-          label='Password'
-          type='password'
-          id='password'
-          autoComplete='current-password'
+          name="password"
+          label="Password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
           onChange={(e) => handleChange(e.target)}
         />
         {submitted && errors.password.length > 0 && (
           <span className={classes.error}>{errors.password}</span>
         )}
         <TextField
-          variant='outlined'
-          margin='normal'
+          variant="outlined"
+          margin="normal"
           required
           fullWidth
-          name='passwordConfirmation'
-          label='Confirm Password'
-          type='password'
-          id='password-confirmation'
-          autoComplete='current-password'
+          name="passwordConfirmation"
+          label="Confirm Password"
+          type="password"
+          id="password-confirmation"
+          autoComplete="current-password"
           onChange={(e) => handleChange(e.target)}
         />
         {submitted && errors.passwordConfirmation.length > 0 && (
           <span className={classes.error}>{errors.passwordConfirmation}</span>
         )}
         <TextField
-          variant='outlined'
-          margin='normal'
+          variant="outlined"
+          margin="normal"
           fullWidth
-          name='postal_code'
-          label='Postal Code'
-          type='postal'
-          id='postal-code'
-          autoComplete='postal-code'
+          name="postal_code"
+          label="Postal Code"
+          type="postal"
+          id="postal-code"
+          autoComplete="postal-code"
           onChange={(e) => handleChange(e.target)}
         />
       </form>
       <Button
         classNames={classes.button}
-        color='primary'
-        variant='contained'
+        color="primary"
+        variant="contained"
         onClick={proceed}
       >
         Continue
