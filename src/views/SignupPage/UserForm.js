@@ -46,14 +46,14 @@ const UserForm = (props) => {
       email_notification: emailNotification,
       sms_notification: smsNotification,
       phone_number: phoneNumber,
-      categories: Object.keys(clicked)
+      categories: Object.keys(clicked),
     };
 
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_COMMONS_API}/users`,
         {
-          user
+          user,
         }
       );
       if (response.data.status === 'created') {
@@ -163,12 +163,14 @@ const UserForm = (props) => {
               email_notification: emailNotification,
               sms_notification: smsNotification,
               phone_number: phoneNumber,
-              categories: Object.keys(clicked)
+              categories: Object.keys(clicked),
             }}
           />
         );
       case 5:
         return <Success />;
+      default:
+        return <Signup nextStep={nextStep} />;
     }
   };
 
