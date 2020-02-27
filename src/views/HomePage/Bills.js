@@ -8,13 +8,7 @@ export default function Bills(props) {
       : bill.categories.includes(props.childCategory);
   });
 
-  const sortedBills = bills.sort(
-    (a, b) => b.introduced_date - a.introduced_date
-  );
-
-  console.log(sortedBills);
-
-  const billCards = sortedBills.map((bill) => {
+  const billCards = bills.map((bill) => {
     return (
       <BillCard
         user={props.user}
