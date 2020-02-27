@@ -13,6 +13,7 @@ import Parallax from 'components/Parallax/Parallax.js';
 import styles from 'assets/jss/material-kit-react/views/components.js';
 import CategoryDropdown from './CategoryDropdown';
 import Bills from './Bills';
+import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(styles);
 
@@ -39,6 +40,10 @@ export default function Home(props) {
       </Parallax>
 
       <div className={classNames(classes.main, classes.mainRaised)}>
+        <Typography variant='h4' style={{ textAlign: 'center', margin: '1em' }}>
+          See up to date information on bills in session in the House of
+          Commons.
+        </Typography>
         <CategoryDropdown
           categories={props.categories}
           passCategory={setChildCategory}
