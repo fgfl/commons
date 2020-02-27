@@ -42,7 +42,7 @@ const App = (props) => {
 
       setBills(sortedBills);
       setCategories(response.data.categories);
-      doneLoading();
+      updateLoadingState(false);
     } catch (error) {
       console.error('Error occurred on fetchBills:', error);
     }
@@ -113,11 +113,6 @@ const App = (props) => {
         updateLoadingState(false);
         console.error(`Error occurred on handleProfileUpdate: ${error}`);
       });
-  };
-
-  // For components to call when they render to remove loading spinner
-  const doneLoading = () => {
-    updateLoadingState(false);
   };
 
   return (
