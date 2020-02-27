@@ -24,9 +24,12 @@ storiesOf('LoadingSpinner', module)
       style={{
         position: 'absolute',
         left: '50px',
-        width: '200px',
-        height: '200px',
+        width: '300px',
+        height: '300px',
         'background-color': 'red',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
       }}
     >
       <LoadingSpinner></LoadingSpinner>
