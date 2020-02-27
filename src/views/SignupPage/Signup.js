@@ -26,8 +26,8 @@ const Signup = (props) => {
     },
     available: {
       usernameTaken: '',
-      emailTaken: '',
-    },
+      emailTaken: ''
+    }
   });
   const [submitted, setSubmitted] = useState(false);
 
@@ -83,8 +83,8 @@ const Signup = (props) => {
       errors,
       available: {
         usernameTaken: '',
-        emailTaken: '',
-      },
+        emailTaken: ''
+      }
     }));
   };
 
@@ -93,6 +93,7 @@ const Signup = (props) => {
   const validUsernameRegex = RegExp(/^([a-zA-Z0-9_-]+)$/);
 
   const validEmailRegex = RegExp(
+    // eslint-disable-next-line
     /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
   );
 
@@ -113,8 +114,8 @@ const Signup = (props) => {
         ...prevState,
         available: {
           ...prevState.available,
-          [`${field}Taken`]: `${fieldUp} ${param} is already associated with a user account.`,
-        },
+          [`${field}Taken`]: `${fieldUp} ${param} is already associated with a user account.`
+        }
       }));
       console.error(`Error occurred on checkAvailability: ${error}`);
       return false;
@@ -142,11 +143,11 @@ const Signup = (props) => {
       ...prev,
       postalCode: prev.postalCode.replace(/ /g, ''),
       errors: {
-        ...prev.errors,
+        ...prev.errors
       },
       available: {
-        ...prev.available,
-      },
+        ...prev.available
+      }
     }));
     validated ? props.nextStep(1, state) : console.error('Invalid Form');
   };
@@ -159,7 +160,7 @@ const Signup = (props) => {
       alignItems: 'center',
       border: 5,
       padding: theme.spacing(2),
-      textAlign: 'center',
+      textAlign: 'center'
     },
     avatar: {
       zIndex: 1000,
@@ -167,30 +168,30 @@ const Signup = (props) => {
       marginBottom: theme.spacing(2),
       width: '120px',
       height: '120px',
-      backgroundColor: '#29c0a8',
+      backgroundColor: '#29c0a8'
     },
     form: {
       zIndex: 1000,
       width: '100%', // Fix IE 11 issue.
       marginTop: theme.spacing(1),
       marginBottom: theme.spacing(1),
-      textAlign: 'center',
+      textAlign: 'center'
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
-      backgroundColor: '#29c0a8',
+      backgroundColor: '#29c0a8'
     },
     accountCircle: {
       width: '90px',
       height: '90px',
-      color: 'white',
+      color: 'white'
     },
     button: {
-      margin: '1em',
+      margin: '1em'
     },
     error: {
-      color: 'red',
-    },
+      color: 'red'
+    }
   }));
   const classes = useStyles();
 
