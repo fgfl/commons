@@ -286,7 +286,7 @@ const Signup = (props) => {
           required
           fullWidth
           error={submitted && state.errors.password.length > 0}
-          helperText={submitted ? state.errors.password : ''}
+          helperText={submitted && state.errors.password}
           name="password"
           label="Password"
           type="password"
@@ -299,12 +299,8 @@ const Signup = (props) => {
           margin="normal"
           required
           fullWidth
-          error={
-            submitted &&
-            state.errors.passwordConfirmation &&
-            state.errors.passwordConfirmation.length > 0
-          }
-          helperText={submitted ? state.errors.passwordConfirmation : ''}
+          error={submitted && state.errors.passwordConfirmation.length > 0}
+          helperText={submitted && state.errors.passwordConfirmation}
           name="passwordConfirmation"
           label="Confirm Password"
           type="password"
@@ -317,7 +313,7 @@ const Signup = (props) => {
           margin="normal"
           fullWidth
           error={submitted && state.errors.postalCode.length > 0}
-          helperText={submitted ? state.errors.postalCode : ''}
+          helperText={submitted && state.errors.postalCode}
           name="postalCode"
           label="Postal Code"
           type="postal"
