@@ -28,27 +28,27 @@ export default function FindMyMp({ user }) {
     root: {
       flexGrow: 1,
       width: '100%',
-      textAlign: 'center',
+      textAlign: 'center'
     },
     title: {
-      marginBottom: theme.spacing(2),
+      marginBottom: theme.spacing(2)
     },
     myMp: {
-      textAlign: 'left',
+      textAlign: 'left'
     },
     divider: {
-      margin: '1em',
+      margin: '1em'
     },
     section: {
-      marginBottom: theme.spacing(2),
+      marginBottom: theme.spacing(2)
     },
     submit: {
-      margin: '0.75em',
+      margin: '0.75em'
     },
     button: {
       marginTop: theme.spacing(2),
-      marginRight: theme.spacing(2),
-    },
+      marginRight: theme.spacing(2)
+    }
   }));
 
   const classes = useStyles();
@@ -75,8 +75,11 @@ export default function FindMyMp({ user }) {
     return (
       <Container xs={12} className={classes.root}>
         <Grid container>
-          <Grid item xs={12} sm={9} className={classes.myMp}>
-            <Typography variant="h4" className={classes.title}>
+          <Grid item xs={12} sm={4} md={4} style={{ marginBottom: '24px' }}>
+            <img alt='Your MP' src={mpPhoto} />
+          </Grid>
+          <Grid item xs={12} sm={8} md={8} className={classes.myMp}>
+            <Typography variant='h4' className={classes.title}>
               <strong>Your Representative</strong>
             </Typography>
             <div className={classes.section}>
@@ -97,15 +100,15 @@ export default function FindMyMp({ user }) {
               </Typography>
               <Button
                 className={classes.button}
-                variant="contained"
+                variant='contained'
                 href={mpWebsite}
-                target="_blank"
+                target='_blank'
               >
                 WEBSITE
               </Button>
             </div>
             <div className={classes.section}>
-              <Typography variant="h5">
+              <Typography variant='h5'>
                 <strong>Federal Office: </strong>
               </Typography>
               <Typography>
@@ -118,7 +121,7 @@ export default function FindMyMp({ user }) {
               </Typography>
             </div>
             <div className={classes.section}>
-              <Typography variant="h5">
+              <Typography variant='h5'>
                 <strong>Local Office: </strong>
               </Typography>
               <Typography>
@@ -129,26 +132,21 @@ export default function FindMyMp({ user }) {
                 <strong>Telephone: </strong>
                 {mpOfficeOttawa.tel}
               </Typography>
+              <Button
+                href={`mailto:${mpEmail.toLowerCase()}`}
+                variant='contained'
+                className={classes.button}
+              >
+                Email My MP
+              </Button>
+              <Button
+                href={`tel:+${mpOfficeOttawa.tel}`}
+                variant='contained'
+                className={classes.button}
+              >
+                Call My MP
+              </Button>
             </div>
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <img alt="Your MP" src={mpPhoto} />
-          </Grid>
-          <Grid container className={classes.myMp}>
-            <Button
-              href={`mailto:${mpEmail.toLowerCase()}`}
-              variant="contained"
-              className={classes.button}
-            >
-              Email My MP
-            </Button>
-            <Button
-              href={`tel:+${mpOfficeOttawa.tel}`}
-              variant="contained"
-              className={classes.button}
-            >
-              Call My MP
-            </Button>
           </Grid>
         </Grid>
       </Container>
@@ -201,26 +199,26 @@ export default function FindMyMp({ user }) {
         {loading && <LoadingSpinner></LoadingSpinner>}
         {!loading && (
           <Fragment>
-            <Typography className={classes.title} variant="h4">
+            <Typography className={classes.title} variant='h4'>
               Find Your Member of Parliament
             </Typography>
-            <Typography variant="h5" style={{ marginBottom: '1em' }}>
+            <Typography variant='h5' style={{ marginBottom: '1em' }}>
               Look up your representative in the House of Commons
             </Typography>
             <form>
               <TextField
-                id="outlined-basic"
-                name="postalCode"
-                label="Postal Code"
-                variant="outlined"
+                id='outlined-basic'
+                name='postalCode'
+                label='Postal Code'
+                variant='outlined'
                 error={errors && errors.length > 0}
                 helperText={errors}
                 value={postalCode}
                 onChange={(e) => setPostalCode(e.target.value)}
               />
               <Button
-                variant="contained"
-                color="primary"
+                variant='contained'
+                color='primary'
                 className={classes.submit}
                 onClick={handleMpSubmit}
               >
