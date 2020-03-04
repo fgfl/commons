@@ -153,43 +153,31 @@ export default function FindMyMp({ user }) {
     );
   };
 
-  const handleMpSubmit = (event) => {
+  const handleMpSubmit = async (event) => {
     event.preventDefault();
     const strippedPostalCode = postalCode.replace(/ /g, '');
     setPostalCode((prev) => prev.replace(/ /g, ''));
     updateLoadingState(true);
 
     if (validate()) {
-      axios
-        .get(
+      try {
+        const response = await axios.get(
           `https://cors-anywhere.herokuapp.com/https://represent.opennorth.ca/postcodes/${strippedPostalCode}?sets=federal-electoral-districts`,
           { withCredentials: false }
-        )
-        .then((response) => {
-          if (response.data) {
-            setMpName(response.data.representatives_centroid[0].name);
-            setMpParty(response.data.representatives_centroid[0].party_name);
-            setMpPhoto(response.data.representatives_centroid[0].photo_url);
-            setMpRiding(
-              response.data.representatives_centroid[0].district_name
-            );
-            setMpWebsite(response.data.representatives_centroid[0].url);
-            setMpEmail(response.data.representatives_centroid[0].email);
-            setMpOfficeLocal(
-              response.data.representatives_centroid[0].offices[0]
-            );
-            setMpOfficeOttawa(
-              response.data.representatives_centroid[0].offices[1]
-            );
-          } else {
-            setErrors(response.data.errors);
-          }
-          updateLoadingState(false);
-        })
-        .catch((error) => {
-          updateLoadingState(false);
-          console.error(`Error occurred on handleMpSubmit: ${error}`);
-        });
+        );
+        setMpName(response.data.representatives_centroid[0].name);
+        setMpParty(response.data.representatives_centroid[0].party_name);
+        setMpPhoto(response.data.representatives_centroid[0].photo_url);
+        setMpRiding(response.data.representatives_centroid[0].district_name);
+        setMpWebsite(response.data.representatives_centroid[0].url);
+        setMpEmail(response.data.representatives_centroid[0].email);
+        setMpOfficeLocal(response.data.representatives_centroid[0].offices[0]);
+        setMpOfficeOttawa(response.data.representatives_centroid[0].offices[1]);
+        updateLoadingState(false);
+      } catch (error) {
+        updateLoadingState(false);
+        console.error(`Error occurred on handleMpSubmit: ${error}`);
+      }
     }
   };
 
