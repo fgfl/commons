@@ -67,7 +67,7 @@ const App = (props) => {
       const res = await axios.put(
         `${process.env.REACT_APP_COMMONS_API}/users/${user.id}`,
         {
-          user,
+          user
         }
       );
       if (res.data.status === 200) {
@@ -88,7 +88,7 @@ const App = (props) => {
   const updateWatchList = (user_bills) => {
     setUser((prev) => ({
       ...prev,
-      user_bills,
+      user_bills
     }));
   };
 
@@ -98,20 +98,18 @@ const App = (props) => {
     setLoggedIn(true);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     updateLoadingState(true);
-    axios
-      .delete(`${process.env.REACT_APP_COMMONS_API}/logout`)
-      .then(() => {
-        setUser(null);
-        setLoggedIn(false);
-        props.history.push('/');
-        updateLoadingState(false);
-      })
-      .catch((error) => {
-        updateLoadingState(false);
-        console.error(`Error occurred on handleProfileUpdate: ${error}`);
-      });
+    try {
+      await axios.delete(`${process.env.REACT_APP_COMMONS_API}/logout`);
+      setUser(null);
+      setLoggedIn(false);
+      props.history.push('/');
+      updateLoadingState(false);
+    } catch (error) {
+      updateLoadingState(false);
+      console.error(`Error occurred on handleProfileUpdate: ${error}`);
+    }
   };
 
   return (
@@ -124,7 +122,7 @@ const App = (props) => {
               minWidth: '100vw',
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'center',
+              justifyContent: 'center'
             }}
           >
             <LoadingSpinner></LoadingSpinner>
@@ -138,7 +136,7 @@ const App = (props) => {
               fixed
               changeColorOnScroll={{
                 height: 200,
-                color: 'white',
+                color: 'white'
               }}
               user={user}
               loggedIn={loggedIn}

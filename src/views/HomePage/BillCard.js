@@ -128,13 +128,16 @@ export default function BillCard(props) {
     getEventsForBill(props.bill.id);
   };
 
+  // Formats the date to use "Month Day, Year" format
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  const introduced_date = new Date(props.bill.introduced_date);
+  // Adding the space forces using UTC time, avoiding wrong day due to offset
+  const introduced_date = new Date(props.bill.introduced_date + ' ');
 
   const eventCards =
     Array.isArray(events) &&
     events.map((event) => {
-      const publication_date = new Date(event.publication_date);
+      // Adding the space forces using UTC time, avoiding wrong day due to offset
+      const publication_date = new Date(event.publication_date + ' ');
       return (
         <CardContent>
           <Grid container justify="center">
