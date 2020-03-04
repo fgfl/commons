@@ -4,6 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import ChipsArray from '../SignupPage/ChipsArray';
 
 import mapUserFieldToLabel from '../../helpers/mapUserFieldToLabel';
+import validationFunctions from '../../helpers/validationFunctions';
+
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -39,21 +41,21 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
     password,
     passwordConfirmation,
     phoneNumber,
-    postalCode
+    postalCode,
   ]);
 
   const useStyles = makeStyles((theme) => ({
     profileTable: {
       display: 'flex',
-      flexDirection: 'row'
+      flexDirection: 'row',
     },
     buttons: {
       margin: '1em',
-      textAlign: 'center'
+      textAlign: 'center',
     },
     button: {
-      marginRight: theme.spacing(2)
-    }
+      marginRight: theme.spacing(2),
+    },
   }));
   const classes = useStyles();
 
@@ -69,56 +71,6 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
     });
   };
 
-  const validationFunctions = {
-    id: () => {
-      return '';
-    },
-    name: (value) => {
-      const validNameRegex = RegExp(/^([a-zA-Z -]+)$/);
-      return value.length < 4 || !validNameRegex.test(value)
-        ? 'Name must be 4 characters long and only contain letters and spaces.'
-        : '';
-    },
-    username: (value) => {
-      const validUsernameRegex = RegExp(/^([a-zA-Z0-9_-]+)$/);
-      return value.length < 4 || !validUsernameRegex.test(value)
-        ? 'Username must be 4 characters long and only contain alphanumeric characters and underscores.'
-        : '';
-    },
-    email: (value) => {
-      const validEmailRegex = RegExp(
-        // eslint-disable-next-line
-        /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
-      );
-      return validEmailRegex.test(value) ? '' : 'Email is not valid.';
-    },
-    password: () => {},
-    password_confirmation: (value) => {
-      return value === password ? '' : 'Passwords must match.';
-    },
-    phone_number: (value) => {
-      const parsedValue = value.replace(/\D+/g, '');
-      return parsedValue.length === 0 || parsedValue.length === 10
-        ? ''
-        : 'Phone number must be exactly 10 digits long.';
-    },
-    postal_code: (value) => {
-      const postalCodeRegex = /^(?!.*[DFIOQU])[A-VXY][0-9][A-Z] ?[0-9][A-Z][0-9]$/;
-      return value.length === 0 || postalCodeRegex.test(value)
-        ? ''
-        : 'Postal code must look like: A1A1A1 or A1A 1A1.';
-    },
-    email_notification: () => {
-      return '';
-    },
-    sms_notification: () => {
-      return '';
-    },
-    categories: () => {
-      return '';
-    }
-  };
-
   const validateForm = () => {
     const formValues = {
       id: user.id,
@@ -126,18 +78,30 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
       username: username,
       email: email,
       password: password,
-      password_confirmation: passwordConfirmation,
-      phone_number: phoneNumber,
-      postal_code: postalCode,
-      email_notification: emailNotification,
-      sms_notification: smsNotification,
-      categories: Object.keys(clicked).map((n) => Number(n))
+      passwordConfirmation: passwordConfirmation,
+      phoneNumber: phoneNumber,
+      postalCode: postalCode,
+      emailNotification: emailNotification,
+      smsNotification: smsNotification,
+      categories: Object.keys(clicked).map((n) => Number(n)),
     };
     const newValidity = {};
     let isValid = true;
 
     for (const key in formValues) {
-      const problem = validationFunctions[key](formValues[key]);
+      let problem = '';
+
+      if (key === 'passwordConfirmation') {
+        problem = validationFunctions[key](
+          formValues[key],
+          formValues.password
+        );
+      } else if (key === 'password') {
+        problem = validationFunctions[`${key}Update`](formValues[key]);
+      } else {
+        problem = validationFunctions[key](formValues[key]);
+      }
+
       newValidity[key] = problem;
       if (problem && problem.length) {
         isValid = false;
@@ -149,6 +113,7 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
   };
 
   const saveForm = () => {
+    // Need snake case because Ruby API uses snake case
     const formValues = {
       id: user.id,
       name: name,
@@ -160,7 +125,7 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
       postal_code: postalCode,
       email_notification: emailNotification,
       sms_notification: smsNotification,
-      categories: Object.keys(clicked).map((n) => Number(n))
+      categories: Object.keys(clicked).map((n) => Number(n)),
     };
 
     if (validateForm()) {
@@ -187,7 +152,7 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
         label={mapUserFieldToLabel('name')}
         name={mapUserFieldToLabel('name')}
         InputProps={{
-          readOnly: !editStatus
+          readOnly: !editStatus,
         }}
         defaultValue={name}
         onChange={(e) => {
@@ -205,7 +170,7 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
         label={mapUserFieldToLabel('username')}
         name={mapUserFieldToLabel('username')}
         InputProps={{
-          readOnly: !editStatus
+          readOnly: !editStatus,
         }}
         defaultValue={username}
         onChange={(e) => setUsername(e.target.value)}
@@ -221,7 +186,7 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
         label={mapUserFieldToLabel('email')}
         name={mapUserFieldToLabel('email')}
         InputProps={{
-          readOnly: !editStatus
+          readOnly: !editStatus,
         }}
         defaultValue={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -239,7 +204,7 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
             label={mapUserFieldToLabel('password_digest')}
             name={mapUserFieldToLabel('password_digest')}
             InputProps={{
-              readOnly: !editStatus
+              readOnly: !editStatus,
             }}
             defaultValue=""
             onChange={(e) => setPassword(e.target.value)}
@@ -249,16 +214,16 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
             type="password"
             margin="normal"
             error={
-              formErrors.password_confirmation &&
-              formErrors.password_confirmation.length > 0
+              formErrors.passwordConfirmation &&
+              formErrors.passwordConfirmation.length > 0
             }
-            helperText={formErrors.password_confirmation}
+            helperText={formErrors.passwordConfirmation}
             fullWidth
             id="password_confirmation"
             label="Confirm password"
             name="Confirm password"
             InputProps={{
-              readOnly: !editStatus
+              readOnly: !editStatus,
             }}
             defaultValue=""
             onChange={(e) => setPasswordConfirmation(e.target.value)}
@@ -268,14 +233,14 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
       <TextField
         variant="outlined"
         margin="normal"
-        error={formErrors.phone_number && formErrors.phone_number.length > 0}
-        helperText={formErrors.phone_number}
+        error={formErrors.phoneNumber && formErrors.phoneNumber.length > 0}
+        helperText={formErrors.phoneNumber}
         fullWidth
         id="phone_number"
         label={mapUserFieldToLabel('phone_number')}
         name={mapUserFieldToLabel('phone_number')}
         InputProps={{
-          readOnly: !editStatus
+          readOnly: !editStatus,
         }}
         defaultValue={phoneNumber}
         onChange={(e) => setPhoneNumber(e.target.value)}
@@ -283,14 +248,14 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
       <TextField
         variant="outlined"
         margin="normal"
-        error={formErrors.postal_code && formErrors.postal_code.length > 0}
-        helperText={formErrors.postal_code}
+        error={formErrors.postalCode && formErrors.postalCode.length > 0}
+        helperText={formErrors.postalCode}
         fullWidth
         id="postal_code"
         label={mapUserFieldToLabel('postal_code')}
         name={mapUserFieldToLabel('postal_code')}
         InputProps={{
-          readOnly: !editStatus
+          readOnly: !editStatus,
         }}
         defaultValue={postalCode}
         onChange={(e) => setPostalCode(e.target.value)}

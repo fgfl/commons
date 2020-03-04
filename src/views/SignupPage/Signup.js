@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Typography, TextField, Button, Avatar } from '@material-ui/core';
@@ -6,98 +6,57 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 import axios from 'axios';
 
+import validationFunctions from '../../helpers/validationFunctions';
+
 const Signup = (props) => {
   const [state, setState] = useState({
-    name: '',
-    username: '',
-    email: '',
+    name: props.name,
+    username: props.username,
+    email: props.email,
     password: '',
     passwordConfirmation: '',
-    postalCode: '',
+    postalCode: props.postalCode,
     errors: {
-      name:
-        'Name must be 4 characters long and only contain letters and spaces.',
-      username:
-        'Username must be 4 characters long and only contain alphanumeric characters and underscores.',
-      email: 'Email is not valid.',
-      password: 'Password must be 5 characters long!',
-      passwordConfirmation: 'Password and password confirmation must match!',
+      name: '',
+      username: '',
+      email: '',
+      password: '',
+      passwordConfirmation: '',
       postalCode: '',
     },
     available: {
       usernameTaken: '',
-      emailTaken: ''
-    }
+      emailTaken: '',
+    },
   });
   const [submitted, setSubmitted] = useState(false);
 
+  useEffect(() => {
+    validateForm();
+  }, [
+    state.name,
+    state.username,
+    state.email,
+    state.password,
+    state.passwordConfirmation,
+    state.postalCode,
+  ]);
+
   const handleChange = (event) => {
     const { name, value } = event;
-    let errors = state.errors;
 
-    switch (name) {
-      case 'name':
-        errors.name =
-          value.length < 4 || !validNameRegex.test(value)
-            ? 'Name must be 4 characters long and only contain letters and spaces.'
-            : '';
-        break;
-      case 'username':
-        errors.username =
-          value.length === 0 ||
-          value.length < 4 ||
-          !validUsernameRegex.test(value)
-            ? 'Username must be 4 characters long and only contain alphanumeric characters and underscores.'
-            : '';
-        break;
-      case 'email':
-        errors.email =
-          value.length === 0 || !validEmailRegex.test(value)
-            ? 'Email is not valid.'
-            : '';
-        break;
-      case 'password':
-        errors.password =
-          value.length === 0 || value.length < 5
-            ? 'Password must be 5 characters long!'
-            : '';
-        break;
-      case 'passwordConfirmation':
-        errors.passwordConfirmation =
-          value !== state.password
-            ? 'Password and password confirmation must match!'
-            : '';
-        break;
-      case 'postalCode':
-        errors.postalCode =
-          value.length === 0 || postalCodeRegex.test(value)
-            ? ''
-            : 'Postal code must look like: A1A1A1 or A1A 1A1.';
-        break;
-      default:
-        break;
-    }
     setState((prevState) => ({
       ...prevState,
       [name]: value,
-      errors,
+      errors: {
+        ...prevState.errors,
+      },
       available: {
         usernameTaken: '',
-        emailTaken: ''
-      }
+        emailTaken: '',
+      },
     }));
   };
-
-  const validNameRegex = RegExp(/^([a-zA-Z -]+)$/);
-
-  const validUsernameRegex = RegExp(/^([a-zA-Z0-9_-]+)$/);
-
-  const validEmailRegex = RegExp(
-    // eslint-disable-next-line
-    /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
-  );
-
-  const postalCodeRegex = /^(?!.*[DFIOQU])[A-VXY][0-9][A-Z] ?[0-9][A-Z][0-9]$/;
 
   const checkAvailability = async (param, field) => {
     const user = { [field]: param };
@@ -114,24 +73,53 @@ const Signup = (props) => {
         ...prevState,
         available: {
           ...prevState.available,
-          [`${field}Taken`]: `${fieldUp} ${param} is already associated with a user account.`
-        }
+          [`${field}Taken`]: `${fieldUp} ${param} is already associated with a user account.`,
+        },
       }));
       console.error(`Error occurred on checkAvailability: ${error}`);
       return false;
     }
   };
 
-  const validateForm = (errors) => {
-    let valid = true;
-    Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
-    return valid;
+  const validateForm = () => {
+    const formValues = {
+      name: state.name,
+      username: state.username,
+      email: state.email,
+      password: state.password,
+      passwordConfirmation: state.passwordConfirmation,
+      postalCode: state.postalCode,
+    };
+
+    const errors = {};
+    let isValid = true;
+
+    for (const key in formValues) {
+      const problem =
+        key === 'passwordConfirmation'
+          ? validationFunctions[key](formValues[key], formValues.password)
+          : validationFunctions[key](formValues[key]);
+      errors[key] = problem;
+      if (problem && problem.length) {
+        isValid = false;
+      }
+    }
+
+    setState((prevState) => ({
+      ...prevState,
+      errors,
+      available: {
+        ...prevState.available,
+      },
+    }));
+
+    return isValid;
   };
 
   const checkValidations = async () => {
     let usernameAvailable = await checkAvailability(state.username, 'username');
     let emailAvailable = await checkAvailability(state.email, 'email');
-    const formValidated = validateForm(state.errors);
+    const formValidated = validateForm();
     return usernameAvailable && emailAvailable && formValidated && true;
   };
 
@@ -143,11 +131,11 @@ const Signup = (props) => {
       ...prev,
       postalCode: prev.postalCode.replace(/ /g, ''),
       errors: {
-        ...prev.errors
+        ...prev.errors,
       },
       available: {
-        ...prev.available
-      }
+        ...prev.available,
+      },
     }));
     validated ? props.nextStep(1, state) : console.error('Invalid Form');
   };
@@ -160,7 +148,7 @@ const Signup = (props) => {
       alignItems: 'center',
       border: 5,
       padding: theme.spacing(2),
-      textAlign: 'center'
+      textAlign: 'center',
     },
     avatar: {
       zIndex: 1000,
@@ -168,30 +156,30 @@ const Signup = (props) => {
       marginBottom: theme.spacing(2),
       width: '120px',
       height: '120px',
-      backgroundColor: '#29c0a8'
+      backgroundColor: '#29c0a8',
     },
     form: {
       zIndex: 1000,
       width: '100%', // Fix IE 11 issue.
       marginTop: theme.spacing(1),
       marginBottom: theme.spacing(1),
-      textAlign: 'center'
+      textAlign: 'center',
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
-      backgroundColor: '#29c0a8'
+      backgroundColor: '#29c0a8',
     },
     accountCircle: {
       width: '90px',
       height: '90px',
-      color: 'white'
+      color: 'white',
     },
     button: {
-      margin: '1em'
+      margin: '1em',
     },
     error: {
-      color: 'red'
-    }
+      color: 'red',
+    },
   }));
   const classes = useStyles();
 
@@ -240,7 +228,6 @@ const Signup = (props) => {
           autoComplete="name"
           autoFocus
           defaultValue={state.name}
-          value={state.name}
           onChange={(e) => handleChange(e.target)}
         />
         <TextField
@@ -259,7 +246,6 @@ const Signup = (props) => {
           autoComplete="username"
           autoFocus
           defaultValue={state.username}
-          value={state.username}
           onChange={(e) => handleChange(e.target)}
         />
         <TextField
@@ -278,7 +264,6 @@ const Signup = (props) => {
           autoComplete="email"
           autoFocus
           defaultValue={state.email}
-          value={state.email}
           onChange={(e) => handleChange(e.target)}
         />
         <TextField
@@ -320,7 +305,6 @@ const Signup = (props) => {
           type="postal"
           id="postal-code"
           defaultValue={state.postalCode}
-          value={state.postalCode}
           autoComplete="postal-code"
           onChange={(e) => handleChange(e.target)}
         />
