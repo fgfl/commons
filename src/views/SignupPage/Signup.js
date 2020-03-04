@@ -8,12 +8,12 @@ import axios from 'axios';
 
 const Signup = (props) => {
   const [state, setState] = useState({
-    name: '',
-    username: '',
-    email: '',
+    name: props.name,
+    username: props.username,
+    email: props.email,
     password: '',
     passwordConfirmation: '',
-    postalCode: '',
+    postalCode: props.postalCode,
     errors: {
       name:
         'Name must be 4 characters long and only contain letters and spaces.',
@@ -26,8 +26,8 @@ const Signup = (props) => {
     },
     available: {
       usernameTaken: '',
-      emailTaken: ''
-    }
+      emailTaken: '',
+    },
   });
   const [submitted, setSubmitted] = useState(false);
 
@@ -83,8 +83,8 @@ const Signup = (props) => {
       errors,
       available: {
         usernameTaken: '',
-        emailTaken: ''
-      }
+        emailTaken: '',
+      },
     }));
   };
 
@@ -114,8 +114,8 @@ const Signup = (props) => {
         ...prevState,
         available: {
           ...prevState.available,
-          [`${field}Taken`]: `${fieldUp} ${param} is already associated with a user account.`
-        }
+          [`${field}Taken`]: `${fieldUp} ${param} is already associated with a user account.`,
+        },
       }));
       console.error(`Error occurred on checkAvailability: ${error}`);
       return false;
@@ -143,11 +143,11 @@ const Signup = (props) => {
       ...prev,
       postalCode: prev.postalCode.replace(/ /g, ''),
       errors: {
-        ...prev.errors
+        ...prev.errors,
       },
       available: {
-        ...prev.available
-      }
+        ...prev.available,
+      },
     }));
     validated ? props.nextStep(1, state) : console.error('Invalid Form');
   };
@@ -160,7 +160,7 @@ const Signup = (props) => {
       alignItems: 'center',
       border: 5,
       padding: theme.spacing(2),
-      textAlign: 'center'
+      textAlign: 'center',
     },
     avatar: {
       zIndex: 1000,
@@ -168,30 +168,30 @@ const Signup = (props) => {
       marginBottom: theme.spacing(2),
       width: '120px',
       height: '120px',
-      backgroundColor: '#29c0a8'
+      backgroundColor: '#29c0a8',
     },
     form: {
       zIndex: 1000,
       width: '100%', // Fix IE 11 issue.
       marginTop: theme.spacing(1),
       marginBottom: theme.spacing(1),
-      textAlign: 'center'
+      textAlign: 'center',
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
-      backgroundColor: '#29c0a8'
+      backgroundColor: '#29c0a8',
     },
     accountCircle: {
       width: '90px',
       height: '90px',
-      color: 'white'
+      color: 'white',
     },
     button: {
-      margin: '1em'
+      margin: '1em',
     },
     error: {
-      color: 'red'
-    }
+      color: 'red',
+    },
   }));
   const classes = useStyles();
 
@@ -240,7 +240,7 @@ const Signup = (props) => {
           autoComplete="name"
           autoFocus
           defaultValue={state.name}
-          value={state.name}
+          // value={state.name}
           onChange={(e) => handleChange(e.target)}
         />
         <TextField
@@ -259,7 +259,7 @@ const Signup = (props) => {
           autoComplete="username"
           autoFocus
           defaultValue={state.username}
-          value={state.username}
+          // value={state.username}
           onChange={(e) => handleChange(e.target)}
         />
         <TextField
@@ -278,7 +278,7 @@ const Signup = (props) => {
           autoComplete="email"
           autoFocus
           defaultValue={state.email}
-          value={state.email}
+          // value={state.email}
           onChange={(e) => handleChange(e.target)}
         />
         <TextField
@@ -320,7 +320,7 @@ const Signup = (props) => {
           type="postal"
           id="postal-code"
           defaultValue={state.postalCode}
-          value={state.postalCode}
+          // value={state.postalCode}
           autoComplete="postal-code"
           onChange={(e) => handleChange(e.target)}
         />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import Signup from './Signup';
 import Notifications from './Notifications';
 import Categories from './Categories';
@@ -134,7 +134,15 @@ const UserForm = (props) => {
   const renderSwitch = (param) => {
     switch (param) {
       case 1:
-        return <Signup nextStep={nextStep} />;
+        return (
+          <Signup
+            nextStep={nextStep}
+            name={name}
+            username={username}
+            email={email}
+            postalCode={postalCode}
+          />
+        );
       case 2:
         return <Notifications nextStep={nextStep} prevStep={prevStep} />;
       case 3:
@@ -174,7 +182,7 @@ const UserForm = (props) => {
     }
   };
 
-  return <div>{renderSwitch(step)}</div>;
+  return <Fragment>{renderSwitch(step)}</Fragment>;
 };
 
 export default UserForm;
