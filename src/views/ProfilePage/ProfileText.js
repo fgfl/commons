@@ -4,6 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import ChipsArray from '../SignupPage/ChipsArray';
 
 import mapUserFieldToLabel from '../../helpers/mapUserFieldToLabel';
+import validationFunctions from '../../helpers/validationFunctions';
+
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -69,58 +71,6 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
     });
   };
 
-  const validationFunctions = {
-    id: () => {
-      return '';
-    },
-    name: (value) => {
-      const validNameRegex = RegExp(/^([a-zA-Z -]+)$/);
-      return value.length < 4 || !validNameRegex.test(value)
-        ? 'Name must be 4 characters long and only contain letters and spaces.'
-        : '';
-    },
-    username: (value) => {
-      const validUsernameRegex = RegExp(/^([a-zA-Z0-9_-]+)$/);
-      return value.length < 4 || !validUsernameRegex.test(value)
-        ? 'Username must be 4 characters long and only contain alphanumeric characters and underscores.'
-        : '';
-    },
-    email: (value) => {
-      const validEmailRegex = RegExp(
-        // eslint-disable-next-line
-        /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
-      );
-      return validEmailRegex.test(value) ? '' : 'Email is not valid.';
-    },
-    password: () => {},
-    password_confirmation: (value) => {
-      return value === password
-        ? ''
-        : 'Password and password confirmation must match!';
-    },
-    phone_number: (value) => {
-      const parsedValue = value.replace(/\D+/g, '');
-      return parsedValue.length === 0 || parsedValue.length === 10
-        ? ''
-        : 'Phone number must be exactly 10 digits long.';
-    },
-    postal_code: (value) => {
-      const postalCodeRegex = /^(?!.*[DFIOQU])[A-VXY][0-9][A-Z] ?[0-9][A-Z][0-9]$/;
-      return value.length === 0 || postalCodeRegex.test(value)
-        ? ''
-        : 'Postal code must look like: A1A1A1 or A1A 1A1.';
-    },
-    email_notification: () => {
-      return '';
-    },
-    sms_notification: () => {
-      return '';
-    },
-    categories: () => {
-      return '';
-    },
-  };
-
   const validateForm = () => {
     const formValues = {
       id: user.id,
@@ -128,18 +78,21 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
       username: username,
       email: email,
       password: password,
-      password_confirmation: passwordConfirmation,
-      phone_number: phoneNumber,
-      postal_code: postalCode,
-      email_notification: emailNotification,
-      sms_notification: smsNotification,
+      passwordConfirmation: passwordConfirmation,
+      phoneNumber: phoneNumber,
+      postalCode: postalCode,
+      emailNotification: emailNotification,
+      smsNotification: smsNotification,
       categories: Object.keys(clicked).map((n) => Number(n)),
     };
     const newValidity = {};
     let isValid = true;
 
     for (const key in formValues) {
-      const problem = validationFunctions[key](formValues[key]);
+      const problem =
+        key === 'passwordConfirmation'
+          ? validationFunctions[key](formValues[key], formValues.password)
+          : validationFunctions[key](formValues[key]);
       newValidity[key] = problem;
       if (problem && problem.length) {
         isValid = false;
@@ -157,11 +110,11 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
       username: username,
       email: email,
       password: password,
-      password_confirmation: passwordConfirmation,
-      phone_number: phoneNumber,
-      postal_code: postalCode,
-      email_notification: emailNotification,
-      sms_notification: smsNotification,
+      passwordConfirmation: passwordConfirmation,
+      phoneNumber: phoneNumber,
+      postalCode: postalCode,
+      emailNotification: emailNotification,
+      smsNotification: smsNotification,
       categories: Object.keys(clicked).map((n) => Number(n)),
     };
 
