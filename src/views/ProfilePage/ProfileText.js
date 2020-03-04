@@ -113,23 +113,24 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
   };
 
   const saveForm = () => {
+    // Need snake case because Ruby API uses snake case
     const formValues = {
       id: user.id,
       name: name,
       username: username,
       email: email,
       password: password,
-      passwordConfirmation: passwordConfirmation,
-      phoneNumber: phoneNumber,
-      postalCode: postalCode,
-      emailNotification: emailNotification,
-      smsNotification: smsNotification,
+      password_confirmation: passwordConfirmation,
+      phone_number: phoneNumber,
+      postal_code: postalCode,
+      email_notification: emailNotification,
+      sms_notification: smsNotification,
       categories: Object.keys(clicked).map((n) => Number(n)),
     };
 
     if (validateForm()) {
       setEditStatus(false);
-      formValues.postalCode = formValues.postalCode.replace(/ /g, '');
+      formValues.postal_code = formValues.postal_code.replace(/ /g, '');
       handleProfileUpdate(formValues);
     }
   };
