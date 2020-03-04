@@ -39,21 +39,21 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
     password,
     passwordConfirmation,
     phoneNumber,
-    postalCode
+    postalCode,
   ]);
 
   const useStyles = makeStyles((theme) => ({
     profileTable: {
       display: 'flex',
-      flexDirection: 'row'
+      flexDirection: 'row',
     },
     buttons: {
       margin: '1em',
-      textAlign: 'center'
+      textAlign: 'center',
     },
     button: {
-      marginRight: theme.spacing(2)
-    }
+      marginRight: theme.spacing(2),
+    },
   }));
   const classes = useStyles();
 
@@ -94,7 +94,9 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
     },
     password: () => {},
     password_confirmation: (value) => {
-      return value === password ? '' : 'Passwords must match.';
+      return value === password
+        ? ''
+        : 'Password and password confirmation must match!';
     },
     phone_number: (value) => {
       const parsedValue = value.replace(/\D+/g, '');
@@ -116,7 +118,7 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
     },
     categories: () => {
       return '';
-    }
+    },
   };
 
   const validateForm = () => {
@@ -131,7 +133,7 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
       postal_code: postalCode,
       email_notification: emailNotification,
       sms_notification: smsNotification,
-      categories: Object.keys(clicked).map((n) => Number(n))
+      categories: Object.keys(clicked).map((n) => Number(n)),
     };
     const newValidity = {};
     let isValid = true;
@@ -160,7 +162,7 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
       postal_code: postalCode,
       email_notification: emailNotification,
       sms_notification: smsNotification,
-      categories: Object.keys(clicked).map((n) => Number(n))
+      categories: Object.keys(clicked).map((n) => Number(n)),
     };
 
     if (validateForm()) {
@@ -187,7 +189,7 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
         label={mapUserFieldToLabel('name')}
         name={mapUserFieldToLabel('name')}
         InputProps={{
-          readOnly: !editStatus
+          readOnly: !editStatus,
         }}
         defaultValue={name}
         onChange={(e) => {
@@ -205,7 +207,7 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
         label={mapUserFieldToLabel('username')}
         name={mapUserFieldToLabel('username')}
         InputProps={{
-          readOnly: !editStatus
+          readOnly: !editStatus,
         }}
         defaultValue={username}
         onChange={(e) => setUsername(e.target.value)}
@@ -221,7 +223,7 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
         label={mapUserFieldToLabel('email')}
         name={mapUserFieldToLabel('email')}
         InputProps={{
-          readOnly: !editStatus
+          readOnly: !editStatus,
         }}
         defaultValue={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -239,7 +241,7 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
             label={mapUserFieldToLabel('password_digest')}
             name={mapUserFieldToLabel('password_digest')}
             InputProps={{
-              readOnly: !editStatus
+              readOnly: !editStatus,
             }}
             defaultValue=""
             onChange={(e) => setPassword(e.target.value)}
@@ -258,7 +260,7 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
             label="Confirm password"
             name="Confirm password"
             InputProps={{
-              readOnly: !editStatus
+              readOnly: !editStatus,
             }}
             defaultValue=""
             onChange={(e) => setPasswordConfirmation(e.target.value)}
@@ -275,7 +277,7 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
         label={mapUserFieldToLabel('phone_number')}
         name={mapUserFieldToLabel('phone_number')}
         InputProps={{
-          readOnly: !editStatus
+          readOnly: !editStatus,
         }}
         defaultValue={phoneNumber}
         onChange={(e) => setPhoneNumber(e.target.value)}
@@ -290,7 +292,7 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
         label={mapUserFieldToLabel('postal_code')}
         name={mapUserFieldToLabel('postal_code')}
         InputProps={{
-          readOnly: !editStatus
+          readOnly: !editStatus,
         }}
         defaultValue={postalCode}
         onChange={(e) => setPostalCode(e.target.value)}
