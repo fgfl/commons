@@ -22,11 +22,15 @@ const validationFunctions = {
     return validEmailRegex.test(value) ? '' : 'Email is not valid.';
   },
   password: (value) => {
-    return value.length === 0 || value.length < 5
+    return value.length < 5 ? 'Password must be 5 characters long!' : '';
+  },
+  passwordUpdate: (value) => {
+    return value.length !== 0 && value.length < 5
       ? 'Password must be 5 characters long!'
       : '';
   },
   passwordConfirmation: (value, password) => {
+    console.log('in pass conf');
     return value === password
       ? ''
       : 'Password and password confirmation must match!';

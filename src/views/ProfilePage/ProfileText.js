@@ -89,10 +89,21 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
     let isValid = true;
 
     for (const key in formValues) {
-      const problem =
-        key === 'passwordConfirmation'
-          ? validationFunctions[key](formValues[key], formValues.password)
-          : validationFunctions[key](formValues[key]);
+      const problem = '';
+
+      if (key === 'passwordConfirmation') {
+        console.log('password conf calling');
+        problem = validationFunctions[key](
+          formValues[key],
+          formValues.password
+        );
+        console.log('problem', problem, formValues[key], formValues.password);
+      } else if (key === 'password') {
+        problem = validationFunctions[`${key}Update`](formValues[key]);
+      } else {
+        problem = validationFunctions[key](formValues[key]);
+      }
+
       newValidity[key] = problem;
       if (problem && problem.length) {
         isValid = false;
@@ -120,7 +131,7 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
 
     if (validateForm()) {
       setEditStatus(false);
-      formValues.postal_code = formValues.postal_code.replace(/ /g, '');
+      formValues.postalCode = formValues.postalCode.replace(/ /g, '');
       handleProfileUpdate(formValues);
     }
   };
@@ -204,10 +215,10 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
             type="password"
             margin="normal"
             error={
-              formErrors.password_confirmation &&
-              formErrors.password_confirmation.length > 0
+              formErrors.passwordConfirmation &&
+              formErrors.passwordConfirmation.length > 0
             }
-            helperText={formErrors.password_confirmation}
+            helperText={formErrors.passwordConfirmation}
             fullWidth
             id="password_confirmation"
             label="Confirm password"
@@ -223,8 +234,8 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
       <TextField
         variant="outlined"
         margin="normal"
-        error={formErrors.phone_number && formErrors.phone_number.length > 0}
-        helperText={formErrors.phone_number}
+        error={formErrors.phoneNumber && formErrors.phoneNumber.length > 0}
+        helperText={formErrors.phoneNumber}
         fullWidth
         id="phone_number"
         label={mapUserFieldToLabel('phone_number')}
@@ -238,8 +249,8 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
       <TextField
         variant="outlined"
         margin="normal"
-        error={formErrors.postal_code && formErrors.postal_code.length > 0}
-        helperText={formErrors.postal_code}
+        error={formErrors.postalCode && formErrors.postalCode.length > 0}
+        helperText={formErrors.postalCode}
         fullWidth
         id="postal_code"
         label={mapUserFieldToLabel('postal_code')}
