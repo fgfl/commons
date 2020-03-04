@@ -92,12 +92,10 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
       const problem = '';
 
       if (key === 'passwordConfirmation') {
-        console.log('password conf calling');
         problem = validationFunctions[key](
           formValues[key],
           formValues.password
         );
-        console.log('problem', problem, formValues[key], formValues.password);
       } else if (key === 'password') {
         problem = validationFunctions[`${key}Update`](formValues[key]);
       } else {

@@ -30,7 +30,6 @@ const validationFunctions = {
       : '';
   },
   passwordConfirmation: (value, password) => {
-    console.log('in pass conf');
     return value === password
       ? ''
       : 'Password and password confirmation must match!';
