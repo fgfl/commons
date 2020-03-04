@@ -89,7 +89,7 @@ const ProfileText = ({ user, handleProfileUpdate, categories }) => {
     let isValid = true;
 
     for (const key in formValues) {
-      const problem = '';
+      let problem = '';
 
       if (key === 'passwordConfirmation') {
         problem = validationFunctions[key](
