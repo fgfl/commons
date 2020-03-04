@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import Signup from './Signup';
 import Notifications from './Notifications';
 import Categories from './Categories';
@@ -107,15 +107,9 @@ const UserForm = (props) => {
       setStep(step + 1);
     }
     if (justFinishedStep === 2) {
-      if (data.smsNotification) {
-        setSmsNotification(data.smsNotification);
-      }
-      if (data.emailNotification) {
-        setEmailNotification(data.emailNotification);
-      }
-      if (data.phoneNumber) {
-        setPhoneNumber(data.phoneNumber);
-      }
+      setSmsNotification(data.smsNotification);
+      setEmailNotification(data.emailNotification);
+      setPhoneNumber(data.phoneNumber);
       setStep(step + 1);
     }
     if (justFinishedStep === 3) {
@@ -134,9 +128,25 @@ const UserForm = (props) => {
   const renderSwitch = (param) => {
     switch (param) {
       case 1:
-        return <Signup nextStep={nextStep} />;
+        return (
+          <Signup
+            nextStep={nextStep}
+            name={name}
+            username={username}
+            email={email}
+            postalCode={postalCode}
+          />
+        );
       case 2:
-        return <Notifications nextStep={nextStep} prevStep={prevStep} />;
+        return (
+          <Notifications
+            nextStep={nextStep}
+            prevStep={prevStep}
+            emailNotification={emailNotification}
+            smsNotification={smsNotification}
+            phoneNumber={phoneNumber}
+          />
+        );
       case 3:
         return (
           <Categories
@@ -174,7 +184,7 @@ const UserForm = (props) => {
     }
   };
 
-  return <div>{renderSwitch(step)}</div>;
+  return <Fragment>{renderSwitch(step)}</Fragment>;
 };
 
 export default UserForm;
