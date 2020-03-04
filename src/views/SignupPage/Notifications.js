@@ -30,10 +30,7 @@ const Notifications = (props) => {
     let errors = state.errors;
     const parsedValue = value.replace(/\D+/g, '');
 
-    errors.phoneNumber =
-      parsedValue.length === 0 || parsedValue.length === 10
-        ? ''
-        : 'Phone number must be exactly 10 digits long.';
+    errors.phoneNumber = validationFunctions.phoneNumber(parsedValue);
 
     setState((prevState) => ({
       ...prevState,
