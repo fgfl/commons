@@ -109,8 +109,7 @@ const Signup = (props) => {
       ...prevState,
       errors,
       available: {
-        usernameTaken: '',
-        emailTaken: '',
+        ...prevState.available,
       },
     }));
 
