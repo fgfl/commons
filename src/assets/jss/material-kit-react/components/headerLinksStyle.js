@@ -22,7 +22,7 @@ const headerLinksStyle = (theme) => ({
     margin: '0',
     padding: '0',
     [theme.breakpoints.down('sm')]: {
-      width: '100%',
+      'width': '100%',
       '&:after': {
         width: 'calc(100% - 30px)',
         content: '""',
@@ -37,27 +37,27 @@ const headerLinksStyle = (theme) => ({
     padding: '0 !important'
   },
   navLink: {
-    color: '#FFF',
-    position: 'relative',
-    padding: '0.9375rem',
-    fontWeight: '600',
-    fontSize: '1.2em',
-    textTransform: 'uppercase',
-    borderRadius: '3px',
-    lineHeight: '20px',
-    textDecoration: 'none',
-    margin: '0px',
-    display: 'inline-flex',
+    'color': '#FFF',
+    'position': 'relative',
+    'padding': '0.9375rem',
+    'fontWeight': '600',
+    'fontSize': '1.2em',
+    'textTransform': 'uppercase',
+    'borderRadius': '3px',
+    'lineHeight': '20px',
+    'textDecoration': 'none',
+    'margin': '0px',
+    'display': 'inline-flex',
     '&:hover,&:focus': {
-      color: '#1a237e',
-      background: 'rgba(200, 200, 200, 0.2)'
+      color: '#10021a',
+      background: 'transparent'
     },
     [theme.breakpoints.down('sm')]: {
-      width: 'calc(100% - 30px)',
-      marginLeft: '15px',
-      marginBottom: '8px',
-      marginTop: '8px',
-      textAlign: 'left',
+      'width': 'calc(100% - 30px)',
+      'marginLeft': '15px',
+      'marginBottom': '8px',
+      'marginTop': '8px',
+      'textAlign': 'left',
       '& > span:first-child': {
         justifyContent: 'flex-start'
       }

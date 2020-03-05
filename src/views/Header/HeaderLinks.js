@@ -8,13 +8,8 @@ import { Link } from 'react-router-dom';
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
 import { List, ListItem, ListItemText } from '@material-ui/core';
-import Tooltip from '@material-ui/core/Tooltip';
-
-// @material-ui/icons
-import { Apps, CloudDownload } from '@material-ui/icons';
 
 // core components
-import CustomDropdown from 'components/CustomDropdown/CustomDropdown.js';
 import Button from 'components/CustomButtons/Button.js';
 
 import styles from 'assets/jss/material-kit-react/components/headerLinksStyle.js';
@@ -25,7 +20,7 @@ export default function HeaderLinks({
   user,
   loggedIn,
   handleDrawerToggle,
-  handleLogout,
+  handleLogout
 }) {
   const classes = useStyles();
 

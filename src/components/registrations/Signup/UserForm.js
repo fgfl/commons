@@ -34,7 +34,7 @@ const UserForm = (props) => {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     let user = {
       name: name,
       username: username,
@@ -45,20 +45,23 @@ const UserForm = (props) => {
       email_notification: emailNotification,
       sms_notification: smsNotification,
       phone_number: phoneNumber,
-      categories: Object.keys(clicked),
+      categories: Object.keys(clicked)
     };
 
-    axios
-      .post(`${process.env.REACT_APP_COMMONS_API}/users`, { user })
-      .then((response) => {
-        if (response.data.status === 'created') {
-          props.handleLogin(response.data);
-          setStep(step + 1);
-        } else {
-          setErrors(response.data.errors);
-        }
-      })
-      .catch((error) => console.error(`Invalid Form: ${error}`));
+    try {
+      const response = axios.post(
+        `${process.env.REACT_APP_COMMONS_API}/users`,
+        { user }
+      );
+      if (response.data.status === 'created') {
+        props.handleLogin(response.data);
+        setStep(step + 1);
+      } else {
+        setErrors(response.data.errors);
+      }
+    } catch (error) {
+      console.error(`Invalid Form: ${error}`);
+    }
   };
 
   const handleErrors = () => {
@@ -158,7 +161,7 @@ const UserForm = (props) => {
               email_notification: emailNotification,
               sms_notification: smsNotification,
               phone_number: phoneNumber,
-              categories: Object.keys(clicked),
+              categories: Object.keys(clicked)
             }}
           />
         );

@@ -53,16 +53,16 @@ const headerStyle = {
   },
   title: {
     ...defaultFont,
-    lineHeight: '30px',
-    fontSize: '2em',
-    fontFamily: 'Prompt',
-    borderRadius: '3px',
-    textTransform: 'none',
-    color: '#FFF',
-    padding: '8px 16px',
-    letterSpacing: 'unset',
+    'lineHeight': '30px',
+    'fontSize': '2em',
+    'fontFamily': 'Prompt',
+    'borderRadius': '3px',
+    'textTransform': 'none',
+    'color': '#FFF',
+    'padding': '8px 16px',
+    'letterSpacing': 'unset',
     '&:hover': {
-      color: '#1a237e',
+      color: '#10021a',
       background: 'transparent'
     }
   },
