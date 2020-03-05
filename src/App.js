@@ -9,7 +9,7 @@ import LoginPage from 'views/LoginPage/LoginPage.js';
 import SignupPage from 'views/SignupPage/SignupPage.js';
 import WatchListPage from 'views/WatchListPage/WatchListPage.js';
 import LoadingSpinner from 'views/LoadingSpinner/LoadingSpinner.js';
-import Header from 'components/Header/Header';
+import Header from 'views/Header/Header';
 
 import useLoading from 'hooks/useLoading';
 

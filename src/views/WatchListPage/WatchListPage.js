@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
 // nodejs library that concatenates classes
 import classNames from 'classnames';
-// react components for routing our app without refresh
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
-// @material-ui/icons
 // core components
 import GridContainer from 'components/Grid/GridContainer.js';
 import GridItem from 'components/Grid/GridItem.js';
 import Parallax from 'components/Parallax/Parallax.js';
 // sections for this page
-
 import styles from 'assets/jss/material-kit-react/views/components.js';
 import CategoryDropdown from '../HomePage/CategoryDropdown';
 import Bills from '../HomePage/Bills';
+
 import image from 'assets/img/bg8.jpg';
 
 const useStyles = makeStyles(styles);

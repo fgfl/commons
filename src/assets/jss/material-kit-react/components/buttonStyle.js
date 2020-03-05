@@ -10,30 +10,30 @@ import {
 
 const buttonStyle = {
   button: {
-    minHeight: 'auto',
-    minWidth: 'auto',
-    backgroundColor: grayColor,
-    color: '#FFFFFF',
-    boxShadow:
+    'minHeight': 'auto',
+    'minWidth': 'auto',
+    'backgroundColor': grayColor,
+    'color': '#FFFFFF',
+    'boxShadow':
       '0 2px 2px 0 rgba(153, 153, 153, 0.14), 0 3px 1px -2px rgba(153, 153, 153, 0.2), 0 1px 5px 0 rgba(153, 153, 153, 0.12)',
-    border: 'none',
-    borderRadius: '3px',
-    position: 'relative',
-    padding: '12px 30px',
-    margin: '.3125rem 1px',
-    fontSize: '12px',
-    fontWeight: '400',
-    textTransform: 'uppercase',
-    letterSpacing: '0',
-    willChange: 'box-shadow, transform',
-    transition:
+    'border': 'none',
+    'borderRadius': '3px',
+    'position': 'relative',
+    'padding': '12px 30px',
+    'margin': '.3125rem 1px',
+    'fontSize': '12px',
+    'fontWeight': '400',
+    'textTransform': 'uppercase',
+    'letterSpacing': '0',
+    'willChange': 'box-shadow, transform',
+    'transition':
       'box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-    lineHeight: '1.42857143',
-    textAlign: 'center',
-    whiteSpace: 'nowrap',
-    verticalAlign: 'middle',
-    touchAction: 'manipulation',
-    cursor: 'pointer',
+    'lineHeight': '1.42857143',
+    'textAlign': 'center',
+    'whiteSpace': 'nowrap',
+    'verticalAlign': 'middle',
+    'touchAction': 'manipulation',
+    'cursor': 'pointer',
     '&:hover,&:focus': {
       color: '#FFFFFF',
       backgroundColor: grayColor,
@@ -75,8 +75,8 @@ const buttonStyle = {
     width: '100%'
   },
   primary: {
-    backgroundColor: primaryColor,
-    boxShadow:
+    'backgroundColor': primaryColor,
+    'boxShadow':
       '0 2px 2px 0 rgba(156, 39, 176, 0.14), 0 3px 1px -2px rgba(156, 39, 176, 0.2), 0 1px 5px 0 rgba(156, 39, 176, 0.12)',
     '&:hover,&:focus': {
       backgroundColor: primaryColor,
@@ -85,8 +85,8 @@ const buttonStyle = {
     }
   },
   info: {
-    backgroundColor: infoColor,
-    boxShadow:
+    'backgroundColor': infoColor,
+    'boxShadow':
       '0 2px 2px 0 rgba(0, 188, 212, 0.14), 0 3px 1px -2px rgba(0, 188, 212, 0.2), 0 1px 5px 0 rgba(0, 188, 212, 0.12)',
     '&:hover,&:focus': {
       backgroundColor: infoColor,
@@ -95,8 +95,8 @@ const buttonStyle = {
     }
   },
   success: {
-    backgroundColor: successColor,
-    boxShadow:
+    'backgroundColor': successColor,
+    'boxShadow':
       '0 2px 2px 0 rgba(76, 175, 80, 0.14), 0 3px 1px -2px rgba(76, 175, 80, 0.2), 0 1px 5px 0 rgba(76, 175, 80, 0.12)',
     '&:hover,&:focus': {
       backgroundColor: successColor,
@@ -105,8 +105,8 @@ const buttonStyle = {
     }
   },
   warning: {
-    backgroundColor: warningColor,
-    boxShadow:
+    'backgroundColor': warningColor,
+    'boxShadow':
       '0 2px 2px 0 rgba(255, 152, 0, 0.14), 0 3px 1px -2px rgba(255, 152, 0, 0.2), 0 1px 5px 0 rgba(255, 152, 0, 0.12)',
     '&:hover,&:focus': {
       backgroundColor: warningColor,
@@ -115,8 +115,8 @@ const buttonStyle = {
     }
   },
   danger: {
-    backgroundColor: dangerColor,
-    boxShadow:
+    'backgroundColor': dangerColor,
+    'boxShadow':
       '0 2px 2px 0 rgba(244, 67, 54, 0.14), 0 3px 1px -2px rgba(244, 67, 54, 0.2), 0 1px 5px 0 rgba(244, 67, 54, 0.12)',
     '&:hover,&:focus': {
       backgroundColor: dangerColor,
@@ -125,8 +125,8 @@ const buttonStyle = {
     }
   },
   rose: {
-    backgroundColor: roseColor,
-    boxShadow:
+    'backgroundColor': roseColor,
+    'boxShadow':
       '0 2px 2px 0 rgba(233, 30, 99, 0.14), 0 3px 1px -2px rgba(233, 30, 99, 0.2), 0 1px 5px 0 rgba(233, 30, 99, 0.12)',
     '&:hover,&:focus': {
       backgroundColor: roseColor,
@@ -141,9 +141,9 @@ const buttonStyle = {
     }
   },
   twitter: {
-    backgroundColor: '#55acee',
-    color: '#fff',
-    boxShadow:
+    'backgroundColor': '#55acee',
+    'color': '#fff',
+    'boxShadow':
       '0 2px 2px 0 rgba(85, 172, 238, 0.14), 0 3px 1px -2px rgba(85, 172, 238, 0.2), 0 1px 5px 0 rgba(85, 172, 238, 0.12)',
     '&:hover,&:focus,&:visited': {
       backgroundColor: '#55acee',
@@ -153,9 +153,9 @@ const buttonStyle = {
     }
   },
   facebook: {
-    backgroundColor: '#3b5998',
-    color: '#fff',
-    boxShadow:
+    'backgroundColor': '#3b5998',
+    'color': '#fff',
+    'boxShadow':
       '0 2px 2px 0 rgba(59, 89, 152, 0.14), 0 3px 1px -2px rgba(59, 89, 152, 0.2), 0 1px 5px 0 rgba(59, 89, 152, 0.12)',
     '&:hover,&:focus': {
       backgroundColor: '#3b5998',
@@ -165,9 +165,9 @@ const buttonStyle = {
     }
   },
   google: {
-    backgroundColor: '#dd4b39',
-    color: '#fff',
-    boxShadow:
+    'backgroundColor': '#dd4b39',
+    'color': '#fff',
+    'boxShadow':
       '0 2px 2px 0 rgba(221, 75, 57, 0.14), 0 3px 1px -2px rgba(221, 75, 57, 0.2), 0 1px 5px 0 rgba(221, 75, 57, 0.12)',
     '&:hover,&:focus': {
       backgroundColor: '#dd4b39',
@@ -177,9 +177,9 @@ const buttonStyle = {
     }
   },
   github: {
-    backgroundColor: '#333333',
-    color: '#fff',
-    boxShadow:
+    'backgroundColor': '#333333',
+    'color': '#fff',
+    'boxShadow':
       '0 2px 2px 0 rgba(51, 51, 51, 0.14), 0 3px 1px -2px rgba(51, 51, 51, 0.2), 0 1px 5px 0 rgba(51, 51, 51, 0.12)',
     '&:hover,&:focus': {
       backgroundColor: '#333333',
@@ -282,20 +282,20 @@ const buttonStyle = {
     }
   },
   justIcon: {
-    paddingLeft: '12px',
-    paddingRight: '12px',
-    fontSize: '20px',
-    height: '41px',
-    minWidth: '41px',
-    width: '41px',
+    'paddingLeft': '12px',
+    'paddingRight': '12px',
+    'fontSize': '20px',
+    'height': '41px',
+    'minWidth': '41px',
+    'width': '41px',
     '& .fab,& .fas,& .far,& .fal,& svg,& .material-icons': {
       marginRight: '0px'
     },
     '&$lg': {
-      height: '57px',
-      minWidth: '57px',
-      width: '57px',
-      lineHeight: '56px',
+      'height': '57px',
+      'minWidth': '57px',
+      'width': '57px',
+      'lineHeight': '56px',
       '& .fab,& .fas,& .far,& .fal,& .material-icons': {
         fontSize: '32px',
         lineHeight: '56px'
@@ -306,9 +306,9 @@ const buttonStyle = {
       }
     },
     '&$sm': {
-      height: '30px',
-      minWidth: '30px',
-      width: '30px',
+      'height': '30px',
+      'minWidth': '30px',
+      'width': '30px',
       '& .fab,& .fas,& .far,& .fal,& .material-icons': {
         fontSize: '17px',
         lineHeight: '29px'
