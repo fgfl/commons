@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
+import { red, grey } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -34,15 +35,31 @@ const useStyles = makeStyles((theme) => ({
     transform: 'rotate(180deg)'
   },
   avatar: {
-    backgroundColor: red[500],
-    borderRadius: '100%',
-    width: '75px',
-    height: '75px',
-    color: '#FFF',
-    fontWeight: 900,
-    boxShadow: '10px 17px 24px -13px rgba(0,0,0,0.5)',
-    // margin: '0 auto',
-    margin: theme.spacing(2)
+    'backgroundColor': red[500],
+    'borderRadius': '100%',
+    'width': '75px',
+    'height': '75px',
+    'color': '#FFF',
+    'fontWeight': 900,
+    'boxShadow': '10px 17px 24px -13px rgba(0,0,0,0.5)',
+    'margin': theme.spacing(2),
+    'transition': 'box-shadow 0.5s ease-in-out',
+    '&:hover,&:focus': {
+      color: '#10021a',
+      background: '#fa7c70',
+      boxShadow: '0 14px 20px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)',
+      transition: 'box-shadow 0.3s ease-in-out'
+    }
+  },
+  fullText: {
+    'backgroundColor': grey[200],
+    'transition': 'box-shadow 0.5s ease-in-out',
+    '&:hover,&:focus': {
+      color: '#10021a',
+      background: '#fa7c70',
+      boxShadow: '0 8px 10px rgba(0,0,0,0.25), 0 6px 6px rgba(0,0,0,0.22)',
+      transition: 'box-shadow 0.3s ease-in-out'
+    }
   },
   status: {
     textAlign: 'center',
@@ -52,6 +69,10 @@ const useStyles = makeStyles((theme) => ({
   pullRight: {
     justifyContent: 'flex-end',
     fontSize: '0.8em'
+  },
+  snackbar: {
+    color: '#10021a',
+    background: '#fa7c70'
   }
 }));
 
@@ -239,6 +260,7 @@ export default function BillCard(props) {
                   href={props.bill.full_text_url}
                   target="_blank"
                   variant="contained"
+                  className={classes.fullText}
                 >
                   Full Text
                 </Button>
@@ -267,11 +289,12 @@ export default function BillCard(props) {
                     vertical: 'bottom',
                     horizontal: 'center'
                   }}
+                  className={classes.snackbar}
                   open={open}
                   autoHideDuration={2000}
                   onClose={handleClose}
                   action={
-                    <React.Fragment>
+                    <>
                       {color === 'grey' ? (
                         <Button
                           color="primary"
@@ -297,7 +320,7 @@ export default function BillCard(props) {
                       >
                         <CloseIcon fontSize="small" />
                       </IconButton>
-                    </React.Fragment>
+                    </>
                   }
                 />
               </IconButton>
