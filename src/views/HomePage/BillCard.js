@@ -15,6 +15,13 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CloseIcon from '@material-ui/icons/Close';
 import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import Chip from '@material-ui/core/Chip';
+import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
+import ClearIcon from '@material-ui/icons/Clear';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 
 import clsx from 'clsx';
 import axios from 'axios';
@@ -43,21 +50,23 @@ const useStyles = makeStyles((theme) => ({
     'fontWeight': 900,
     'boxShadow': '10px 17px 24px -13px rgba(0,0,0,0.5)',
     'margin': theme.spacing(2),
-    'transition': 'box-shadow 0.5s ease-in-out',
+    'transition': 'all 0.5s ease-in-out',
     '&:hover,&:focus': {
       color: '#10021a',
       background: '#fa7c70',
       boxShadow: '0 14px 20px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)',
-      transition: 'box-shadow 0.3s ease-in-out'
+      transform: 'scale(1.05)',
+      transition: 'all 0.3s ease-in-out'
     }
   },
-  fullText: {
+  billText: {
     'backgroundColor': grey[200],
-    'transition': 'box-shadow 0.5s ease-in-out',
+    'transition': 'all 0.5s ease-in-out',
     '&:hover,&:focus': {
       color: '#10021a',
       background: '#fa7c70',
       boxShadow: '0 8px 10px rgba(0,0,0,0.25), 0 6px 6px rgba(0,0,0,0.22)',
+      transform: 'scale(1.05)',
       transition: 'box-shadow 0.3s ease-in-out'
     }
   },
@@ -70,9 +79,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
     fontSize: '0.8em'
   },
-  snackbar: {
-    color: '#10021a',
-    background: '#fa7c70'
+  billChips: {
+    minWidth: '100px'
   }
 }));
 
@@ -105,17 +113,14 @@ export default function BillCard(props) {
     const watchlist_bill = {
       id: { bill_id: props.bill.id, user_id: props.user.id }
     };
-    color === 'grey' ? setColor('red') : setColor('grey');
 
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_COMMONS_API}/bill_users`,
         watchlist_bill
       );
+      color === 'grey' ? setColor('red') : setColor('grey');
       props.updateWatchList(response.data.watchlist);
-      response.data.watchlist.includes(props.bill.id)
-        ? setColor('red')
-        : setColor('grey');
       setOpen(true);
     } catch (error) {
       console.error(`Error occurred on handleWatchSubmit: ${error}`);
@@ -136,11 +141,10 @@ export default function BillCard(props) {
     }
   };
 
-  const handleClose = (event, reason) => {
+  const handleClose = (reason) => {
     if (reason === 'clickaway') {
       return;
     }
-
     setOpen(false);
   };
 
@@ -151,13 +155,14 @@ export default function BillCard(props) {
 
   // Formats the date to use "Month Day, Year" format
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  // Adding the space forces using UTC time, avoiding wrong day due to offset
-  const introduced_date = new Date(props.bill.introduced_date + ' ');
+  // Adding the ' ' forces using UTC time, avoiding wrong day due to offset
+  const validDate = new Date(props.bill.introduced_date + ' ');
+  const introduced_date = !isNaN(validDate) ? validDate : null;
 
   const eventCards =
     Array.isArray(events) &&
     events.map((event) => {
-      // Adding the space forces using UTC time, avoiding wrong day due to offset
+      // Adding the ' ' forces using UTC time, avoiding wrong day due to offset
       const publication_date = new Date(event.publication_date + ' ');
       return (
         <CardContent>
@@ -201,7 +206,10 @@ export default function BillCard(props) {
             spacing={3}
             className={classes.status}
           >
-            <Tooltip title="View Bill Page" placement="right">
+            <Tooltip
+              title="View bill page on parliament's website."
+              placement="right"
+            >
               <Button
                 href={props.bill.page_url}
                 variant="contained"
@@ -213,29 +221,38 @@ export default function BillCard(props) {
               </Button>
             </Tooltip>
             {props.bill.passed === true ? (
-              <Button
-                className={classes.billButtons}
-                variant="contained"
-                color="primary"
-              >
-                Passed
-              </Button>
+              <Tooltip title="This bill has been passed." placement="bottom">
+                <Chip
+                  label="Passed"
+                  className={classes.billChips}
+                  variant="contained"
+                  color="primary"
+                  icon={<DoneOutlineIcon />}
+                />
+              </Tooltip>
             ) : props.bill.passed === false ? (
-              <Button
-                className={classes.billButtons}
-                variant="contained"
-                color="secondary"
-              >
-                Defeated
-              </Button>
+              <Tooltip title="This bill has been defeated." placement="bottom">
+                <Chip
+                  label="Defeated"
+                  className={classes.billChips}
+                  variant="contained"
+                  color="secondary"
+                  icon={<ClearIcon />}
+                />
+              </Tooltip>
             ) : (
-              <Button
-                className={classes.billButtons}
-                variant="outlined"
-                disabled
+              <Tooltip
+                title="This bill is currently in progress through parliament."
+                placement="bottom"
               >
-                In Progress
-              </Button>
+                <Chip
+                  label="In Progress"
+                  className={classes.billChips}
+                  variant="outlined"
+                  color="basic"
+                  icon={<AccessTimeIcon />}
+                />
+              </Tooltip>
             )}
           </Grid>
           <Grid item xs={10} sm={7} md={8} lg={8} xl={10}>
@@ -243,8 +260,10 @@ export default function BillCard(props) {
               <strong>{props.bill.title}</strong>
             </Typography>
             <Typography style={{ marginBottom: '16px' }}>
-              {'Introduced on ' +
-                introduced_date.toLocaleDateString('en-US', options)}
+              {introduced_date
+                ? 'Introduced on ' +
+                  introduced_date.toLocaleDateString('en-US', options)
+                : 'The introduced date of this bill is not available.'}
             </Typography>
             <Grid container direction="row">
               <Grid item xs={12}>
@@ -256,14 +275,60 @@ export default function BillCard(props) {
                 >
                   {props.bill.description}
                 </Typography>
-                <Button
-                  href={props.bill.full_text_url}
-                  target="_blank"
-                  variant="contained"
-                  className={classes.fullText}
-                >
-                  Full Text
-                </Button>
+                <Grid container xs={12} spacing={2} style={{ display: 'flex' }}>
+                  <Grid item>
+                    <Tooltip
+                      title="View the full text of this bill on parliament's website."
+                      placement="right"
+                    >
+                      <Button
+                        href={props.bill.full_text_url}
+                        target="_blank"
+                        variant="contained"
+                        className={classes.billText}
+                      >
+                        <LibraryBooksIcon style={{ marginRight: '8px' }} />
+                        Full Text
+                      </Button>
+                    </Tooltip>
+                  </Grid>
+                  <Grid item>
+                    {props.bill.summary_url ? (
+                      <Tooltip
+                        title="View the summary text of this bill on parliament's website."
+                        placement="right"
+                      >
+                        <Button
+                          href={props.bill.summary_url}
+                          target="_blank"
+                          variant="contained"
+                          className={classes.billText}
+                        >
+                          <AccountBalanceIcon style={{ marginRight: '8px' }} />
+                          Summary
+                        </Button>
+                      </Tooltip>
+                    ) : (
+                      <Tooltip
+                        title="The legislative summary for this bill is not yet available. This link will be updated when the summary becomes available."
+                        placement="right"
+                      >
+                        <div>
+                          <Button
+                            disabled
+                            variant="contained"
+                            className={classes.billText}
+                          >
+                            <AccountBalanceIcon
+                              style={{ marginRight: '8px' }}
+                            />
+                            Summary
+                          </Button>
+                        </div>
+                      </Tooltip>
+                    )}
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -277,52 +342,45 @@ export default function BillCard(props) {
             style={{ textAlign: 'right' }}
           >
             {props.user ? (
-              <IconButton
-                aria-label="settings"
-                onClick={() => {
-                  handleWatchSubmit();
-                }}
-              >
-                <BookmarkIcon style={{ color: color }} />
+              <IconButton aria-label="settings">
+                <BookmarkIcon
+                  style={{ color: color }}
+                  onClick={() => {
+                    handleWatchSubmit();
+                  }}
+                />
                 <Snackbar
                   anchorOrigin={{
                     vertical: 'bottom',
                     horizontal: 'center'
                   }}
-                  className={classes.snackbar}
                   open={open}
                   autoHideDuration={2000}
                   onClose={handleClose}
-                  action={
-                    <>
-                      {color === 'grey' ? (
-                        <Button
-                          color="primary"
+                >
+                  <SnackbarContent
+                    style={{
+                      backgroundColor: '#f44336'
+                    }}
+                    message={
+                      props.user.user_bills.includes(props.bill.id)
+                        ? `Bill ${props.bill.code} added to watchlist`
+                        : `Bill ${props.bill.code} removed from watchlist`
+                    }
+                    action={
+                      <>
+                        <IconButton
                           size="small"
+                          aria-label="close"
+                          color="inherit"
                           onClick={handleClose}
                         >
-                          Bill {props.bill.code} removed from watchlist
-                        </Button>
-                      ) : (
-                        <Button
-                          color="primary"
-                          size="small"
-                          onClick={handleClose}
-                        >
-                          Bill {props.bill.code} added to watchlist
-                        </Button>
-                      )}
-                      <IconButton
-                        size="small"
-                        aria-label="close"
-                        color="inherit"
-                        onClick={handleClose}
-                      >
-                        <CloseIcon fontSize="small" />
-                      </IconButton>
-                    </>
-                  }
-                />
+                          <CloseIcon fontSize="small" />
+                        </IconButton>
+                      </>
+                    }
+                  />
+                </Snackbar>
               </IconButton>
             ) : (
               <Tooltip
@@ -362,7 +420,7 @@ export default function BillCard(props) {
               sm={3}
               md={2}
               lg={2}
-              xl={2}
+              xl={1}
               justify="flex-end"
             ></Grid>
             <Grid
@@ -375,7 +433,7 @@ export default function BillCard(props) {
               justify="flex-end"
               style={{ paddingRight: 'none' }}
             >
-              <Typography variant="h4">Bill Events</Typography>
+              <Typography>Bill Events</Typography>
             </Grid>
           </Grid>
         </CardContent>
