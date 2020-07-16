@@ -31,9 +31,7 @@ const App = (props) => {
   // Fetches bills from the Rails back end
   const fetchBills = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_COMMONS_API}/bills`
-      );
+      const response = await axios.get(`${process.env.BASE_URL}/bills`);
 
       const sortedBills = response.data.bills.sort(
         (a, b) => new Date(b.introduced_date) - new Date(a.introduced_date)
