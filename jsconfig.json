@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
+    "baseUrl": "https://commons-react-app.herokuapp.com/",
     "paths": {
-      "*": ["src/*"]
+      "*": ["https://commons-react-app.herokuapp.com/*"]
     }
   }
 }
