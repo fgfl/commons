@@ -1,17 +1,17 @@
-import React, { useEffect, useState, Fragment } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import axios from 'axios';
+import React, { useEffect, useState, Fragment } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import axios from "axios";
 
-import Home from 'views/HomePage/Home.js';
+import Home from "views/HomePage/Home.js";
 // import LandingPage from "views/LandingPage/LandingPage.js";
-import ProfilePage from 'views/ProfilePage/ProfilePage.js';
-import LoginPage from 'views/LoginPage/LoginPage.js';
-import SignupPage from 'views/SignupPage/SignupPage.js';
-import WatchListPage from 'views/WatchListPage/WatchListPage.js';
-import LoadingSpinner from 'views/LoadingSpinner/LoadingSpinner.js';
-import Header from 'views/Header/Header';
+import ProfilePage from "views/ProfilePage/ProfilePage.js";
+import LoginPage from "views/LoginPage/LoginPage.js";
+import SignupPage from "views/SignupPage/SignupPage.js";
+import WatchListPage from "views/WatchListPage/WatchListPage.js";
+import LoadingSpinner from "views/LoadingSpinner/LoadingSpinner.js";
+import Header from "views/Header/Header";
 
-import useLoading from 'hooks/useLoading';
+import useLoading from "hooks/useLoading";
 
 const App = (props) => {
   const [user, setUser] = useState();
@@ -43,33 +43,28 @@ const App = (props) => {
       setCategories(response.data.categories);
       updateLoadingState(false);
     } catch (error) {
-      console.error('Error occurred on fetchBills:', error);
+      console.error("Error occurred on fetchBills:", error);
     }
   };
 
   const loginStatus = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_COMMONS_API}/logged_in`
-      );
+      const response = await axios.get(`${process.env.BASE_URL}/logged_in`);
       if (response.data.logged_in) {
         handleLogin(response.data);
       } else {
         handleLogout();
       }
     } catch (error) {
-      console.error('Error occurred on loginStatus:', error);
+      console.error("Error occurred on loginStatus:", error);
     }
   };
 
   const handleProfileUpdate = async (user) => {
     try {
-      const res = await axios.put(
-        `${process.env.REACT_APP_COMMONS_API}/users/${user.id}`,
-        {
-          user
-        }
-      );
+      const res = await axios.put(`${process.env.BASE_URL}/users/${user.id}`, {
+        user
+      });
       if (res.data.status === 200) {
         // back end is only returning the user data and their categories, keep the old
         // user_bills (aka watchlist)
@@ -101,10 +96,10 @@ const App = (props) => {
   const handleLogout = async () => {
     updateLoadingState(true);
     try {
-      await axios.delete(`${process.env.REACT_APP_COMMONS_API}/logout`);
+      await axios.delete(`${process.env.BASE_URL}/logout`);
       setUser(null);
       setLoggedIn(false);
-      props.history.push('/');
+      props.history.push("/");
       updateLoadingState(false);
     } catch (error) {
       updateLoadingState(false);
@@ -118,11 +113,11 @@ const App = (props) => {
         {loading && (
           <div
             style={{
-              minHeight: '100vh',
-              minWidth: '100vw',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center'
+              minHeight: "100vh",
+              minWidth: "100vw",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center"
             }}
           >
             <LoadingSpinner></LoadingSpinner>
@@ -136,7 +131,7 @@ const App = (props) => {
               fixed
               changeColorOnScroll={{
                 height: 200,
-                color: 'white'
+                color: "white"
               }}
               user={user}
               loggedIn={loggedIn}
