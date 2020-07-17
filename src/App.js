@@ -31,7 +31,9 @@ const App = (props) => {
   // Fetches bills from the Rails back end
   const fetchBills = async () => {
     try {
-      const response = await axios.get(`${process.env.BASE_URL}/bills`);
+      const response = await axios.get(
+        `${process.env.REACT_APP_COMMONS_API}/bills`
+      );
 
       const sortedBills = response.data.bills.sort(
         (a, b) => new Date(b.introduced_date) - new Date(a.introduced_date)
@@ -47,7 +49,9 @@ const App = (props) => {
 
   const loginStatus = async () => {
     try {
-      const response = await axios.get(`${process.env.BASE_URL}/logged_in`);
+      const response = await axios.get(
+        `${process.env.REACT_APP_COMMONS_API}/logged_in`
+      );
       if (response.data.logged_in) {
         handleLogin(response.data);
       } else {
@@ -60,9 +64,12 @@ const App = (props) => {
 
   const handleProfileUpdate = async (user) => {
     try {
-      const res = await axios.put(`${process.env.BASE_URL}/users/${user.id}`, {
-        user
-      });
+      const res = await axios.put(
+        `${process.env.REACT_APP_COMMONS_API}/users/${user.id}`,
+        {
+          user
+        }
+      );
       if (res.data.status === 200) {
         // back end is only returning the user data and their categories, keep the old
         // user_bills (aka watchlist)
@@ -94,7 +101,7 @@ const App = (props) => {
   const handleLogout = async () => {
     updateLoadingState(true);
     try {
-      await axios.delete(`${process.env.BASE_URL}/logout`);
+      await axios.delete(`${process.env.REACT_APP_COMMONS_API}/logout`);
       setUser(null);
       setLoggedIn(false);
       props.history.push("/");
